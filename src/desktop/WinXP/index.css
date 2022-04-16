@@ -1,0 +1,69 @@
+#desktop-win-xp {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9999999;
+}
+
+#desktop-win-xp *::-webkit-scrollbar {
+  display: block;
+  width: 16px;
+}
+#desktop-win-xp *::-webkit-scrollbar:horizontal {
+  height: 16px;
+}
+#desktop-win-xp *::-webkit-scrollbar-corner {
+  background: #dfdfdf;
+}
+#desktop-win-xp *::-webkit-scrollbar-track:vertical {
+  background-image: url("../assets/scroll/scroll-background.svg");
+}
+#desktop-win-xp *::-webkit-scrollbar-thumb {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #c8d6fb;
+  background-size: 7px;
+  border: 1px solid #eeede6;
+  border-right: 1px solid rgb(159, 181, 208, 0.75);
+  border-bottom: 1px solid rgb(159, 181, 208, 0.75);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px white, inset -3px 0 #bad1fc, inset 1px 1px #b7caf5;
+}
+#desktop-win-xp *::-webkit-scrollbar-thumb::before {
+  content: '';
+  position: absolute;
+  height: 10%;
+  width: 10%;
+  border: 1px solid black;
+}
+#desktop-win-xp *::-webkit-scrollbar-button:horizontal:start:decrement,
+#desktop-win-xp *::-webkit-scrollbar-button:horizontal:end:increment,
+#desktop-win-xp *::-webkit-scrollbar-button:vertical:start:decrement,
+#desktop-win-xp *::-webkit-scrollbar-button:vertical:end:increment {
+    display: block;
+}
+#desktop-win-xp *::-webkit-scrollbar-thumb:vertical {
+  background-image: url("../assets/scroll/scroll-thumb.svg");
+}
+#desktop-win-xp *::-webkit-scrollbar-button:vertical:start {
+  height: 16px;
+  background-image: url("../assets/scroll/scroll-arrow-up.svg");
+}
+#desktop-win-xp *::-webkit-scrollbar-button:vertical:end {
+  height: 16px;
+  background-image: url("../assets/scroll/scroll-arrow-down.svg");
+}
+#desktop-win-xp *::-webkit-scrollbar-button:horizontal {
+  display: block;
+}
+#desktop-win-xp *::-webkit-scrollbar-button:horizontal:start {
+  width: 16px;
+  background-image: url("../assets/scroll/scroll-arrow-left.svg");
+}
+#desktop-win-xp *::-webkit-scrollbar-button:horizontal:end {
+  width: 16px;
+  background-image: url("../assets/scroll/scroll-arrow-right.svg");
+}

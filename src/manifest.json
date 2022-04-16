@@ -1,0 +1,14 @@
+{
+  "name": "AIM for Slack",
+  "description": "Time travel back to 2002",
+  "author": "Jared Schwalbe",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["*://app.slack.com/client/*"],
+      "js": ["app.js"]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./fonts/NotoSans-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Noto Sans TC';
+  src: url('./fonts/NotoSans-Medium.ttf');
+}
+
+@font-face {
+  font-family: 'Verdana Custom';
+  src: url('./fonts/verdana/VerdanaPro-CondRegular.ttf');
+}
+
+@font-face {
+  font-family: 'MS Sans Serif';
+  src: url('./fonts/ms_sans_serif.ttf');
+}
+
+@font-face {
+  font-family: 'MS Sans Serif Bold';
+  src: url('./fonts/ms_sans_serif_bold.ttf');
+}
+
+@font-face {
+  font-family: 'FrutigerCond';
+  src: url('./fonts/FrutigerCond.ttf');
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 14px;
+}
+
+*,
+*:before,
+*:after,
+*:placeholder-shown {
+  font-family: inherit;
+}

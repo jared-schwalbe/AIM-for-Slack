@@ -13,7 +13,7 @@ import actions_top from '../../../../assets/aim/actions_top_sharp.png';
 import actions_bottom from '../../../../assets/aim/actions_bottom_sharp.png';
 import ticker from '../../../../assets/aim/ticker_sharp.png';
 
-function BuddyList({ onClose, dispatch }) {
+function BuddyList({ onClose, isFocus, dispatch }) {
   const [, rerender] = useState(Date.now());
 
   useEffect(() => {
@@ -108,20 +108,29 @@ function BuddyList({ onClose, dispatch }) {
               </button>
             </div>
             <div className="com__buddy-list__group__items">
-              {g.expanded && g.children.map(c => (
-                <button
-                  key={c.name}
-                  className="com__buddy-list__group__item"
-                  onClick={e => setActive(c.name)}
-                  onDoubleClick={() => openChat(c)}
-                >
-                  <span>
-                    <span className={active === c.name ? 'com__buddy-list__active' : ''}>
-                      {c.name}
+              {g.expanded && g.children.map(c => {
+                let activeClass = '';
+                if (active === c.name) {
+                  activeClass = 'com__buddy-list__active';
+                  if (isFocus) {
+                    activeClass = 'com__buddy-list__active--focus';
+                  }
+                }
+                return (
+                  <button
+                    key={c.name}
+                    className="com__buddy-list__group__item"
+                    onClick={e => setActive(c.name)}
+                    onDoubleClick={() => openChat(c)}
+                  >
+                    <span>
+                      <span className={activeClass}>
+                        {c.name}
+                      </span>
                     </span>
-                  </span>
-                </button>
-              ))}
+                  </button>
+                );
+              })}
             </div>
           </div>
         ))}
@@ -237,6 +246,9 @@ const Div = styled.div`
     background: #fff url(${background}) no-repeat 50% 25%;
   }
   .com__buddy-list__active {
+    background: yellow;
+  }
+  .com__buddy-list__active--focus {
     background: yellow;
     border: 1px dotted black !important;
   }

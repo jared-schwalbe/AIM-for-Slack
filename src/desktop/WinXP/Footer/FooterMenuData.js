@@ -50,9 +50,9 @@ import freecell from '../../assets/windowsIcons/freecell.png';
 import heart from '../../assets/windowsIcons/heart.png';
 import rdp from '../../assets/windowsIcons/rdp.png';
 import solitaire from '../../assets/windowsIcons/solitaire.png';
-// import narrator from '../../assets/windowsIcons/narrator.ico';
+import narrator from '../../assets/windowsIcons/narrator.png';
 import pinball from '../../assets/windowsIcons/pinball.png';
-// import restore from '../../assets/windowsIcons/restore.ico';
+import restore from '../../assets/windowsIcons/restore.png';
 import mine from '../../assets/minesweeper/mine-icon.png';
 
 export const MyRecentDocuments = [
@@ -116,7 +116,7 @@ export const AllPrograms = [
           },
           {
             type: 'item',
-            // icon: require('../../assets/windowsIcons/narrator.ico'),
+            icon: narrator,
             text: 'Narrator',
           },
           {
@@ -235,7 +235,7 @@ export const AllPrograms = [
           },
           {
             type: 'item',
-            // icon: require('../../assets/windowsIcons/restore.ico'),
+            icon: restore,
             text: 'System Restore',
           },
         ],

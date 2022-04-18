@@ -10,5 +10,13 @@
       "matches": ["*://app.slack.com/client/*"],
       "js": ["app.js"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["*://app.slack.com/*"],
+      "resources": [
+        "audio/error.wav"
+      ]
+    }
   ]
 }

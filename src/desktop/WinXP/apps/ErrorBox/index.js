@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import '../../../assets/sounds/error.wav';
 import error from '../../../assets/windowsIcons/897(32x32).png';
 
 function lineBreak(str) {
@@ -14,9 +15,9 @@ function lineBreak(str) {
 function Error({ onClose, message = "Something's wrong!" }) {
   useEffect(() => {
     try {
-      // new Audio(require('../../../assets/sounds/error.wav')).play();
+      new Audio(chrome.runtime.getURL("audio/error.wav")).play();
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }, []);
   return (

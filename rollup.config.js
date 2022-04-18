@@ -2,6 +2,7 @@ import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
+import files from 'rollup-plugin-import-file';
 import image from '@rollup/plugin-image';
 import styles from 'rollup-plugin-styles';
 
@@ -35,5 +36,10 @@ export default {
     commonjs(),
     image(),
     styles(),
+    files({
+      output: 'dist/audio',
+      extensions: /\.wav$/,
+      hash: false,
+    }),
   ],
 };

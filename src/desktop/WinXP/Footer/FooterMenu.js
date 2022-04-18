@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import SubMenu from '../../components/SubMenu';
 import ie from '../../assets/windowsIcons/ie.png';
+import aim from '../../assets/windowsIcons/aim.png';
 import mine from '../../assets/minesweeper/mine-icon.png';
 import setAccess from '../../assets/windowsIcons/227(32x32).png';
 import outlook from '../../assets/windowsIcons/887(32x32).png';
@@ -23,7 +24,7 @@ import run from '../../assets/windowsIcons/743(32x32).png';
 import lock from '../../assets/windowsIcons/546(32x32).png';
 import user from '../../assets/windowsIcons/user.png';
 import shut from '../../assets/windowsIcons/310(32x32).png';
-// import allProgramsIcon from '../../assets/windowsIcons/all-programs.ico';
+import allProgramsIcon from '../../assets/windowsIcons/all-programs.png';
 import notepad from '../../assets/windowsIcons/327(32x32).png';
 import empty from '../../assets/empty.png';
 
@@ -55,6 +56,7 @@ function FooterMenu({ className, onClick }) {
           <Items
             onClick={onClick}
             items={[
+              { icon: aim, text: 'AOL Instant Messenger' },
               { icon: mine, text: 'Minesweeper' },
               { icon: notepad, text: 'Notepad' },
               { icon: paint, text: 'Paint' },
@@ -76,14 +78,14 @@ function FooterMenu({ className, onClick }) {
             text={
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 All Programs
-                {/* <img
-                  src={require('../../assets/windowsIcons/all-programs.ico')}
+                <img
+                  src={allProgramsIcon}
                   alt=""
                   style={{
                     marginLeft: '5px',
                     height: '18px',
                   }}
-                /> */}
+                />
               </div>
             }
             icon={empty}

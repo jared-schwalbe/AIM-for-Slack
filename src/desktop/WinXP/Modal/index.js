@@ -6,7 +6,7 @@ import { POWER_STATE } from '../constants';
 import windowsLogo from '../../assets/windowsIcons/windows-off.png';
 import off from '../../assets/windowsIcons/310(32x32).png';
 import lock from '../../assets/windowsIcons/546(32x32).png';
-// import restart from '../../assets/windowsIcons/restart.ico';
+import restart from '../../assets/windowsIcons/restart.png';
 import switcher from '../../assets/windowsIcons/290.png';
 
 function Modal(props) {
@@ -14,7 +14,7 @@ function Modal(props) {
     <StyledContainer>
       <Menu {...props} />
     </StyledContainer>,
-    document.body,
+    document.getElementById('desktop-win-xp'),
   );
 }
 
@@ -44,7 +44,7 @@ const Menu = ({ mode, onClose, onClickButton }) => {
           <Button img={off} text="Turn Off" onClick={onClickButton} />
           <Button
             style={{ margin: '-3px 0 0px 0', width: '33px', height: '33px' }}
-            // img={require('../../assets/windowsIcons/restart.ico')}
+            img={restart}
             text="Restart"
             onClick={onClickButton}
           />

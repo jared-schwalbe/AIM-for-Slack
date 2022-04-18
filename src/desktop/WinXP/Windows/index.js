@@ -206,7 +206,7 @@ const StyledWindow = styled(Window)`
     width: 15px;
     height: 15px;
     margin-left: 1px;
-    margin-right: 3px;
+    margin-right: 5px;
   }
   .app__header__title {
     flex: 1;

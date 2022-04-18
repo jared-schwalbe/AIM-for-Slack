@@ -18,6 +18,7 @@ import notepadLarge from '../../assets/windowsIcons/327(32x32).png';
 import paintLarge from '../../assets/windowsIcons/680(32x32).png';
 import paint from '../../assets/windowsIcons/680(16x16).png';
 import aim from '../../assets/windowsIcons/aim.png';
+import aimBuddyList from '../../assets/windowsIcons/aimBuddyList.png';
 import aimChat from '../../assets/windowsIcons/aimChat.png';
 
 const randomPos = (max, min) => Math.round(Math.random() * (max - min)) + min;
@@ -236,7 +237,7 @@ export const appSettings = {
   },
   AIMBuddyList: {
     header: {
-      icon: aim,
+      icon: aimBuddyList,
       title: "Jared Schwalbe's Buddy List",
     },
     component: AIMBuddyList,

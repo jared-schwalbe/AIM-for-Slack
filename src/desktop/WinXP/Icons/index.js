@@ -27,8 +27,7 @@ function Icons({
         return x - sx < sw && sx - x < w && y - sy < sh && sy - y < h;
       })
       .map(icon => icon.id);
-    // TODO: uncomment when I figure out why this is still calling after unmount?
-    // setSelectedIcons(selectedIds);
+    setSelectedIcons(selectedIds);
   }, [iconsRect, setSelectedIcons, selecting, mouse.docX, mouse.docY]);
   return (
     <IconsContainer>

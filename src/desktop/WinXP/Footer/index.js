@@ -5,8 +5,9 @@ import FooterMenu from './FooterMenu';
 import Balloon from '../../components/Balloon';
 import startButton from '../../assets/windowsIcons/start.png';
 import sound from '../../assets/windowsIcons/690(16x16).png';
-import usb from '../../assets/windowsIcons/394(16x16).png';
+import media from '../../assets/windowsIcons/846(16x16)_small.png';
 import risk from '../../assets/windowsIcons/229(16x16).png';
+import info from '../../assets/windowsIcons/info.png';
 
 const getTime = () => {
   const date = new Date();
@@ -93,10 +94,26 @@ function Footer({
 
       <div className="footer__items right">
         <img className="footer__icon" src={sound} alt="" />
-        <img className="footer__icon" src={usb} alt="" />
+        <img className="footer__icon" src={media} alt="" />
         <img className="footer__icon" src={risk} alt="" />
         <div style={{ position: 'relative', width: 0, height: 0 }}>
-          <Balloon />
+          <Balloon
+            imgHeaderSrc={risk}
+            textHeader="Your computer might be at risk"
+            textFirst="Antivirus software might not be installed"
+            textSecond="Click this balloon to fix this problem."
+            startAfter={3000}
+            duration={12000}
+            style={{ whiteSpace: 'nowrap', right: "-6px" }}
+          />
+          <Balloon
+            imgHeaderSrc={info}
+            textHeader="Take a tour of Windows XP"
+            textFirst="To learn about the exciting new features in XP now, click here. To take the tour later, click All Programs on the Start menu, and then click Accessories."
+            startAfter={22000}
+            duration={12000}
+            style={{ width: "345px", right: "11px" }}
+          />
         </div>
         <div className="footer__time">{time}</div>
       </div>
@@ -214,6 +231,7 @@ const Container = styled.footer`
   .footer__icon {
     height: 15px;
     width: 15px;
+    margin: 0 1px;
   }
   .footer__text {
     position: absolute;

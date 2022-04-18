@@ -95,47 +95,56 @@ function BuddyList({ onClose, isFocus, dispatch }) {
         </div>
       </section>
       <div className="com__buddy-list">
-        {getGroups().map(g => (
-          <div className="com__buddy-list__group" key={g.title}>
-            <div className={`com__buddy-list__group__title--${g.expanded ? 'expanded' : 'collapsed'}`}>
-              <button
-                className="com__buddy-list__group__expand"
-                onClick={e => setActive(g.title)}
-                onDoubleClick={() => g.element.click()}
-              >
-                <div className={`com__buddy-list__group__expand__icon--${g.expanded ? 'expanded' : 'collapsed'}`} />
-                <span className={active === g.title ? 'com__buddy-list__active' : ''}>
-                  {`${g.title} (${g.children.length}/${g.children.length})`}
-                </span>
-              </button>
-            </div>
-            <div className="com__buddy-list__group__items">
-              {g.expanded && g.children.map(c => {
-                let activeClass = '';
-                if (active === c.name) {
-                  activeClass = 'com__buddy-list__active';
-                  if (isFocus) {
-                    activeClass = 'com__buddy-list__active--focus';
+        {getGroups().map(g => {
+          let titleClass = '';
+          if (active === g.title) {
+            titleClass = 'com__buddy-list__active';
+            if (isFocus) {
+              titleClass = 'com__buddy-list__active--focus';
+            }
+          }
+          return (
+            <div className="com__buddy-list__group" key={g.title}>
+              <div className={`com__buddy-list__group__title--${g.expanded ? 'expanded' : 'collapsed'}`}>
+                <button
+                  className="com__buddy-list__group__expand"
+                  onClick={e => setActive(g.title)}
+                  onDoubleClick={() => g.element.click()}
+                >
+                  <div className={`com__buddy-list__group__expand__icon--${g.expanded ? 'expanded' : 'collapsed'}`} />
+                  <span className={titleClass}>
+                    {`${g.title} (${g.children.length}/${g.children.length})`}
+                  </span>
+                </button>
+              </div>
+              <div className="com__buddy-list__group__items">
+                {g.expanded && g.children.map(c => {
+                  let itemClass = '';
+                  if (active === c.name) {
+                    itemClass = 'com__buddy-list__active';
+                    if (isFocus) {
+                      itemClass = 'com__buddy-list__active--focus';
+                    }
                   }
-                }
-                return (
-                  <button
-                    key={c.name}
-                    className="com__buddy-list__group__item"
-                    onClick={e => setActive(c.name)}
-                    onDoubleClick={() => openChat(c)}
-                  >
-                    <span>
-                      <span className={activeClass}>
-                        {c.name}
+                  return (
+                    <button
+                      key={c.name}
+                      className="com__buddy-list__group__item"
+                      onClick={e => setActive(c.name)}
+                      onDoubleClick={() => openChat(c)}
+                    >
+                      <span>
+                        <span className={itemClass}>
+                          {c.name}
+                        </span>
                       </span>
-                    </span>
-                  </button>
-                );
-              })}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       <div className="com__actions">
         <div className="com__actions__top">

@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import risk from '../../assets/windowsIcons/229(16x16).png';
-
-function Balloon({ startAfter = 3000, duration = 15000 }) {
+function Balloon({
+  imgHeaderSrc,
+  textHeader,
+  textFirst,
+  textSecond,
+  startAfter,
+  duration,
+  style = {},
+}) {
   const [show, setShow] = useState(true);
   const [start, setStart] = useState(false);
   useEffect(() => {
@@ -22,20 +28,22 @@ function Balloon({ startAfter = 3000, duration = 15000 }) {
   return (
     start && (
       <Div show={show}>
-        <div className="balloon__container">
+        <div className="balloon__container" style={style}>
           <button onClick={() => setShow(false)} className="balloon__close" />
           <div className="balloon__header">
-            <img className="balloon__header__img" src={risk} alt="risk" />
+            <img className="balloon__header__img" src={imgHeaderSrc} alt="" />
             <span className="balloon__header__text">
-              Your computer might be at risk
+              {textHeader}
             </span>
           </div>
           <p className="balloon__text__first">
-            Antivirus software might not be installed
+            {textFirst}
           </p>
-          <p className="balloon__text__second">
-            Click this balloon to fix this problem.
-          </p>
+          {textSecond && (
+            <p className="balloon__text__second">
+              {textSecond}
+            </p>
+          )}
         </div>
       </Div>
     )
@@ -73,14 +81,12 @@ const Div = styled.div`
   filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.4));
   .balloon__container {
     position: absolute;
-    right: -4px;
     bottom: 19px;
     border: 1px solid black;
     border-radius: 7px;
     padding: 6px 28px 10px 10px;
     background-color: #ffffe1;
     font-size: 11px;
-    white-space: nowrap;
     &:before {
       content: '';
       position: absolute;
@@ -157,9 +163,10 @@ const Div = styled.div`
     margin-right: 8px;
   }
   .balloon__text__first {
-    margin: 5px 0 10px;
+    margin: 5px 0 0;
   }
   .balloon__text__second {
+    margin-top: 8px;
     margin-bottom: 0;
   }
 `;

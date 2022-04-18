@@ -83,7 +83,9 @@ function BuddyList({ onClose, isFocus, dispatch }) {
       </section>
       <section className="com__header">
         <div className="com__banner">
-          <img className="com__banner__image" src={banner} alt="" />
+          <a href="https://www.aol.com/" target="_blank" rel="noreferrer">
+            <img className="com__banner__image" src={banner} alt="" />
+          </a>
         </div>
         <div className="com__title">
           <div className="com__title__name">{`${username}'s Buddy List:`}</div>

@@ -5,27 +5,21 @@ import { WindowDropDowns } from '../../../components';
 import dropDownData from './dropDownData';
 import go from '../../../assets/windowsIcons/290.png';
 import search from '../../../assets/windowsIcons/299(32x32).png';
-import computer from '../../../assets/windowsIcons/676(16x16).png';
+import recycleBin from '../../../assets/windowsIcons/recycle-bin(16x16).png';
 import back from '../../../assets/windowsIcons/back.png';
 import forward from '../../../assets/windowsIcons/forward.png';
 import up from '../../../assets/windowsIcons/up.png';
-import remove from '../../../assets/windowsIcons/302(16x16).png';
 import control from '../../../assets/windowsIcons/300(16x16).png';
 import network from '../../../assets/windowsIcons/693(16x16).png';
 import document from '../../../assets/windowsIcons/308(16x16).png';
 import folderSmall from '../../../assets/windowsIcons/318(16x16).png';
 import menu from '../../../assets/windowsIcons/358(32x32).png';
-import folder from '../../../assets/windowsIcons/318(48x48).png';
 import folderOpen from '../../../assets/windowsIcons/337(32x32).png';
-import disk from '../../../assets/windowsIcons/334(48x48).png';
-import cd from '../../../assets/windowsIcons/111(48x48).png';
 import dropdown from '../../../assets/windowsIcons/dropdown.png';
 import pullup from '../../../assets/windowsIcons/pullup.png';
-import logo from '../../../assets/github-logo.png';
-import mine from '../../../assets/minesweeper/mine-icon.png';
 import windows from '../../../assets/windowsIcons/windows.png';
 
-function MyComputer({ onClose }) {
+function RecycleBin({ onClose }) {
   function onClickOptionItem(item) {
     switch (item) {
       case 'Close':
@@ -89,11 +83,11 @@ function MyComputer({ onClose }) {
         <div className="com__address_bar__title">Address</div>
         <div className="com__address_bar__content">
           <img
-            src={computer}
+            src={recycleBin}
             alt="ie"
             className="com__address_bar__content__img"
           />
-          <div className="com__address_bar__content__text">My Computer</div>
+          <div className="com__address_bar__content__text">Recycle Bin</div>
           <img
             src={dropdown}
             alt="dropdown"
@@ -108,50 +102,6 @@ function MyComputer({ onClose }) {
       <div className="com__content">
         <div className="com__content__inner">
           <div className="com__content__left">
-            <div className="com__content__left__card">
-              <div className="com__content__left__card__header">
-                <div className="com__content__left__card__header__text">
-                  System Tasks
-                </div>
-                <img
-                  src={pullup}
-                  alt=""
-                  className="com__content__left__card__header__img"
-                />
-              </div>
-              <div className="com__content__left__card__content">
-                <div className="com__content__left__card__row">
-                  {/* <img
-                    className="com__content__left__card__img"
-                    src={require('../../../assets/windowsIcons/view-info.ico')}
-                    alt="view"
-                  /> */}
-                  <div className="com__content__left__card__text link">
-                    View system information
-                  </div>
-                </div>
-                <div className="com__content__left__card__row">
-                  <img
-                    className="com__content__left__card__img"
-                    src={remove}
-                    alt="remove"
-                  />
-                  <div className="com__content__left__card__text link">
-                    Add or remove programs
-                  </div>
-                </div>
-                <div className="com__content__left__card__row">
-                  <img
-                    className="com__content__left__card__img"
-                    src={control}
-                    alt="control"
-                  />
-                  <div className="com__content__left__card__text link">
-                    Change a setting
-                  </div>
-                </div>
-              </div>
-            </div>
             <div className="com__content__left__card">
               <div className="com__content__left__card__header">
                 <div className="com__content__left__card__header__text">
@@ -220,7 +170,7 @@ function MyComputer({ onClose }) {
               <div className="com__content__left__card__content">
                 <div className="com__content__left__card__row column">
                   <div className="com__content__left__card__text black bold">
-                    My Computer
+                    Recycle Bin
                   </div>
                   <div className="com__content__left__card__text black">
                     System Folder
@@ -230,75 +180,7 @@ function MyComputer({ onClose }) {
             </div>
           </div>
           <div className="com__content__right">
-            <div className="com__content__right__card">
-              <div className="com__content__right__card__header">
-                Files Stored on This Computer
-              </div>
-              <div className="com__content__right__card__content">
-                <div className="com__content__right__card__item">
-                  <img
-                    src={folder}
-                    alt="folder"
-                    className="com__content__right__card__img"
-                  />
-                  <div className="com__content__right__card__img-container">
-                    <div className="com__content__right__card__text">
-                      Shared Documents
-                    </div>
-                  </div>
-                </div>
-                <div className="com__content__right__card__item">
-                  <img
-                    src={folder}
-                    alt="folder"
-                    className="com__content__right__card__img"
-                  />
-                  <div className="com__content__right__card__img-container">
-                    <div className="com__content__right__card__text">
-                      User's Documents
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="com__content__right__card">
-              <div className="com__content__right__card__header">
-                Hard Disk Drives
-              </div>
-              <div className="com__content__right__card__content">
-                <div className="com__content__right__card__item">
-                  <img
-                    src={disk}
-                    alt="disk"
-                    className="com__content__right__card__img"
-                  />
-                  <div className="com__content__right__card__img-container">
-                    <div className="com__content__right__card__text">
-                      Local Disk (C:)
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="com__content__right__card">
-              <div className="com__content__right__card__header">
-                Devices with Removable Storage
-              </div>
-              <div className="com__content__right__card__content">
-                <div className="com__content__right__card__item">
-                  <div className="com__content__right__card__img-container">
-                    <img
-                      src={cd}
-                      alt="cd"
-                      className="com__content__right__card__img"
-                    />
-                  </div>
-                  <div className="com__content__right__card__text">
-                    CD Drive (D:)
-                  </div>
-                </div>
-              </div>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -687,4 +569,4 @@ const Div = styled.div`
   }
 `;
 
-export default MyComputer;
+export default RecycleBin;

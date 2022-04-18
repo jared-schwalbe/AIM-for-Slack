@@ -242,6 +242,8 @@ function WinXP() {
       dispatch({ type: ADD_APP, payload: appSettings.Minesweeper });
     else if (o === 'My Computer')
       dispatch({ type: ADD_APP, payload: appSettings['My Computer'] });
+    else if (o === 'Recycle Bin')
+      dispatch({ type: ADD_APP, payload: appSettings['Recycle Bin'] });
     else if (o === 'Notepad')
       dispatch({ type: ADD_APP, payload: appSettings.Notepad });
     else if (o === 'Paint')

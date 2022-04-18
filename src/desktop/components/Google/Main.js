@@ -19,7 +19,6 @@ function Main({ onSearch, className }) {
       <header>
         <div className="text">Gmail</div>
         <div className="text">Images</div>
-        <img src={smile} alt="avatar" />
       </header>
       <section className="content">
         <img
@@ -51,11 +50,6 @@ function Main({ onSearch, className }) {
         </div>
       </section>
       <footer>
-        <section className="upper">
-          <div className="items left">
-            <div className="item">Taiwan</div>
-          </div>
-        </section>
         <section className="lower">
           <div className="items left">
             <div className="item">Advertising</div>
@@ -175,10 +169,12 @@ export default styled(Main)`
     }
   }
   footer {
+    display: flex;
+    align-items: center;
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 83px;
+    height: 44px;
     border-top: 1px solid rgba(0, 0, 0, 0.07);
     background-color: rgba(0, 0, 0, 0.05);
     .upper {
@@ -191,7 +187,6 @@ export default styled(Main)`
     }
     .lower {
       position: relative;
-      border-top: 1px solid rgba(0, 0, 0, 0.07);
       height: 50%;
       color: rgb(95, 99, 104);
       font-size: 13px;

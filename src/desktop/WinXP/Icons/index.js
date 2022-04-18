@@ -54,6 +54,7 @@ function Icon({
   id,
   component,
   measure,
+  style = {},
 }) {
   const ref = useRef(null);
   function _onMouseDown() {
@@ -76,6 +77,7 @@ function Icon({
       onMouseDown={_onMouseDown}
       onDoubleClick={_onDoubleClick}
       ref={ref}
+      style={style}
     >
       <div className={`${className}__img__container`}>
         <img src={icon} alt={title} className={`${className}__img`} />

@@ -2,6 +2,7 @@ import InternetExplorer from './InternetExplorer';
 import Minesweeper from './Minesweeper';
 import ErrorBox from './ErrorBox';
 import MyComputer from './MyComputer';
+import RecycleBin from './ReycleBin';
 import AIMSignIn from './aim/SignIn';
 import AIMBuddyList from './aim/BuddyList';
 import AIMChat from './aim/Chat';
@@ -14,12 +15,12 @@ import error from '../../assets/windowsIcons/897(16x16).png';
 import computer from '../../assets/windowsIcons/676(16x16).png';
 import computerLarge from '../../assets/windowsIcons/676(32x32).png';
 import notepad from '../../assets/windowsIcons/327(16x16).png';
-import notepadLarge from '../../assets/windowsIcons/327(32x32).png';
-import paintLarge from '../../assets/windowsIcons/680(32x32).png';
 import paint from '../../assets/windowsIcons/680(16x16).png';
 import aim from '../../assets/windowsIcons/aim.png';
 import aimBuddyList from '../../assets/windowsIcons/aimBuddyList.png';
 import aimChat from '../../assets/windowsIcons/aimChat.png';
+import recycleBin from '../../assets/windowsIcons/recycle-bin(16x16).png';
+import recycleBinLarge from '../../assets/windowsIcons/recycle-bin.png';
 
 const randomPos = (max, min) => Math.round(Math.random() * (max - min)) + min;
 const gen = () => {
@@ -57,45 +58,36 @@ export const defaultAppState = [
 export const defaultIconState = [
   {
     id: 0,
-    icon: ie,
-    title: 'Internet Explorer',
-    component: InternetExplorer,
-    isFocus: false,
-  },
-  {
-    id: 1,
-    icon: mine,
-    title: 'Minesweeper',
-    component: Minesweeper,
-    isFocus: false,
-  },
-  {
-    id: 2,
     icon: computerLarge,
     title: 'My Computer',
     component: MyComputer,
     isFocus: false,
   },
   {
-    id: 3,
-    icon: notepadLarge,
-    title: 'Notepad',
-    component: Notepad,
+    id: 1,
+    icon: ie,
+    title: 'Internet Explorer',
+    component: InternetExplorer,
     isFocus: false,
   },
   {
-    id: 4,
-    icon: paintLarge,
-    title: 'Paint',
-    component: Paint,
-    isFocus: false,
-  },
-  {
-    id: 5,
+    id: 2,
     icon: aim,
     title: 'AOL Instant Messenger',
     component: AIMBuddyList,
     isFocus: false,
+  },
+  {
+    id: 3,
+    icon: recycleBinLarge,
+    title: 'Recycle Bin',
+    component: RecycleBin,
+    isFocus: false,
+    style: {
+      position: 'fixed',
+      bottom: '40px',
+      right: '40px',
+    }
   },
 ];
 
@@ -103,7 +95,7 @@ export const appSettings = {
   'Internet Explorer': {
     header: {
       icon: iePaper,
-      title: 'InternetExplorer',
+      title: 'Internet Explorer',
     },
     component: InternetExplorer,
     defaultSize: {
@@ -172,6 +164,25 @@ export const appSettings = {
     defaultOffset: {
       x: 260,
       y: 50,
+    },
+    resizable: true,
+    minimized: false,
+    maximized: window.innerWidth < 800,
+    multiInstance: false,
+  },
+  'Recycle Bin': {
+    header: {
+      icon: recycleBin,
+      title: 'Recycle Bin',
+    },
+    component: RecycleBin,
+    defaultSize: {
+      width: 660,
+      height: 500,
+    },
+    defaultOffset: {
+      x: 270,
+      y: 60,
     },
     resizable: true,
     minimized: false,
@@ -291,4 +302,4 @@ export const appSettings = {
   },
 };
 
-export { InternetExplorer, Minesweeper, ErrorBox, MyComputer, Notepad, AIMBuddyList, AIMChat };
+export { InternetExplorer, Minesweeper, ErrorBox, MyComputer, RecycleBin, Notepad, AIMBuddyList, AIMChat };

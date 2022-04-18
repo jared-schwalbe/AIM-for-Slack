@@ -2,7 +2,7 @@
 name: Bug report
 about: Create a report to help me fix your issue
 title: ''
-labels: ''
+labels: bug
 assignees: ''
 
 ---

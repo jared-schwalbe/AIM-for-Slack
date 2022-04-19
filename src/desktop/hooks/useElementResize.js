@@ -30,7 +30,35 @@ function useElementResize(ref, options) {
     let _boundary;
     let originMouseX;
     let originMouseY;
+    let resizeDebounce;
 
+    function onWindowResize() {
+      clearTimeout(resizeDebounce);
+      resizeDebounce = setTimeout(() => {
+        if (window.innerWidth < offset.x + size.width) {
+          if (window.innerWidth - size.width > 0) {
+            setOffset(prev => ({ ...prev, x: window.innerWidth - size.width }));
+          } else if (size.width > constraintSize.width) {
+            setOffset(prev => ({ ...prev, x: 0 }));
+            setSize(prev => ({ ...prev, width: window.innerWidth }));
+          } else {
+            setOffset(prev => ({ ...prev, x: 0 }));
+            setSize(prev => ({ ...prev, width: constraintSize.width }));
+          }
+        }
+        if (window.innerHeight - 30 < offset.y + size.height) {
+          if (window.innerHeight - 30 - size.height > 0) {
+            setOffset(prev => ({ ...prev, y: window.innerHeight - 30 - size.height }));
+          } else if (size.height > constraintSize.height) {
+            setOffset(prev => ({ ...prev, y: 0 }));
+            setSize(prev => ({ ...prev, height: window.innerHeight - 30 }));
+          } else {
+            setOffset(prev => ({ ...prev, y: 0 }));
+            setSize(prev => ({ ...prev, height: constraintSize.height }));
+          }
+        }
+      }, 250);
+    }
     function onDragging(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       const x = pageX - originMouseX + previousOffset.x;
@@ -272,8 +300,10 @@ function useElementResize(ref, options) {
       }
     }
     target.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('resize', onWindowResize);
     return () => {
       target.removeEventListener('mousedown', onMouseDown);
+      window.removeEventListener('resize', onWindowResize);
       window.removeEventListener('mousemove', onDraggingLeft);
       window.removeEventListener('mousemove', onDraggingTop);
       window.removeEventListener('mousemove', onDragging);

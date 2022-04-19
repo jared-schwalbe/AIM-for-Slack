@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import '../../../assets/sounds/error.wav';
 import error from '../../../assets/windowsIcons/897(32x32).png';
 
 function lineBreak(str) {

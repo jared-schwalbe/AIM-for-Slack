@@ -32,7 +32,6 @@ function SignIn({ onClose, dispatch }) {
       </div>
       <div className="com__sign-in__hr" />
       <div className="com__sign-in__content">
-        <div>Jared Schwalbe</div>
         <div>{stage}</div>
         <button className="com__button--focused">Cancel</button>
       </div>

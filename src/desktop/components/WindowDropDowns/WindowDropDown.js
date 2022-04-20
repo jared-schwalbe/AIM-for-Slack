@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import parse from 'html-react-parser';
 
@@ -7,11 +7,32 @@ import ieBook from '../../assets/windowsIcons/ie-book.png';
 import check from '../../assets/windowsIcons/checked.png';
 import folder from '../../assets/windowsIcons/folder.png';
 
-export function WindowDropDown({ items, position = {}, onClick }) {
+export function WindowDropDown({ items, position = {}, onClick, isSubmenu }) {
   const [option, setOption] = useState('');
+  const menuRef = useRef();
+
+  useLayoutEffect(() => {
+    const menuRect = menuRef.current?.getBoundingClientRect() ?? {};
+    if (menuRect.x < 0) {
+      menuRef.current.style.left = `${-menuRect.x}px`;
+    }
+    if (menuRect.x + menuRect.width > window.innerWidth) {
+      if (isSubmenu) {
+        const parentMenu = menuRef.current.parentElement.closest('.drop-down__menu');
+        const parentMenuRect = parentMenu.getBoundingClientRect();
+        menuRef.current.style.left = `-${menuRect.width + parentMenuRect.width - 10}px`;
+      } else {
+        menuRef.current.style.left = `-${menuRect.x + menuRect.width - window.innerWidth}px`;
+      }
+    }
+    if (menuRect.y + menuRect.height > window.innerHeight) {
+      menuRef.current.style.top = `-${menuRect.height + 20}px`;
+    }
+  });
+
   return (
     <Div {...position}>
-      <div className="drop-down__menu">
+      <div className="drop-down__menu" ref={menuRef}>
         {items.map((item, index) => {
           switch (item.type) {
             case 'item':
@@ -52,6 +73,7 @@ export function WindowDropDown({ items, position = {}, onClick }) {
                   <div style={{ position: 'relative' }}>
                     {option === item.text && (
                       <WindowDropDown
+                        isSubmenu
                         position={item.position}
                         items={item.items}
                         onClick={onClick}
@@ -151,7 +173,7 @@ const Div = styled.div`
     display: grid;
     background-color: #fff;
     position: absolute;
-    box-shadow: 2px 2px 1px rgb(100, 100, 100);
+    box-shadow: 2px 2px 2px rgb(0 0 0 / 40%);
     border: 1px solid gray;
     grid-template-columns: 16px auto auto 15px 0px;
   }

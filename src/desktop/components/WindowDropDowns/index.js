@@ -21,9 +21,9 @@ export function WindowDropDowns({
     if (!dropDown.current?.contains(e.target)) setOpenOption('');
   }
   useEffect(() => {
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('mousedown', onMouseUp);
     return () => {
-      window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('mousedown', onMouseUp);
     };
   }, []);
   return (

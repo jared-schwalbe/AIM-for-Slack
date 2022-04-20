@@ -51,7 +51,7 @@ function useElementResize(ref, options) {
             setOffset(prev => ({ ...prev, y: window.innerHeight - 30 - size.height }));
           } else if (size.height > constraintSize.height) {
             setOffset(prev => ({ ...prev, y: 0 }));
-            setSize(prev => ({ ...prev, height: window.innerHeight - 30 }));
+            setSize(prev => ({ ...prev, height: Math.max(window.innerHeight - 30, constraintSize.height) }));
           } else {
             setOffset(prev => ({ ...prev, y: 0 }));
             setSize(prev => ({ ...prev, height: constraintSize.height }));

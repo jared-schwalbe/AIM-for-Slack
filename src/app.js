@@ -6,9 +6,10 @@ import './desktop/assets/clear.css';
 import './desktop/assets/font.css';
 import WinXP from './desktop/WinXP';
 
-const div = document.createElement('div');
-div.id = 'desktop-win-xp';
-document.body.appendChild(div);
+(function() {
+  const div = document.createElement('div');
+  div.id = 'desktop-win-xp';
+  document.body.appendChild(div);
 
-ReactDOM.render(<WinXP />, document.getElementById('desktop-win-xp'));
-
+  ReactDOM.render(<WinXP />, document.getElementById('desktop-win-xp'));
+})();

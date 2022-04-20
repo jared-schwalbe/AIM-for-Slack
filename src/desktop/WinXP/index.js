@@ -226,10 +226,11 @@ function WinXP() {
   const onMouseDownIcon = useCallback(id => {
     dispatch({ type: FOCUS_ICON, payload: id });
   }, []);
-  const onDoubleClickIcon = useCallback(component => {
+  const onDoubleClickIcon = useCallback((id, component) => {
     const appSetting = Object.values(appSettings).find(
       setting => setting.component === component,
     );
+    dispatch({ type: FOCUS_ICON, payload: id });
     dispatch({ type: ADD_APP, payload: appSetting });
   }, []);
   const onMouseDownFooter = useCallback(() => {

@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 
+import shortcut from '../../assets/windowsIcons/shortcut.png';
+
 function Icons({
   icons,
   onMouseDown,
@@ -54,6 +56,7 @@ function Icon({
   id,
   component,
   measure,
+  isShortcut,
   style = {},
 }) {
   const ref = useRef(null);
@@ -61,7 +64,7 @@ function Icon({
     onMouseDown(id);
   }
   function _onDoubleClick() {
-    onDoubleClick(component);
+    onDoubleClick(id, component);
   }
   useEffect(() => {
     const target = ref.current;
@@ -81,6 +84,7 @@ function Icon({
     >
       <div className={`${className}__img__container`}>
         <img src={icon} alt={title} className={`${className}__img`} />
+        {isShortcut && <img src={shortcut} alt="" className={`${className}__shortcut`} />}
       </div>
       <div className={`${className}__text__container`}>
         <div className={`${className}__text`}>{title}</div>
@@ -91,13 +95,13 @@ function Icon({
 
 const IconsContainer = styled.div`
   position: absolute;
-  margin-top: 40px;
-  margin-left: 40px;
+  margin-top: 30px;
+  margin-left: 20px;
 `;
 
 const StyledIcon = styled(Icon)`
   width: 70px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,6 +133,7 @@ const StyledIcon = styled(Icon)`
     flex-shrink: 1;
   }
   &__img__container {
+    position: relative;
     width: 30px;
     height: 30px;
     filter: ${({ isFocus, displayFocus }) =>
@@ -139,6 +144,12 @@ const StyledIcon = styled(Icon)`
     height: 30px;
     opacity: ${({ isFocus, displayFocus }) =>
       isFocus && displayFocus ? 0.5 : 1};
+  }
+  &__shortcut {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 11px;
   }
 `;
 

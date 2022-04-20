@@ -13,7 +13,7 @@ export function WindowDropDown({ items, position = {}, onClick, isSubmenu }) {
 
   useLayoutEffect(() => {
     const menuRect = menuRef.current?.getBoundingClientRect() ?? {};
-    if (menuRect.x < 0) {
+    if (!isSubmenu && menuRect.x < 0) {
       menuRef.current.style.left = `${-menuRect.x}px`;
     }
     if (menuRect.x + menuRect.width > window.innerWidth) {
@@ -25,7 +25,7 @@ export function WindowDropDown({ items, position = {}, onClick, isSubmenu }) {
         menuRef.current.style.left = `-${menuRect.x + menuRect.width - window.innerWidth}px`;
       }
     }
-    if (menuRect.y + menuRect.height > window.innerHeight) {
+    if (!isSubmenu && menuRect.y + menuRect.height > window.innerHeight) {
       menuRef.current.style.top = `-${menuRect.height + 20}px`;
     }
   });
@@ -132,6 +132,7 @@ const Div = styled.div`
     position: relative;
     display: contents;
     &:hover > *:not(:nth-child(5)) {
+      color: black;
       background: #e99f17;
       filter: invert(100%);
     }
@@ -146,6 +147,7 @@ const Div = styled.div`
       filter: invert(100%);
     }
     & > *:not(:nth-child(5)) {
+      color: black;
       background: #e99f17;
       filter: invert(100%);
     }

@@ -73,6 +73,7 @@ export const defaultIconState = [
   {
     id: 2,
     icon: aim,
+    isShortcut: true,
     title: 'AOL Instant Messenger',
     component: AIMBuddyList,
     isFocus: false,
@@ -85,8 +86,8 @@ export const defaultIconState = [
     isFocus: false,
     style: {
       position: 'fixed',
-      bottom: '40px',
-      right: '40px',
+      bottom: '35px',
+      right: '20px',
     }
   },
 ];

@@ -14,7 +14,7 @@ function Modal(props) {
     <StyledContainer>
       <Menu {...props} />
     </StyledContainer>,
-    document.getElementById('desktop-win-xp'),
+    document.getElementById('winxp'),
   );
 }
 

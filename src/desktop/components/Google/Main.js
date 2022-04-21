@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import smile from './smile.svg';
 
 function Main({ onSearch, className }) {
   const [value, setValue] = useState('');

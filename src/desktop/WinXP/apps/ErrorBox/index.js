@@ -15,9 +15,7 @@ function Error({ onClose, message = "Something's wrong!" }) {
   useEffect(() => {
     try {
       new Audio(chrome.runtime.getURL("audio/error.wav")).play();
-    } catch (e) {
-      console.error(e);
-    }
+    } catch (e) {}
   }, []);
   return (
     <Div>

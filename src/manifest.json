@@ -15,6 +15,7 @@
     {
       "matches": ["*://app.slack.com/*"],
       "resources": [
+        "audio/startup.mp3",
         "audio/error.wav"
       ]
     }

@@ -4,12 +4,14 @@ import ReactDOM from 'react-dom';
 import './desktop/WinXP/index.css';
 import './desktop/assets/clear.css';
 import './desktop/assets/font.css';
-import WinXP from './desktop/WinXP';
+import Modal from './Modal';
 
-(function() {
-  const div = document.createElement('div');
-  div.id = 'desktop-win-xp';
-  document.body.appendChild(div);
+const div = document.createElement('div');
+div.id = 'aim-for-slack';
+document.body.appendChild(div);
 
-  ReactDOM.render(<WinXP />, document.getElementById('desktop-win-xp'));
-})();
+document.addEventListener("DOMNodeInserted", (e) => {
+  if (e.target.classList && e.target.classList.contains('p-client')) {
+    ReactDOM.render(<Modal />, document.getElementById('aim-for-slack'));
+  }
+}, true);

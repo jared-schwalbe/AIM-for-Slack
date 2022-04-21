@@ -1,4 +1,17 @@
-#desktop-win-xp {
+.aim__launcher {
+  opacity: 1;
+  margin-right: 6px;
+}
+
+.aim__launcher:active {
+  opacity: 0.8;
+}
+
+.aim__launcher:hover {
+  filter: brightness(1.15);
+}
+
+#winxp {
   background-color: white;
   height: 100%;
   width: 100%;
@@ -8,25 +21,25 @@
   z-index: 9999999;
 }
 
-#desktop-win-xp *::-webkit-scrollbar {
+#winxp *::-webkit-scrollbar {
   display: block;
 }
-#desktop-win-xp *::-webkit-scrollbar:vertical {
+#winxp *::-webkit-scrollbar:vertical {
   width: 16px;
 }
-#desktop-win-xp *::-webkit-scrollbar:horizontal {
+#winxp *::-webkit-scrollbar:horizontal {
   height: 16px;
 }
-#desktop-win-xp *::-webkit-scrollbar-corner {
+#winxp *::-webkit-scrollbar-corner {
   background: #dfdfdf;
 }
-#desktop-win-xp *::-webkit-scrollbar-track:vertical {
+#winxp *::-webkit-scrollbar-track:vertical {
   background-image: url("../assets/scroll/scroll-background.svg");
 }
-#desktop-win-xp *::-webkit-scrollbar-track:horizontal {
+#winxp *::-webkit-scrollbar-track:horizontal {
   background-image: url("../assets/scroll/scroll-background-horizontal.svg");
 }
-#desktop-win-xp *::-webkit-scrollbar-thumb {
+#winxp *::-webkit-scrollbar-thumb {
   background-position: center;
   background-repeat: no-repeat;
   background-color: #c8d6fb;
@@ -37,31 +50,31 @@
   border-radius: 2px;
   box-shadow: inset 0 0 0 1px white, inset -3px 0 #bad1fc, inset 1px 1px #b7caf5;
 }
-#desktop-win-xp *::-webkit-scrollbar-button:horizontal:start:decrement,
-#desktop-win-xp *::-webkit-scrollbar-button:horizontal:end:increment,
-#desktop-win-xp *::-webkit-scrollbar-button:vertical:start:decrement,
-#desktop-win-xp *::-webkit-scrollbar-button:vertical:end:increment {
+#winxp *::-webkit-scrollbar-button:horizontal:start:decrement,
+#winxp *::-webkit-scrollbar-button:horizontal:end:increment,
+#winxp *::-webkit-scrollbar-button:vertical:start:decrement,
+#winxp *::-webkit-scrollbar-button:vertical:end:increment {
     display: block;
 }
-#desktop-win-xp *::-webkit-scrollbar-thumb:vertical {
+#winxp *::-webkit-scrollbar-thumb:vertical {
   background-image: url("../assets/scroll/scroll-thumb.svg");
 }
-#desktop-win-xp *::-webkit-scrollbar-button:vertical:start {
+#winxp *::-webkit-scrollbar-button:vertical:start {
   height: 16px;
   background-image: url("../assets/scroll/scroll-arrow-up.svg");
 }
-#desktop-win-xp *::-webkit-scrollbar-button:vertical:end {
+#winxp *::-webkit-scrollbar-button:vertical:end {
   height: 16px;
   background-image: url("../assets/scroll/scroll-arrow-down.svg");
 }
-#desktop-win-xp *::-webkit-scrollbar-thumb:horizontal {
+#winxp *::-webkit-scrollbar-thumb:horizontal {
   background-image: url("../assets/scroll/scroll-thumb-horizontal.svg");
 }
-#desktop-win-xp *::-webkit-scrollbar-button:horizontal:start {
+#winxp *::-webkit-scrollbar-button:horizontal:start {
   width: 16px;
   background-image: url("../assets/scroll/scroll-arrow-left.svg");
 }
-#desktop-win-xp *::-webkit-scrollbar-button:horizontal:end {
+#winxp *::-webkit-scrollbar-button:horizontal:end {
   width: 16px;
   background-image: url("../assets/scroll/scroll-arrow-right.svg");
 }

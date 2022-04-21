@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useCallback, useMemo } from 'react';
+import React, { useReducer, useRef, useCallback, useMemo, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import useMouse from 'react-use/lib/useMouse';
 
@@ -175,7 +175,7 @@ const reducer = (state, action = { type: '' }) => {
       return state;
   }
 };
-function WinXP() {
+function WinXP({ onClose }) {
   const [state, dispatch] = useReducer(reducer, initState);
   const ref = useRef(null);
   const mouse = useMouse(ref);
@@ -281,18 +281,22 @@ function WinXP() {
     dispatch({ type: SELECT_ICONS, payload: iconIds });
   }, []);
   const onClickModalButton = useCallback(text => {
-    dispatch({ type: CANCEL_POWER_OFF });
-    dispatch({
-      type: ADD_APP,
-      payload: appSettings.Error,
-    });
+    onClose();
   }, []);
   const onModalClose = useCallback(() => {
     dispatch({ type: CANCEL_POWER_OFF });
   }, []);
+  useEffect(() => {
+    try {
+      new Audio(chrome.runtime.getURL("audio/startup.mp3")).play();
+    } catch (e) {
+      console.warn(e);
+    }
+  }, []);
   return (
     <Container
       ref={ref}
+      id="winxp"
       onMouseUp={onMouseUpDesktop}
       onMouseDown={onMouseDownDesktop}
       state={state.powerState}

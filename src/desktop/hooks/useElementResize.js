@@ -354,6 +354,7 @@ function useCursor(ref, threshold, resizable) {
       setPosition(p);
       target.style.cursor = getCursorStyle(p);
       cover.style.cursor = getCursorStyle(p);
+      document.body.style.cursor = getCursorStyle(p);
     }
     function onMouseDown(e) {
       if (e.which !== 1) return;
@@ -367,6 +368,7 @@ function useCursor(ref, threshold, resizable) {
     function onMouseUp(e) {
       lock = false;
       cover.remove();
+      document.body.style.cursor = getCursorStyle(position);
       window.removeEventListener('mouseup', onMouseUp);
     }
     function onHoverEnd(e) {

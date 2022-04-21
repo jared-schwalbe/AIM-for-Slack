@@ -53,7 +53,7 @@ function Modal({ className }) {
               <label className="c-label c-label--inline c-label--pointer">
                 <span className="c-label__text">Ask me every time</span>
                 <span className="c-label__children">
-                  <input name="aim_ask_everytime" type="checkbox" className="c-input_checkbox" checked="true" onChange={() => {}} />
+                  <input name="aim_ask_everytime" type="checkbox" className="c-input_checkbox" checked={true} onChange={() => {}} />
                 </span>
               </label>
             </div>

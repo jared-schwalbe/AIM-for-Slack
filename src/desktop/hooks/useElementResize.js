@@ -1,5 +1,11 @@
 import { useEffect, useState } from 'react';
 
+import nsResize from '../assets/cursors/ns-resize.png';
+import ewResize from '../assets/cursors/ew-resize.png';
+import nwseResize from '../assets/cursors/nwse-resize.png';
+import neswResize from '../assets/cursors/nesw-resize.png';
+import defaultCursor from '../assets/cursors/default.png';
+
 function useElementResize(ref, options) {
   const {
     defaultOffset,
@@ -423,23 +429,23 @@ function getComputedPagePosition(e, boundary) {
 function getCursorStyle(pos) {
   switch (pos) {
     case 'top':
-      return 'n-resize';
+      return `url(${nsResize}) 11 11, ns-resize`;
     case 'topRight':
-      return 'ne-resize';
+      return `url(${neswResize}) 11 11, nesw-resize`;
     case 'right':
-      return 'e-resize';
+      return `url(${ewResize}) 11 11, ew-resize`;
     case 'bottomRight':
-      return 'se-resize';
+      return `url(${nwseResize}) 11 11, nwse-resize`;
     case 'bottom':
-      return 's-resize';
+      return `url(${nsResize}) 11 11, ns-resize`;
     case 'bottomLeft':
-      return 'sw-resize';
+      return `url(${neswResize}) 11 11, nesw-resize`;
     case 'left':
-      return 'w-resize';
+      return `url(${ewResize}) 11 11, ew-resize`;
     case 'topLeft':
-      return 'nw-resize';
+      return `url(${nwseResize}) 11 11, nwse-resize`;
     default:
-      return 'auto';
+      return `url(${defaultCursor}) 11 11, default`;
   }
 }
 export default useElementResize;

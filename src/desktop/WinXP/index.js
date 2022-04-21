@@ -1,7 +1,9 @@
-import React, { useReducer, useRef, useCallback, useMemo, useEffect } from 'react';
+import React, { useReducer, useRef, useCallback, useMemo, useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import useMouse from 'react-use/lib/useMouse';
 
+import defaultCursor from '../assets/cursors/default.png';
+import progressCursor from '../assets/cursors/progress.png';
 import background from '../assets/xp-background.jpeg';
 
 import {
@@ -177,6 +179,7 @@ const reducer = (state, action = { type: '' }) => {
 };
 function WinXP({ onClose }) {
   const [state, dispatch] = useReducer(reducer, initState);
+  const [loading, setLoading] = useState(true);
   const ref = useRef(null);
   const mouse = useMouse(ref);
   const focusedAppId = useMemo(() => {
@@ -207,11 +210,12 @@ function WinXP({ onClose }) {
   );
   const onCloseApp = useCallback(
     id => {
-      if (focusedAppId === id) {
+      // if (focusedAppId === id) {
         dispatch({ type: DEL_APP, payload: id });
-      }
+      // }
     },
-    [focusedAppId],
+    [],
+    // [focusedAppId],
   );
   const onMouseDownFooterApp = useCallback(
     id => {
@@ -282,16 +286,26 @@ function WinXP({ onClose }) {
   }, []);
   const onClickModalButton = useCallback(text => {
     onClose();
-  }, []);
+  }, [onClose]);
   const onModalClose = useCallback(() => {
     dispatch({ type: CANCEL_POWER_OFF });
   }, []);
   useEffect(() => {
     try {
       new Audio(chrome.runtime.getURL("audio/startup.mp3")).play();
-    } catch (e) {
-      console.warn(e);
-    }
+    } catch (e) {}
+  }, []);
+  useEffect(() => {
+    document.body.style.cursor = `url(${progressCursor}) 11 11, auto`;
+    let t1 = setTimeout(() => {
+      document.body.style.cursor = `url(${defaultCursor}) 11 11, auto`;
+    }, 2000);
+    let t2 = setTimeout(() => {
+      setLoading(false);
+      if (state.apps.length) {
+        onFocusApp(state.apps[0].id);
+      }
+    }, 2100);
   }, []);
   return (
     <Container
@@ -312,15 +326,17 @@ function WinXP({ onClose }) {
         setSelectedIcons={onIconsSelected}
       />
       <DashedBox startPos={state.selecting} mouse={mouse} />
-      <Windows
-        apps={state.apps}
-        dispatch={dispatch}
-        onMouseDown={onFocusApp}
-        onClose={onCloseApp}
-        onMinimize={onMinimizeWindow}
-        onMaximize={onMaximizeWindow}
-        focusedAppId={focusedAppId}
-      />
+      {!loading && (
+        <Windows
+          apps={state.apps}
+          dispatch={dispatch}
+          onMouseDown={onFocusApp}
+          onClose={onCloseApp}
+          onMinimize={onMinimizeWindow}
+          onMaximize={onMaximizeWindow}
+          focusedAppId={focusedAppId}
+        />
+      )}
       <Footer
         apps={state.apps}
         onMouseDownApp={onMouseDownFooterApp}

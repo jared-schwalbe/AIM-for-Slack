@@ -24,6 +24,7 @@ import pullup from '../../../assets/windowsIcons/pullup.png';
 import logo from '../../../assets/github-logo.png';
 import mine from '../../../assets/minesweeper/mine-icon.png';
 import windows from '../../../assets/windowsIcons/windows.png';
+import pointer from '../../../assets/cursors/pointer.png';
 
 function MyComputer({ onClose }) {
   function onClickOptionItem(item) {
@@ -544,7 +545,7 @@ const Div = styled.div`
     height: 23px;
     padding-left: 11px;
     padding-right: 2px;
-    cursor: pointer;
+    cursor: url${pointer} 11 11, pointer;
     background: linear-gradient(
       to right,
       rgb(240, 240, 255) 0,
@@ -604,7 +605,7 @@ const Div = styled.div`
     }
 
     &.link:hover {
-      cursor: pointer;
+      cursor: url${pointer} 11 11, pointer;
       color: #2b72ff;
       text-decoration: underline;
     }

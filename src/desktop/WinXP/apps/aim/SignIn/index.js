@@ -4,25 +4,32 @@ import styled from 'styled-components';
 import { ADD_APP } from '../../../constants/actions';
 import { appSettings } from '../../';
 
+import defaultCursor from '../../../../assets/cursors/default.png';
 import signInImage from '../../../../assets/aim/signInImage.png';
 
 function SignIn({ onClose, dispatch }) {
   const [stage, setStage] = useState('1. Connecting ...');
 
+  const profileEl = document.querySelector('.p-ia__nav__user__button');
+  const username = profileEl && profileEl.getAttribute('aria-label').replace('User menu: ', '');
+
   useEffect(() => {
-    setTimeout(() => {
+    let s2 = setTimeout(() => {
       setStage('2. Verifying name and password ...');
-    }, 2000);
-    setTimeout(() => {
+    }, 1800);
+    let s3 = setTimeout(() => {
       setStage('3. Starting services ...');
-    }, 4000);
-    setTimeout(() => {
+    }, 2500);
+    let s4 = setTimeout(() => {
       dispatch({
         type: ADD_APP,
         payload: appSettings.AIMBuddyList,
       });
+      try {
+        new Audio(chrome.runtime.getURL("audio/door-open.mp3")).play();
+      } catch (e) {}
       onClose();
-    }, 5000);
+    }, 2900);
   }, []);
 
   return (
@@ -32,6 +39,7 @@ function SignIn({ onClose, dispatch }) {
       </div>
       <div className="com__sign-in__hr" />
       <div className="com__sign-in__content">
+        <div>{username}</div>
         <div>{stage}</div>
         <button className="com__button--focused">Cancel</button>
       </div>
@@ -110,7 +118,7 @@ const Div = styled.div`
     display: inline-block;
     text-align: center;
     align-items: flex-start;
-    cursor: default;
+    cursor: url(${defaultCursor}) 11 11, default;
     appearance: auto;
     writing-mode: horizontal-tb !important;
     font-style: ;

@@ -12,6 +12,7 @@ import background from '../../../../assets/aim/background.png';
 import actions_top from '../../../../assets/aim/actions_top_sharp.png';
 import actions_bottom from '../../../../assets/aim/actions_bottom_sharp.png';
 import ticker from '../../../../assets/aim/ticker_sharp.png';
+import pointer from '../../../../assets/cursors/pointer.png';
 
 function BuddyList({ onClose, isFocus, dispatch }) {
   const [, rerender] = useState(Date.now());
@@ -210,6 +211,9 @@ const Div = styled.div`
     justify-content: center;
     background-color: #fbfeea;
     width: 100%;
+  }
+  .com__banner a {
+    cursor: url(${pointer}) 11 11, pointer;
   }
   .com__banner__image {
     margin-top: 4px;

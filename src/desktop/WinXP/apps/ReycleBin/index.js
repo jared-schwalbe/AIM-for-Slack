@@ -18,6 +18,7 @@ import folderOpen from '../../../assets/windowsIcons/337(32x32).png';
 import dropdown from '../../../assets/windowsIcons/dropdown.png';
 import pullup from '../../../assets/windowsIcons/pullup.png';
 import windows from '../../../assets/windowsIcons/windows.png';
+import pointer from '../../../assets/cursors/pointer.png';
 
 function RecycleBin({ onClose }) {
   function onClickOptionItem(item) {
@@ -426,7 +427,7 @@ const Div = styled.div`
     height: 23px;
     padding-left: 11px;
     padding-right: 2px;
-    cursor: pointer;
+    cursor: url${pointer} 11 11, pointer;
     background: linear-gradient(
       to right,
       rgb(240, 240, 255) 0,
@@ -486,7 +487,7 @@ const Div = styled.div`
     }
 
     &.link:hover {
-      cursor: pointer;
+      cursor: url${pointer} 11 11, pointer;
       color: #2b72ff;
       text-decoration: underline;
     }

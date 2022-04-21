@@ -53,7 +53,7 @@ function Modal({ className }) {
               <label className="c-label c-label--inline c-label--pointer">
                 <span className="c-label__text">Ask me every time</span>
                 <span className="c-label__children">
-                  <input name="aim_ask_everytime" type="checkbox" className="c-input_checkbox" checked />
+                  <input name="aim_ask_everytime" type="checkbox" className="c-input_checkbox" checked="true" onChange={() => {}} />
                 </span>
               </label>
             </div>
@@ -108,6 +108,7 @@ export default styled(Modal)`
   .aim__modal__item.aim:hover {
     background: url(${aimPreview}), linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45));
     background-blend-mode: overlay;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
     cursor: pointer;
   }
   .aim__modal__item.aim:hover::before {
@@ -119,6 +120,7 @@ export default styled(Modal)`
   .aim__modal__item.slack:hover {
     background: url(${slackPreview}), linear-gradient(rgba(0,0,0,0.45),rgba(0,0,0,0.45));
     background-blend-mode: overlay;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
     cursor: pointer;
   }
   .aim__modal__item.slack:hover::before {

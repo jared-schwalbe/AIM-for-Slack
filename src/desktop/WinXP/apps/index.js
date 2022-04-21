@@ -75,7 +75,7 @@ export const defaultIconState = [
     icon: aim,
     isShortcut: true,
     title: 'AOL Instant Messenger',
-    component: AIMBuddyList,
+    getComponent: () => window.aimForSlack.signedIn ? AIMBuddyList : AIMSignIn,
     isFocus: false,
   },
   {

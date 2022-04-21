@@ -110,11 +110,13 @@ const Window = memo(function({
     >
       <div className="header__bg" />
       <header className="app__header" ref={dragRef}>
-        <img
-          src={header.icon}
-          alt={header.title}
-          className="app__header__icon"
-        />
+        {header.icon && (
+          <img
+            src={header.icon}
+            alt={header.title}
+            className="app__header__icon"
+          />
+        )}
         <div className="app__header__title">{props?.headerTitle ?? header.title}</div>
         <HeaderButtons
           buttons={header.buttons}
@@ -206,11 +208,11 @@ const StyledWindow = styled(Window)`
     width: 15px;
     height: 15px;
     margin-left: 1px;
-    margin-right: 5px;
   }
   .app__header__title {
     flex: 1;
     pointer-events: none;
+    margin-left: 5px;
     padding-right: 5px;
     letter-spacing: 0.5px;
     overflow: hidden;

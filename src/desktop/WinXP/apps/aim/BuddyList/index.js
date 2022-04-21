@@ -43,6 +43,13 @@ function BuddyList({ onClose, isFocus, dispatch }) {
 
   function onClickOptionItem(item) {
     switch (item) {
+      case 'Sign Off':
+        try {
+          new Audio(chrome.runtime.getURL("audio/door-close.mp3")).play();
+        } catch (e) {}
+        window.aimForSlack.signedIn = false;
+        onClose();
+        break;
       case 'Report a Bug':
         window.open('https://github.com/jared-schwalbe/AIM-for-Slack/issues/new?assignees=&labels=bug&template=bug_report.md&title=', '_blank');
         break;

@@ -55,6 +55,7 @@ function Icon({
   className,
   id,
   component,
+  getComponent,
   measure,
   isShortcut,
   style = {},
@@ -64,7 +65,7 @@ function Icon({
     onMouseDown(id);
   }
   function _onDoubleClick() {
-    onDoubleClick(id, component);
+    onDoubleClick(id, component ?? getComponent());
   }
   useEffect(() => {
     const target = ref.current;

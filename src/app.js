@@ -6,6 +6,10 @@ import './desktop/assets/clear.css';
 import './desktop/assets/font.css';
 import Modal from './Modal';
 
+window.aimForSlack = {
+  signedIn: false,
+};
+
 const div = document.createElement('div');
 div.id = 'aim-for-slack';
 document.body.appendChild(div);

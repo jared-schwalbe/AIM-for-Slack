@@ -28,6 +28,7 @@ function SignIn({ onClose, dispatch }) {
       try {
         new Audio(chrome.runtime.getURL("audio/door-open.mp3")).play();
       } catch (e) {}
+      window.aimForSlack.signedIn = true;
       onClose();
     }, 2900);
   }, []);

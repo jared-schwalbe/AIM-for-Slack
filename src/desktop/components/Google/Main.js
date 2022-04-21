@@ -85,7 +85,7 @@ export default styled(Main)`
     color: rgb(80, 80, 80);
     * {
       padding-right: 15px;
-      cursor: url${pointer} 11 11, pointer;
+      cursor: url(${pointer}) 11 11, pointer;
     }
     .text:hover {
       text-decoration: underline;
@@ -133,7 +133,7 @@ export default styled(Main)`
         width: 40px;
         padding: 0 8px;
         height: 44px;
-        cursor: url${pointer} 11 11, pointer;
+        cursor: url(${pointer}) 11 11, pointer;
         display: flex;
         align-items: center;
         img {
@@ -193,7 +193,7 @@ export default styled(Main)`
       font-size: 13px;
       width: 100%;
       .item {
-        cursor: url${pointer} 11 11, pointer;
+        cursor: url(${pointer}) 11 11, pointer;
       }
       .item:hover {
         text-decoration: underline;

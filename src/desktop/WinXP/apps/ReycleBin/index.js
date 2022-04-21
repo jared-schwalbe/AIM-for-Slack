@@ -427,7 +427,7 @@ const Div = styled.div`
     height: 23px;
     padding-left: 11px;
     padding-right: 2px;
-    cursor: url${pointer} 11 11, pointer;
+    cursor: url(${pointer}) 11 11, pointer;
     background: linear-gradient(
       to right,
       rgb(240, 240, 255) 0,
@@ -487,7 +487,7 @@ const Div = styled.div`
     }
 
     &.link:hover {
-      cursor: url${pointer} 11 11, pointer;
+      cursor: url(${pointer}) 11 11, pointer;
       color: #2b72ff;
       text-decoration: underline;
     }

@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'; 
+import ReactDOM from 'react-dom'; 
 
-import './desktop/WinXP/index.css';
-import './desktop/assets/clear.css';
-import './desktop/assets/font.css';
-import Modal from './Modal';
+import './desktop/WinXP/index.css'; 
+import './desktop/assets/clear.css'; 
+import './desktop/assets/font.css'; 
+import Container from './Container';
 
 window.aimForSlack = {
   signedIn: false,
@@ -14,8 +14,18 @@ const div = document.createElement('div');
 div.id = 'aim-for-slack';
 document.body.appendChild(div);
 
-document.addEventListener("DOMNodeInserted", (e) => {
-  if (e.target.classList && e.target.classList.contains('p-client')) {
-    ReactDOM.render(<Modal />, document.getElementById('aim-for-slack'));
+// chrome.storage.sync.clear();
+chrome.storage.sync.get(['view'], function(result) {
+  if (result.view !== 'aim') {
+    document.body.style.visibility = 'visible';
   }
-}, true);
+  if (!result.view) {
+    document.addEventListener("DOMNodeInserted", (e) => {
+      if (e.target.classList && e.target.classList.contains('p-client')) {
+        ReactDOM.render(<Container initialView={result.view} />, document.getElementById('aim-for-slack'));
+      }
+    }, true);
+  } else {
+    ReactDOM.render(<Container initialView={result.view} />, document.getElementById('aim-for-slack'));
+  }
+});

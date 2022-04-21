@@ -291,21 +291,19 @@ function WinXP({ onClose }) {
     dispatch({ type: CANCEL_POWER_OFF });
   }, []);
   useEffect(() => {
-    try {
-      new Audio(chrome.runtime.getURL("audio/startup.mp3")).play();
-    } catch (e) {}
+    new Audio(chrome.runtime.getURL("audio/startup.mp3")).play().catch(() => {});
   }, []);
   useEffect(() => {
     document.body.style.cursor = `url(${progressCursor}) 11 11, auto`;
     let t1 = setTimeout(() => {
       document.body.style.cursor = `url(${defaultCursor}) 11 11, auto`;
-    }, 2000);
+    }, 1500);
     let t2 = setTimeout(() => {
       setLoading(false);
       if (state.apps.length) {
         onFocusApp(state.apps[0].id);
       }
-    }, 2100);
+    }, 1800);
   }, []);
   return (
     <Container

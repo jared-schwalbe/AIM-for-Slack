@@ -25,9 +25,7 @@ function SignIn({ onClose, dispatch }) {
         type: ADD_APP,
         payload: appSettings.AIMBuddyList,
       });
-      try {
-        new Audio(chrome.runtime.getURL("audio/door-open.mp3")).play();
-      } catch (e) {}
+      new Audio(chrome.runtime.getURL("audio/door-open.mp3")).play().catch(() => {});
       window.aimForSlack.signedIn = true;
       onClose();
     }, 2900);

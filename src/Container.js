@@ -6,8 +6,22 @@ import aimPreview from './aim-preview.png';
 import aimIcon from './desktop/assets/windowsIcons/aim.png';
 import WinXP from './desktop/WinXP';
 
-function Modal({ className }) {
-  const [view, setView] = useState();
+function Container({ className, initialView }) {
+  const [view, setView] = useState(initialView);
+  const [ask, setAsk] = useState(!initialView);
+
+  useEffect(() => {
+    if (!ask) {
+      chrome.storage.sync.set({ view });
+    }
+    if (view !== 'aim') {
+      document.body.style.cursor = 'auto';
+    }
+  }, [view, ask]);
+
+  useEffect(() => {
+    document.body.style.visibility = 'visible';
+  }, []);
 
   useEffect(() => {
     const div = document.createElement('div');
@@ -22,7 +36,18 @@ function Modal({ className }) {
     img.height = "18";
     button.append(img);
     div.append(button);
-    document.querySelector('.p-top_nav__right').prepend(div);
+    const navRight = document.querySelector('.p-top_nav__right');
+    if (navRight) {
+      navRight.prepend(div);
+    } else {
+      const onNodeInserted = (e) => {
+        if (e.target.classList && e.target.classList.contains('p-client')) {
+          document.querySelector('.p-top_nav__right').prepend(div);
+          document.removeEventListener("DOMNodeInserted", onNodeInserted, true);
+        }
+      }
+      document.addEventListener("DOMNodeInserted", onNodeInserted, true);
+    }
   }, []);
 
   if (view === 'slack') {
@@ -53,7 +78,7 @@ function Modal({ className }) {
               <label className="c-label c-label--inline c-label--pointer">
                 <span className="c-label__text">Ask me every time</span>
                 <span className="c-label__children">
-                  <input name="aim_ask_everytime" type="checkbox" className="c-input_checkbox" checked={true} onChange={() => {}} />
+                  <input name="aim_ask_everytime" type="checkbox" className="c-input_checkbox" checked={ask} onChange={e => setAsk(e.target.checked)} />
                 </span>
               </label>
             </div>
@@ -71,7 +96,7 @@ function Modal({ className }) {
   );
 }
 
-export default styled(Modal)`
+export default styled(Container)`
   h4 {
     color: #454545;
   }

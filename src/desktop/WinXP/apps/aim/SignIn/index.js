@@ -14,13 +14,13 @@ function SignIn({ onClose, dispatch }) {
   const username = profileEl && profileEl.getAttribute('aria-label').replace('User menu: ', '');
 
   useEffect(() => {
-    let s2 = setTimeout(() => {
+    const t1 = setTimeout(() => {
       setStage('2. Verifying name and password ...');
     }, 1800);
-    let s3 = setTimeout(() => {
+    const t2 = setTimeout(() => {
       setStage('3. Starting services ...');
     }, 2500);
-    let s4 = setTimeout(() => {
+    const t3 = setTimeout(() => {
       dispatch({
         type: ADD_APP,
         payload: appSettings.AIMBuddyList,
@@ -29,7 +29,13 @@ function SignIn({ onClose, dispatch }) {
       window.aimForSlack.signedIn = true;
       onClose();
     }, 2900);
-  }, []);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Div>

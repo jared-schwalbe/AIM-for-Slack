@@ -295,16 +295,47 @@ function WinXP({ onClose }) {
   }, []);
   useEffect(() => {
     document.body.style.cursor = `url(${progressCursor}) 11 11, auto`;
-    let t1 = setTimeout(() => {
+  
+    let t1;
+    let t2;
+    let loaded = false;
+    let timeElapsed = false;
+
+    const setup = () => {
       document.body.style.cursor = `url(${defaultCursor}) 11 11, auto`;
-    }, 1500);
-    let t2 = setTimeout(() => {
-      setLoading(false);
-      if (state.apps.length) {
-        onFocusApp(state.apps[0].id);
+      t2 = setTimeout(() => {
+        setLoading(false);
+        if (state.apps.length) {
+          onFocusApp(state.apps[0].id);
+        }
+      }, 100);
+    };
+  
+    t1 = setTimeout(() => {
+      timeElapsed = true;
+      if (loaded) {
+        setup();
       }
-    }, 1800);
-  }, []);
+    }, 1400);
+  
+    if (!document.querySelector('.p-client')) {
+      document.addEventListener("DOMNodeInserted", (e) => {
+        if (e.target.classList && e.target.classList.contains('p-client')) {
+          loaded = true;
+          if (timeElapsed) {
+            setup();
+          }
+        }
+      }, true);
+    } else {
+      loaded = true;
+    }
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Container
       ref={ref}

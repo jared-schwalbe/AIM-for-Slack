@@ -38,8 +38,9 @@ function BuddyList({ onClose, isFocus, dispatch }) {
         title: `${c.name} - Instant Message`,
       },
       props: {
-        channel: c.name,
-        sidebarElement: c.element,
+        channelName: c.name,
+        sidebarItem: c.sidebarItem,
+        sidebarGroup: c.sidebarGroup,
       }
     },
   });
@@ -64,6 +65,7 @@ function BuddyList({ onClose, isFocus, dispatch }) {
     Array.from(items).forEach(item => {
       if (item.id && item.id.includes('sectionHeading')) {
         groups.push({
+          sidebarGroup: item,
           element: item.querySelector('.p-channel_sidebar__section_heading_label_overflow'),
           title: item.getAttribute('aria-label'),
           expanded: item.getAttribute('aria-expanded') === 'true',
@@ -73,6 +75,8 @@ function BuddyList({ onClose, isFocus, dispatch }) {
         const nameEl = item.querySelector('.p-channel_sidebar__name');
         groups[groups.length - 1].children.push({
           element: item.querySelector('.p-channel_sidebar__channel'),
+          sidebarItem: item,
+          sidebarGroup: groups[groups.length - 1].sidebarGroup,
           name: nameEl ? nameEl.textContent : '',
         });
       }

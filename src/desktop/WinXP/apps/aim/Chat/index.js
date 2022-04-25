@@ -13,7 +13,7 @@ import get_info from '../../../../assets/aim/get_info.png';
 import send_disabled from '../../../../assets/aim/send_disabled.png';
 import send_enabled from '../../../../assets/aim/send_enabled.png';
 
-function Chat({ onClose, isFocus, sidebarElement, channel }) {
+function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
   const sidebarListRef = useRef();
   const [draft, setDraft] = useState('');
 
@@ -66,10 +66,34 @@ function Chat({ onClose, isFocus, sidebarElement, channel }) {
   useEffect(() => {
     if (isFocus) {
       setTimeout(() => {
-        if (sidebarElement.className.includes('close_container')) {
-          sidebarElement.firstChild.click();
+        // CLICK ON THE CHANNEL
+        // IF IT'S NOT VISIBLE THEN EXPAND THE GROUP, CLICK IT, AND COLLAPSE THE GROUP
+        if (sidebarGroup.getAttribute('aria-expanded') === 'true') {
+          sidebarItem.querySelector('.p-channel_sidebar__channel').click();
         } else {
-          sidebarElement.click();
+          const callback = function (mutationsList, observer) {
+            for (const mutation of mutationsList) {
+              if (mutation.addedNodes?.[0]?.classList?.contains('p-channel_sidebar__static_list__item')) {
+                const channel = mutation.addedNodes[0].querySelector('.p-channel_sidebar__name');
+                if (channel.textContent === channelName) {
+                  mutation.addedNodes[0].querySelector('.p-channel_sidebar__channel').click();
+                  break;
+                }
+              }
+            }
+            sidebarGroup.querySelector('.p-channel_sidebar__section_heading_label_overflow').click();
+            observer.disconnect();
+          }
+
+          const groupUnreadsObserver = new MutationObserver(callback);
+
+          const sidebarList = document.querySelector('.c-virtual_list__scroll_container');
+          groupUnreadsObserver.observe(sidebarList, {
+            childList: true,
+            subtree: true,
+          });
+
+          sidebarGroup.querySelector('.p-channel_sidebar__section_heading_label_overflow').click();
         }
 
         const list = sidebarListRef.current;
@@ -109,7 +133,7 @@ function Chat({ onClose, isFocus, sidebarElement, channel }) {
       clone.querySelector('.c-scrollbar__hider').scrollTo(0, scrollTop);
       clone.style['pointer-events'] = 'none';
     }
-  }, [isFocus, sidebarElement, username]);
+  }, [isFocus, sidebarItem, sidebarGroup, username]);
 
   useEffect(() => {
     const list = sidebarListRef.current;
@@ -139,7 +163,7 @@ function Chat({ onClose, isFocus, sidebarElement, channel }) {
             onClickItem={onClickOptionItem}
           />
           <div className="com__warning-level">
-            {`${channel}'s Warning Level: 0%`}
+            {`${channelName}'s Warning Level: 0%`}
           </div>
         </div>
       </section>

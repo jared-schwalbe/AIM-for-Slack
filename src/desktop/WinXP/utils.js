@@ -1,10 +1,16 @@
-function checkCollapsedGroupUnreads(toggleGroupExpanded, addUnread) {
-  let checkingItems = false;
-
+function createGroupUnreadsObserver(addUnread) {
   const callback = function (mutationsList, observer) {
+    const clicked = {};
     for (const mutation of mutationsList) {
       if (mutation.addedNodes?.[0]?.classList?.contains('p-channel_sidebar__static_list__item')) {
-        checkingItems = true;
+        let group = mutation.previousSibling;
+        while (group && !group.id.includes('sectionHeading')) {
+          group = group.previousSibling;
+        }
+        if (group && group.id.includes('sectionHeading') && !clicked[group.id]) {
+          clicked[group.id] = true;
+          group.querySelector('.p-channel_sidebar__section_heading_label_overflow').click();
+        }
         const channel = mutation.addedNodes[0].querySelector('.p-channel_sidebar__name');
         const badge = mutation.addedNodes[0].querySelector('.c-mention_badge');
         if (channel && badge) {
@@ -12,14 +18,17 @@ function checkCollapsedGroupUnreads(toggleGroupExpanded, addUnread) {
         }
       }
     }
-    if (checkingItems) {
-      checkingItems = false;
-      toggleGroupExpanded();
-      observer.disconnect();
-    }
+    observer.disconnect();
   }
 
-  const groupUnreadsObserver = new MutationObserver(callback);
+  return new MutationObserver(callback);
+}
+
+export function getUnreads() {
+  const unreads = {};
+  const addUnread = (channel, count) => unreads[channel] = count;
+
+  const groupUnreadsObserver = createGroupUnreadsObserver(addUnread);
 
   const sidebarList = document.querySelector('.c-virtual_list__scroll_container');
   groupUnreadsObserver.observe(sidebarList, {
@@ -27,15 +36,9 @@ function checkCollapsedGroupUnreads(toggleGroupExpanded, addUnread) {
     subtree: true,
   });
 
-  toggleGroupExpanded();
-}
-
-export function getUnreads() {
-  const unreads = {};
-  const addUnread = (channel, count) => unreads[channel] = count;
-
   const sidebarItems = document.querySelectorAll('.p-channel_sidebar__static_list__item');
 
+  let collpasedCount = 0;
   Array.from(sidebarItems).forEach(item => {
     if (item.querySelector('.p-channel_sidebar__channel')) {
       // channels: check unread badge
@@ -46,13 +49,14 @@ export function getUnreads() {
       }
     } else if (item.id && item.id.includes('sectionHeading') && item.getAttribute('aria-expanded') === 'false') {
       // collapsed groups: expand, check unread badges, collapse
-      const heading = item.querySelector('.p-channel_sidebar__section_heading_label_overflow');
-      const toggleGroupExpanded = () => heading.click();
-      checkCollapsedGroupUnreads(toggleGroupExpanded, addUnread);
+      collpasedCount++;
+      item.querySelector('.p-channel_sidebar__section_heading_label_overflow').click();
     }
   });
 
-  console.warn('unreads: ', unreads);
+  if (!collpasedCount) {
+    groupUnreadsObserver.disconnect();
+  }
 
   return unreads;
 }
@@ -78,12 +82,15 @@ export function createNewMessageObserver(unreads, dispatchNewMessage) {
         if (channel) {
           if (mutation.addedNodes.length) {
             unreads[channel.textContent] = 1;
-            console.warn('new message! 1');
+            const sidebarItem = mutation.addedNodes[0].closest('.p-channel_sidebar__static_list__item');
+            let sidebarGroup = mutation.addedNodes[0].closest('.p-channel_sidebar__static_list__item');
+            while (sidebarGroup && !sidebarGroup.id?.includes('sectionHeading')) {
+              sidebarGroup = sidebarGroup.previousSibling;
+            }
             dispatchNewMessage({
-              // TODO: the sidebarElement may not exist in rare cases...
-              // like if this window is open but not focused and then the group gets collapsed
-              channel: channel.textContent,
-              sidebarElement: mutation.target,
+              channelName: channel.textContent,
+              sidebarItem,
+              sidebarGroup,
             });
           } else {
             delete unreads[channel.textContent];
@@ -101,7 +108,7 @@ export function createNewMessageObserver(unreads, dispatchNewMessage) {
         || (mutation.type === 'characterData'
           && mutation.target.parentElement.classList.contains('p-channel_sidebar__badge'))
       ) {
-        groupToWatch = mutation.target.parentElement.closest('.c-virtual_list__item').querySelector('.p-channel_sidebar__section_heading_label_overflow');
+        groupToWatch = mutation.target.parentElement.closest('.p-channel_sidebar__static_list__item').querySelector('.p-channel_sidebar__section_heading_label_overflow');
         groupToWatch.click();
         watchItems = true;
       }
@@ -116,13 +123,15 @@ export function createNewMessageObserver(unreads, dispatchNewMessage) {
           if (badge) {
             const oldValue = unreads[channel.textContent];
             unreads[channel.textContent] = Number(badge.textContent);
-            if (oldValue !== Number(badge.textContent)) {
-              console.warn('new message! 2');
+            if (!oldValue || (Number(badge.textContent) > oldValue)) {
+              let sidebarGroup = mutation.previousSibling;
+              while (sidebarGroup && !sidebarGroup.id?.includes('sectionHeading')) {
+                sidebarGroup = sidebarGroup.previousSibling;
+              }
               dispatchNewMessage({
-                // TODO: expand group, click, then recollapse
-                // otherwise the sidebarElement won't exist by the time we try to click it!
-                channel: channel.textContent,
-                sidebarElement: mutation.addedNodes[0].firstChild,
+                channelName: channel.textContent,
+                sidebarItem: mutation.addedNodes[0],
+                sidebarGroup,
               });
             }
           } else {

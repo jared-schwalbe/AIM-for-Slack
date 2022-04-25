@@ -177,7 +177,7 @@ const reducer = (state, action = { type: '' }) => {
         powerState: POWER_STATE.START,
       };
     case AIM_NEW_MESSAGE:
-      const chatWindow = state.apps.find(app => app.props?.channel === action.payload.channel);
+      const chatWindow = state.apps.find(app => app.props?.channelName === action.payload.channelName);
       if (chatWindow) {
         if (state.focusing === FOCUSING.WINDOW && chatWindow.zIndex === state.nextZIndex - 1) {
           // nothing to do if this chat is already open and focused
@@ -199,11 +199,12 @@ const reducer = (state, action = { type: '' }) => {
               ...appSettings.AIMChat,
               header: {
                 ...appSettings.AIMChat.header,
-                title: `${action.payload.channel} - Instant Message`,
+                title: `${action.payload.channelName} - Instant Message`,
               },
               props: {
-                channel: action.payload.channel,
-                sidebarElement: action.payload.sidebarElement,
+                channelName: action.payload.channelName,
+                sidebarItem: action.payload.sidebarItem,
+                sidebarGroup: action.payload.sidebarGroup,
               },
               id: state.nextAppID,
               zIndex: state.nextZIndex,

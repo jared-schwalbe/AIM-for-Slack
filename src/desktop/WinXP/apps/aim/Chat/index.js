@@ -13,8 +13,8 @@ import get_info from '../../../../assets/aim/get_info.png';
 import send_disabled from '../../../../assets/aim/send_disabled.png';
 import send_enabled from '../../../../assets/aim/send_enabled.png';
 
-function Chat({ onClose, isFocus, openMessages, name }) {
-  const messageListRef = useRef();
+function Chat({ onClose, isFocus, sidebarElement, channel }) {
+  const sidebarListRef = useRef();
   const [draft, setDraft] = useState('');
 
   const profileEl = document.querySelector('.p-ia__nav__user__button');
@@ -66,8 +66,13 @@ function Chat({ onClose, isFocus, openMessages, name }) {
   useEffect(() => {
     if (isFocus) {
       setTimeout(() => {
-        openMessages();
-        const list = messageListRef.current;
+        if (sidebarElement.className.includes('close_container')) {
+          sidebarElement.firstChild.click();
+        } else {
+          sidebarElement.click();
+        }
+
+        const list = sidebarListRef.current;
         let body = document.querySelector('.p-workspace__primary_view_body');
         if (document.querySelector('#winxp-message-list')) {
           body = document.querySelector('#winxp-message-list');
@@ -88,7 +93,7 @@ function Chat({ onClose, isFocus, openMessages, name }) {
         }
       }, 100);
     } else {
-      const list = messageListRef.current;
+      const list = sidebarListRef.current;
       const body = list.querySelector('.p-workspace__primary_view_body');
       const scrollTop = body.querySelector('.c-scrollbar__hider').scrollTop;
       document.querySelector('.p-client_container').appendChild(body);
@@ -104,10 +109,10 @@ function Chat({ onClose, isFocus, openMessages, name }) {
       clone.querySelector('.c-scrollbar__hider').scrollTo(0, scrollTop);
       clone.style['pointer-events'] = 'none';
     }
-  }, [isFocus, openMessages, username]);
+  }, [isFocus, sidebarElement, username]);
 
   useEffect(() => {
-    const list = messageListRef.current;
+    const list = sidebarListRef.current;
     return () => {
       if (list.querySelector('.p-workspace__primary_view_body')) {
         const body = list.querySelector('.p-workspace__primary_view_body');
@@ -134,12 +139,12 @@ function Chat({ onClose, isFocus, openMessages, name }) {
             onClickItem={onClickOptionItem}
           />
           <div className="com__warning-level">
-            {`${name}'s Warning Level: 0%`}
+            {`${channel}'s Warning Level: 0%`}
           </div>
         </div>
       </section>
       <section className="com__content">
-        <div className="com__message-list" ref={messageListRef}></div>
+        <div className="com__message-list" ref={sidebarListRef}></div>
         <div className="com__formatting">
           <img className="com__formatting__image" src={formatting} alt="" />
         </div>

@@ -87,6 +87,7 @@ function Footer({
                 title={app.header.title}
                 onMouseDown={onMouseDownApp}
                 isFocus={focusedAppId === app.id}
+                hasNotification={app.hasNotification}
               />
             ),
         )}
@@ -121,14 +122,14 @@ function Footer({
   );
 }
 
-function FooterWindow({ id, icon, title, onMouseDown, isFocus }) {
+function FooterWindow({ id, icon, title, onMouseDown, isFocus, hasNotification }) {
   function _onMouseDown() {
     onMouseDown(id);
   }
   return (
     <div
       onMouseDown={_onMouseDown}
-      className={`footer__window ${isFocus ? 'focus' : 'cover'}`}
+      className={`footer__window ${isFocus ? 'focus' : 'cover'} ${hasNotification ? 'notification' : ''}`}
     >
       <img className="footer__icon" src={icon} alt={title} />
       <div className="footer__text">{title}</div>
@@ -272,6 +273,20 @@ const Container = styled.footer`
     background-color: #1e52b7;
     box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.2),
       inset 1px 0 1px rgba(0, 0, 0, 0.7);
+  }
+  @keyframes footer-blink {
+    0%, 38% {
+      background-color: #e27907;
+    }
+    39%, 52% {
+      background-color: #3c81f3;
+    }
+    53%, 100% {
+      background-color: #e27907;
+    }
+  }
+  .footer__window.notification {
+    animation: footer-blink 1.6s infinite;
   }
   .footer__time {
     margin: 0 5px;

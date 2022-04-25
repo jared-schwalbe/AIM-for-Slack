@@ -33,10 +33,13 @@ function BuddyList({ onClose, isFocus, dispatch }) {
     type: ADD_APP,
     payload: {
       ...appSettings.AIMChat,
+      header: {
+        ...appSettings.AIMChat.header,
+        title: `${c.name} - Instant Message`,
+      },
       props: {
-        headerTitle: `${c.name} - Instant Message`,
-        openMessages: () => c.element.click(),
-        name: c.name,
+        channel: c.name,
+        sidebarElement: c.element,
       }
     },
   });

@@ -6,6 +6,8 @@ import defaultCursor from '../assets/cursors/default.png';
 import progressCursor from '../assets/cursors/progress.png';
 import background from '../assets/xp-background.jpeg';
 
+import { getUnreads, createNewMessageObserver } from './utils';
+
 import {
   ADD_APP,
   DEL_APP,
@@ -19,6 +21,7 @@ import {
   END_SELECT,
   POWER_OFF,
   CANCEL_POWER_OFF,
+  AIM_NEW_MESSAGE,
 } from './constants/actions';
 import { FOCUSING, POWER_STATE } from './constants';
 import { defaultIconState, defaultAppState, appSettings } from './apps';
@@ -85,7 +88,7 @@ const reducer = (state, action = { type: '' }) => {
     case FOCUS_APP: {
       const apps = state.apps.map(app =>
         app.id === action.payload
-          ? { ...app, zIndex: state.nextZIndex, minimized: false }
+          ? { ...app, zIndex: state.nextZIndex, minimized: false, hasNotification: false }
           : app,
       );
       return {
@@ -173,6 +176,44 @@ const reducer = (state, action = { type: '' }) => {
         ...state,
         powerState: POWER_STATE.START,
       };
+    case AIM_NEW_MESSAGE:
+      const chatWindow = state.apps.find(app => app.props?.channel === action.payload.channel);
+      if (chatWindow) {
+        if (state.focusing === FOCUSING.WINDOW && chatWindow.zIndex === state.nextZIndex - 1) {
+          // nothing to do if this chat is already open and focused
+          return state;
+        } else {
+          // set hasNotification on the chat window so it blinks
+          const apps = state.apps.map(app =>
+            app.id === chatWindow.id ? { ...app, hasNotification: true } : app,
+          );
+          return { ...state, apps };
+        }
+      } else {
+        // open new chat window
+        return {
+          ...state,
+          apps: [
+            ...state.apps,
+            {
+              ...appSettings.AIMChat,
+              header: {
+                ...appSettings.AIMChat.header,
+                title: `${action.payload.channel} - Instant Message`,
+              },
+              props: {
+                channel: action.payload.channel,
+                sidebarElement: action.payload.sidebarElement,
+              },
+              id: state.nextAppID,
+              zIndex: state.nextZIndex,
+            },
+          ],
+          nextAppID: state.nextAppID + 1,
+          nextZIndex: state.nextZIndex + 1,
+          focusing: FOCUSING.WINDOW,
+        };
+      }
     default:
       return state;
   }
@@ -210,12 +251,9 @@ function WinXP({ onClose }) {
   );
   const onCloseApp = useCallback(
     id => {
-      // if (focusedAppId === id) {
-        dispatch({ type: DEL_APP, payload: id });
-      // }
+      dispatch({ type: DEL_APP, payload: id });
     },
     [],
-    // [focusedAppId],
   );
   const onMouseDownFooterApp = useCallback(
     id => {
@@ -336,6 +374,44 @@ function WinXP({ onClose }) {
       clearTimeout(t2);
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    let newMessageObserver;
+
+    const onAimSignIn = () => {
+      const unreads = getUnreads();
+      const dispatchNewMessage = payload => {
+        dispatch({
+          type: AIM_NEW_MESSAGE,
+          payload,
+        });
+      };
+
+      newMessageObserver = createNewMessageObserver(unreads, dispatchNewMessage);
+
+      const sidebarList = document.querySelector('.c-virtual_list__scroll_container');
+      newMessageObserver.observe(sidebarList, {
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
+    }
+
+    const onAimSignOut = () => {
+      newMessageObserver.disconnect();
+    }
+
+    window.addEventListener('aimsignin', onAimSignIn);
+    window.addEventListener('aimsignout', onAimSignOut);
+
+    return () => {
+      newMessageObserver.disconnect();
+
+      window.removeEventListener('aimsignin', onAimSignIn);
+      window.removeEventListener('aimsignout', onAimSignOut);
+    }
+  }, []);
+
   return (
     <Container
       ref={ref}

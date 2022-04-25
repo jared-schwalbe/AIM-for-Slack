@@ -52,6 +52,7 @@ const Window = memo(function({
   component,
   zIndex,
   isFocus,
+  hasNotification,
   className,
   props,
 }) {
@@ -98,7 +99,7 @@ const Window = memo(function({
   }
   return (
     <div
-      className={className}
+      className={`${className} ${hasNotification ? 'notification' : ''}`}
       ref={ref}
       onMouseDown={_onMouseDown}
       style={{
@@ -108,7 +109,7 @@ const Window = memo(function({
         zIndex,
       }}
     >
-      <div className="header__bg" />
+      <div className={`header__bg ${hasNotification ? 'notification' : ''}`} />
       <header className="app__header" ref={dragRef}>
         {header.icon && (
           <img
@@ -117,7 +118,7 @@ const Window = memo(function({
             className="app__header__icon"
           />
         )}
-        <div className="app__header__title">{props?.headerTitle ?? header.title}</div>
+        <div className="app__header__title">{header.title}</div>
         <HeaderButtons
           buttons={header.buttons}
           onMaximize={_onMouseUpMaximize}
@@ -152,6 +153,17 @@ const StyledWindow = styled(Window)`
   flex-direction: column;
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+  @keyframes window-blink {
+    0%, 30% {
+      background-color: #0831d9;
+    }
+    31%, 100% {
+      background-color: #6582f5;
+    }
+  }
+  &.notification {
+    animation: window-blink 1.6s infinite;
+  }
   .header__bg {
     background: ${({ isFocus }) =>
       isFocus
@@ -167,6 +179,17 @@ const StyledWindow = styled(Window)`
     border-top-right-radius: 8px;
     overflow: hidden;
   }
+  @keyframes header-blink {
+    0%, 30% {
+      background: linear-gradient(to bottom,#0058ee 0%,#3593ff 4%,#288eff 6%,#127dff 8%,#036ffc 10%,#0262ee 14%,#0057e5 20%,#0054e3 24%,#0055eb 56%,#005bf5 66%,#026afe 76%,#0062ef 86%,#0052d6 92%,#0040ab 94%,#003092 100%);
+    }
+    31%, 100% {
+      background: linear-gradient(to bottom, #7697e7 0%,#7e9ee3 3%,#94afe8 6%,#97b4e9 8%,#82a5e4 14%,#7c9fe2 17%,#7996de 25%,#7b99e1 56%,#82a9e9 81%,#80a5e7 89%,#7b96e1 94%,#7a93df 97%,#abbae3 100%);
+    }
+  }
+  .header__bg.notification {
+    animation: header-blink 1.6s infinite;
+  }
   .header__bg:before {
     content: '';
     display: block;
@@ -178,6 +201,17 @@ const StyledWindow = styled(Window)`
     bottom: 0;
     width: 15px;
   }
+  @keyframes header-before-blink {
+    0%, 30% {
+      opacity: 1;
+    }
+    31%, 100% {
+      opacity: 0.3;
+    }
+  }
+  .header__bg.notification:before {
+    animation: header-before-blink 1.6s infinite;
+  }
   .header__bg:after {
     content: '';
     opacity: ${({ isFocus }) => (isFocus ? 1 : 0.4)};
@@ -188,6 +222,17 @@ const StyledWindow = styled(Window)`
     top: 0;
     bottom: 0;
     width: 15px;
+  }
+  @keyframes header-after-blink {
+    0%, 30% {
+      opacity: 1;
+    }
+    31%, 100% {
+      opacity: 0.4;
+    }
+  }
+  .header__bg.notification:after {
+    animation: header-after-blink 1.6s infinite;
   }
   .app__header {
     display: ${({ header }) => (header.invisible ? 'none' : 'flex')};

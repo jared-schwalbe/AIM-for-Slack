@@ -16,7 +16,7 @@ function SignIn({ onClose, dispatch }) {
   useEffect(() => {
     const t1 = setTimeout(() => {
       setStage('2. Verifying name and password ...');
-    }, 1800);
+    }, 1500);
     const t2 = setTimeout(() => {
       setStage('3. Starting services ...');
     }, 2500);
@@ -27,6 +27,7 @@ function SignIn({ onClose, dispatch }) {
       });
       new Audio(chrome.runtime.getURL("audio/door-open.mp3")).play().catch(() => {});
       window.aimForSlack.signedIn = true;
+      window.dispatchEvent(new CustomEvent('aimsignin'));
       onClose();
     }, 2900);
 

@@ -206,7 +206,9 @@ function BuddyList({ onClose, isFocus, dispatch }) {
                       key={c.name}
                       className="com__buddy-list__group__item"
                       onClick={e => setActive(c.name)}
-                      onDoubleClick={() => openChat(c)}
+                      onDoubleClick={() => {
+                        openChat(c);
+                      }}
                     >
                       <span>
                         <span className={itemClass}>

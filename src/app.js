@@ -8,6 +8,7 @@ import Container from './Container';
 
 window.aimForSlack = {
   signedIn: false,
+  ignoreNextExpansion: {},
 };
 
 const div = document.createElement('div');

@@ -93,6 +93,7 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
             subtree: true,
           });
 
+          window.aimForSlack.ignoreNextExpansion[sidebarGroup.id] = true;
           sidebarGroup.querySelector('.p-channel_sidebar__section_heading_label_overflow').click();
         }
 

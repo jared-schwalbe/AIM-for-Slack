@@ -26,7 +26,9 @@ function createGroupUnreadsObserver(addUnread) {
 
 export function getUnreads() {
   const unreads = {};
-  const addUnread = (channel, count) => unreads[channel] = count;
+  const addUnread = (channel, count) => {
+    unreads[channel] = count;
+  };
 
   const groupUnreadsObserver = createGroupUnreadsObserver(addUnread);
 
@@ -50,6 +52,7 @@ export function getUnreads() {
     } else if (item.id && item.id.includes('sectionHeading') && item.getAttribute('aria-expanded') === 'false') {
       // collapsed groups: expand, check unread badges, collapse
       collpasedCount++;
+      window.aimForSlack.ignoreNextExpansion[item.id] = true;
       item.querySelector('.p-channel_sidebar__section_heading_label_overflow').click();
     }
   });
@@ -108,7 +111,9 @@ export function createNewMessageObserver(unreads, dispatchNewMessage) {
         || (mutation.type === 'characterData'
           && mutation.target.parentElement.classList.contains('p-channel_sidebar__badge'))
       ) {
-        groupToWatch = mutation.target.parentElement.closest('.p-channel_sidebar__static_list__item').querySelector('.p-channel_sidebar__section_heading_label_overflow');
+        const group = mutation.target.parentElement.closest('.p-channel_sidebar__static_list__item');
+        groupToWatch = group.querySelector('.p-channel_sidebar__section_heading_label_overflow');
+        window.aimForSlack.ignoreNextExpansion[group.id] = true;
         groupToWatch.click();
         watchItems = true;
       }

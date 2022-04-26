@@ -347,7 +347,7 @@ function WinXP({ onClose }) {
         if (state.apps.length) {
           onFocusApp(state.apps[0].id);
         }
-      }, 100);
+      }, 1);
     };
   
     t1 = setTimeout(() => {
@@ -355,7 +355,7 @@ function WinXP({ onClose }) {
       if (loaded) {
         setup();
       }
-    }, 1400);
+    }, 1000);
   
     if (!document.querySelector('.p-client')) {
       document.addEventListener("DOMNodeInserted", (e) => {

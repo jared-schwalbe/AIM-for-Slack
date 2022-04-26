@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 
 import { ADD_APP } from '../../../constants/actions';
@@ -14,14 +14,101 @@ import actions_bottom from '../../../../assets/aim/actions_bottom_sharp.png';
 import ticker from '../../../../assets/aim/ticker_sharp.png';
 import pointer from '../../../../assets/cursors/pointer.png';
 
+import { getHiddenCounts } from './utils';
+
 function BuddyList({ onClose, isFocus, dispatch }) {
-  const [, rerender] = useState(Date.now());
+  const counts = useRef({});
+  const [groups, setGroups] = useState([]);
+
+  function getGroupCount(group) {
+    if (group.expanded) {
+      return `(${group.children.length}/${group.children.length})`;
+    } else if (counts.current[group.id]) {
+      return `(${counts.current[group.id]}/${counts.current[group.id]})`;
+    } else {
+      return '(0/0)';
+    }
+  }
+
+  function getGroups() {
+    const groups = [];
+    const items = document.getElementsByClassName('p-channel_sidebar__static_list__item');
+    Array.from(items).forEach(item => {
+      if (item.id && item.id.includes('sectionHeading')) {
+        groups.push({
+          id: item.id,
+          sidebarGroup: item,
+          element: item.querySelector('.p-channel_sidebar__section_heading_label_overflow'),
+          title: item.getAttribute('aria-label'),
+          expanded: item.getAttribute('aria-expanded') === 'true',
+          children: [],
+        });
+      } else if (item.querySelector('.p-channel_sidebar__channel')) {
+        const nameEl = item.querySelector('.p-channel_sidebar__name');
+        groups[groups.length - 1].children.push({
+          element: item.querySelector('.p-channel_sidebar__channel'),
+          sidebarItem: item,
+          sidebarGroup: groups[groups.length - 1].sidebarGroup,
+          name: nameEl ? nameEl.textContent : '',
+        });
+      }
+    });
+    groups.forEach(g => {
+      if (g.expanded) {
+        counts.current[g.id] = g.children.length;
+      }
+    });
+    setGroups(groups);
+  }
 
   useEffect(() => {
-    const interval = setInterval(() => rerender(Date.now()), 1000);
-    return () => {
-      clearInterval(interval);
+    const updateCount = (groupId, count) => {
+      counts.current[groupId] = count;
     };
+  
+    getGroups();
+    getHiddenCounts(updateCount);
+
+    const callback = function (mutationsList, observer) {
+      let groupsModified = false;
+      const allowExpansion = ![...mutationsList]
+        .filter(m => m.type === 'attributes')
+        .every(m => window.aimForSlack.ignoreNextExpansion[m.target.id]);
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'attributes'
+          && mutation.target.getAttribute('aria-expanded') === 'false'
+          && window.aimForSlack.ignoreNextExpansion[mutation.target.id]) {
+          delete window.aimForSlack.ignoreNextExpansion[mutation.target.id];
+        }
+        if (
+          mutation.type === 'childList'
+          && allowExpansion
+          && (
+            mutation.addedNodes?.[0]?.classList?.contains('p-channel_sidebar__static_list__item')
+            || mutation.removedNodes?.[0]?.classList?.contains('p-channel_sidebar__static_list__item')
+          )
+        ) {
+          groupsModified = true;
+        }
+      }
+      if (groupsModified) {
+        getGroups();
+      }
+    }
+
+    const rebuildGroupsObserver = new MutationObserver(callback);
+
+    const sidebarList = document.querySelector('.c-virtual_list__scroll_container');
+    rebuildGroupsObserver.observe(sidebarList, {
+      attributes: true,
+      attributeFilter: ['aria-expanded'],
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      rebuildGroupsObserver.disconnect();
+    }
   }, []);
 
   const [active, setActive] = useState();
@@ -59,31 +146,6 @@ function BuddyList({ onClose, isFocus, dispatch }) {
     }
   }
 
-  function getGroups() {
-    const groups = [];
-    const items = document.getElementsByClassName('p-channel_sidebar__static_list__item');
-    Array.from(items).forEach(item => {
-      if (item.id && item.id.includes('sectionHeading')) {
-        groups.push({
-          sidebarGroup: item,
-          element: item.querySelector('.p-channel_sidebar__section_heading_label_overflow'),
-          title: item.getAttribute('aria-label'),
-          expanded: item.getAttribute('aria-expanded') === 'true',
-          children: [],
-        });
-      } else if (item.querySelector('.p-channel_sidebar__channel')) {
-        const nameEl = item.querySelector('.p-channel_sidebar__name');
-        groups[groups.length - 1].children.push({
-          element: item.querySelector('.p-channel_sidebar__channel'),
-          sidebarItem: item,
-          sidebarGroup: groups[groups.length - 1].sidebarGroup,
-          name: nameEl ? nameEl.textContent : '',
-        });
-      }
-    });
-    return groups;
-  }
-
   return (
     <Div>
       <section className="com__toolbar">
@@ -108,7 +170,7 @@ function BuddyList({ onClose, isFocus, dispatch }) {
         </div>
       </section>
       <div className="com__buddy-list">
-        {getGroups().map(g => {
+        {groups.map(g => {
           let titleClass = '';
           if (active === g.title) {
             titleClass = 'com__buddy-list__active';
@@ -126,7 +188,7 @@ function BuddyList({ onClose, isFocus, dispatch }) {
                 >
                   <div className={`com__buddy-list__group__expand__icon--${g.expanded ? 'expanded' : 'collapsed'}`} />
                   <span className={titleClass}>
-                    {`${g.title} (${g.children.length}/${g.children.length})`}
+                    {`${g.title} ${getGroupCount(g)}`}
                   </span>
                 </button>
               </div>

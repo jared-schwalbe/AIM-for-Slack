@@ -99,10 +99,10 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
 
         const list = sidebarListRef.current;
         let body = document.querySelector('.p-workspace__primary_view_body');
-        if (document.querySelector('#winxp-message-list')) {
-          body = document.querySelector('#winxp-message-list');
+        if (document.querySelector('#aim-message-list')) {
+          body = document.querySelector('#aim-message-list');
         } else {
-          body.id = 'winxp-message-list';
+          body.id = 'aim-message-list';
           body.addEventListener("DOMNodeInserted", (e) => {
             processListItem(e.target);
           }, true);
@@ -111,18 +111,19 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
           body.querySelectorAll('.c-virtual_list__item').forEach(e => {
             processListItem(e);
           });
-          while (list.childElementCount) {
-            list.removeChild(list.lastChild);
+          if (list.childElementCount > 1) {
+            list.removeChild(list.firstChild);
           }
           list.appendChild(body);
         }
       }, 100);
     } else {
       const list = sidebarListRef.current;
-      const body = list.querySelector('.p-workspace__primary_view_body');
+      const body = list.querySelector('#aim-message-list');
       const scrollTop = body.querySelector('.c-scrollbar__hider').scrollTop;
       document.querySelector('.p-client_container').appendChild(body);
-      const clone = document.querySelector('#winxp-message-list').cloneNode(true);
+      const clone = document.querySelector('#aim-message-list').cloneNode(true);
+      clone.id = '';
       Array.from(clone.querySelectorAll('*')).forEach(e => {
         for (let i = 0; i < e.attributes.length; i++) {
           if (e.attributes[i].name !== 'class' && e.attributes[i].name !== 'style' && e.attributes[i].name !== 'src') {
@@ -134,13 +135,13 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
       clone.querySelector('.c-scrollbar__hider').scrollTo(0, scrollTop);
       clone.style['pointer-events'] = 'none';
     }
-  }, [isFocus, sidebarItem, sidebarGroup, username]);
+  }, [isFocus]);
 
   useEffect(() => {
     const list = sidebarListRef.current;
     return () => {
-      if (list.querySelector('.p-workspace__primary_view_body')) {
-        const body = list.querySelector('.p-workspace__primary_view_body');
+      if (list.querySelector('#aim-message-list')) {
+        const body = list.querySelector('#aim-message-list');
         document.querySelector('.p-client_container').appendChild(body);
       }
     }
@@ -278,13 +279,34 @@ const Div = styled.div`
     border-bottom: 1px solid #e4dec0;
     box-shadow: -0.5px -0.5px 0 0.5px #aaa, 1px 1px 0 0.5px #fff;
     background-color: #fff;
-    flex-grow: 1;
     min-height: 90px;
     margin: 5px 5px;
-    flex-direction: column;
     font-size: 14px;
-    display: flex;
+    height: 100%;
+    position: relative;
+  }
+  .p-workspace__primary_view_body {
+    height: calc(100% + 10px);
+    width: 100%;
+    position: absolute;
+    top: -10px;
+    left: 0;
+  }
+  .p-workspace__primary_view_body .c-virtual_list__scroll_container {
     padding-left: 3px;
+    margin-top: -10px;
+  }
+  @keyframes delayed-blur {
+    0%, 99% {
+      filter: none;
+    }
+    100% {
+      filter: blur(5px);
+    }
+  }
+  .p-workspace__primary_view_body:not(#aim-message-list) .c-virtual_list__scroll_container {
+    animation: delayed-blur 250ms;
+    animation-fill-mode: forwards;
   }
   .com__message-list__container {
     flex-shrink: 0;
@@ -516,6 +538,8 @@ const Div = styled.div`
   }
   .com__message-list .c-scrollbar__hider {
     right: 0;
+    top: 10px;
+    height: calc(100% - 10px);
   }
   .com__message-list .c-scrollbar__hider::before {
     top: unset !important;

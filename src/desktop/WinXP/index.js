@@ -180,12 +180,23 @@ const reducer = (state, action = { type: '' }) => {
       const chatWindow = state.apps.find(app => app.props?.channelName === action.payload.channelName);
       if (chatWindow) {
         if (state.focusing === FOCUSING.WINDOW && chatWindow.zIndex === state.nextZIndex - 1) {
+          console.warn('doing nothing on new message...');
           // nothing to do if this chat is already open and focused
           return state;
         } else {
           // set hasNotification on the chat window so it blinks
+          // also change the newMessage prop so we can play a sound
           const apps = state.apps.map(app =>
-            app.id === chatWindow.id ? { ...app, hasNotification: true } : app,
+            app.id === chatWindow.id
+              ? {
+                ...app,
+                props: {
+                  ...app.props,
+                  newMessage: Date.now(),
+                },
+                hasNotification: true,
+              }
+              : app,
           );
           return { ...state, apps };
         }
@@ -202,6 +213,7 @@ const reducer = (state, action = { type: '' }) => {
                 title: `${action.payload.channelName} - Instant Message`,
               },
               props: {
+                newChat: true,
                 channelName: action.payload.channelName,
                 sidebarItem: action.payload.sidebarItem,
                 sidebarGroup: action.payload.sidebarGroup,

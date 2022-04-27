@@ -16,7 +16,19 @@ import send_enabled from '../../../../assets/aim/send_enabled.png';
 import Placeholder from './Placeholder';
 import './index.css';
 
-function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
+function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarItem, sidebarGroup }) {
+  useEffect(() => {
+    if (newChat) {
+      new Audio(chrome.runtime.getURL("audio/ring.wav")).play().catch(() => {});
+    }
+  }, []);
+
+  useEffect(() => {
+    if (newMessage) {
+      new Audio(chrome.runtime.getURL("audio/imrcv.wav")).play().catch(() => {});
+    }
+  }, [newMessage]);
+
   const sidebarListRef = useRef();
   const [draft, setDraft] = useState('');
 
@@ -32,25 +44,29 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
     if (editor) {
       editor.innerHTML = draft;
       const sendBtn = document.querySelector('.c-icon_button[data-qa="texty_send_button"]');
-      if (sendBtn) {
+      if (sendBtn && sendBtn.getAttribute('aria-disabled') !== 'true') {
         setTimeout(() => {
           sendBtn.click();
+          new Audio(chrome.runtime.getURL("audio/imsend.wav")).play().catch(() => {});
           setDraft('');
         }, 500);
       }
     }
   }
 
-  function processListItem(element) {
+  function processListItem(element, inserted) {
     if (element.classList && element.classList.contains('c-virtual_list__item')) {
+      // open files in a new tab
       if (element.querySelector('.p-file_image_thumbnail__wrapper')) {
         const thumbnailLinks = element.querySelectorAll('.p-file_image_thumbnail__wrapper');
         Array.from(thumbnailLinks).forEach(a => a.setAttribute('target', '_blank'));
       }
+      // remove non-breaking spaces
       const gutterRight = element.querySelector('.c-message_kit__gutter__right');
       if (gutterRight) {
         gutterRight.innerHTML = gutterRight.innerHTML.replace(/\&nbsp;/g, '');
       }
+      // look for sender in previous messages
       if (gutterRight && !element.querySelector('.c-message_kit__sender')) {
         let cur = element;
         while (cur && !cur.querySelector('.c-message_kit__sender')) {
@@ -61,10 +77,18 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
         }
       }
       if (gutterRight && element.querySelector('.c-message_kit__sender')) {
+        // set color of the sender
+        // then play a sound if this element was inserted as the last sibling
         if (element.querySelector('.c-message_kit__sender').getAttribute('data-stringify-text') === username) {
           element.querySelector('.c-message_kit__sender').style.color = 'red';
         } else {
           element.querySelector('.c-message_kit__sender').style.color = 'blue';
+          const timestampElement = element.querySelector('.c-timestamp');
+          const timestamp = timestampElement ? Number(timestampElement.getAttribute('data-ts')) * 1000 : 0;
+          const isNew = Math.abs(timestamp - Date.now()) < 1000;
+          if (inserted && !element.nextSibling && isNew) {
+            new Audio(chrome.runtime.getURL("audio/imrcv.wav")).play().catch(() => {});
+          }
         }
         // if the next element does not have a sender, its because we could not find it earlier
         // but now we know that it is this person
@@ -117,9 +141,19 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
           body = document.querySelector('#aim-message-list');
         } else {
           body.id = 'aim-message-list';
-          body.addEventListener("DOMNodeInserted", (e) => {
-            processListItem(e.target);
-          }, true);
+
+          const callback = function (mutationsList, observer) {
+            for (const mutation of mutationsList) {
+              if (mutation.addedNodes?.[0]?.classList?.contains('c-virtual_list__item')) {
+                processListItem(mutation.addedNodes?.[0], true);
+              }
+            }
+          }
+
+          const messageObserver = new MutationObserver(callback);
+          
+          const messageList = body.querySelector('.c-virtual_list__scroll_container');
+          messageObserver.observe(messageList, { childList: true });
         }
         if (list && body) {
           body.querySelectorAll('.c-virtual_list__item').forEach(e => {
@@ -130,6 +164,7 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
           }
           list.appendChild(body);
           if (list.childElementCount === 1) {
+            // I don't think this is working...
             list.querySelector('.c-scrollbar__hider').scrollTo(0, 999999);
           }
         }

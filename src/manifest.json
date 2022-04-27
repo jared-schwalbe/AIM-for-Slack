@@ -20,9 +20,12 @@
       "matches": ["*://app.slack.com/*"],
       "resources": [
         "audio/startup.mp3",
-        "audio/door-open.mp3",
-        "audio/door-close.mp3",
         "audio/error.wav",
+        "audio/dooropen.wav",
+        "audio/doorslam.wav",
+        "audio/imrcv.wav",
+        "audio/imsend.wav",
+        "audio/ring.wav",
         "hide.css"
       ]
     }

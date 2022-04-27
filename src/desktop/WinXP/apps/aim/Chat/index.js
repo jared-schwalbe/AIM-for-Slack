@@ -77,6 +77,13 @@ function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarItem,
         }
       }
       if (gutterRight && element.querySelector('.c-message_kit__sender')) {
+        // add colon next to sender
+        if (!element.querySelector('.c-message_kit__sender .colon')) {
+          const colon = document.createElement('span');
+          colon.className = 'colon';
+          colon.textContent = ': ';
+          element.querySelector('.c-message_kit__sender').append(colon);
+        }
         // set color of the sender
         // then play a sound if this element was inserted as the last sibling
         if (element.querySelector('.c-message_kit__sender').getAttribute('data-stringify-text') === username) {

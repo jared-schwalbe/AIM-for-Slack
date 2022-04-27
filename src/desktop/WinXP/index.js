@@ -180,7 +180,6 @@ const reducer = (state, action = { type: '' }) => {
       const chatWindow = state.apps.find(app => app.props?.channelName === action.payload.channelName);
       if (chatWindow) {
         if (state.focusing === FOCUSING.WINDOW && chatWindow.zIndex === state.nextZIndex - 1) {
-          console.warn('doing nothing on new message...');
           // nothing to do if this chat is already open and focused
           return state;
         } else {

@@ -116,13 +116,11 @@
 .com__aim-chat .com__message-list__message__from--blue {
   color: blue;
   font-weight: bold;
-  margin-right: 3px;
   display: inline;
 }
 .com__aim-chat .com__message-list__message__from--red {
   color: red;
   font-weight: bold;
-  margin-right: 3px;
   display: inline;
 }
 .com__aim-chat .com__message-list__message__text {
@@ -266,16 +264,23 @@
 }
 .com__aim-chat .com__message-list .c-message_kit__sender {
   white-space: nowrap;
-  margin-right: 3px;
 }
 .com__aim-chat .com__message-list .c-message_kit__sender a {
   color: inherit;
 }
-.com__aim-chat .com__message-list .c-message_kit__sender::after {
+/* .com__aim-chat .com__message-list .c-message_kit__sender::after {
   content: ':';
+} */
+.com__aim-chat .com__message-list .c-message_kit__sender .colon {
+  font-weight: normal;
 }
 .com__aim-chat .com__message-list * {
   line-height: 18px;
+  user-select: text;
+}
+.com__aim-chat .com__message-list *::selection {
+  color: white;
+  background-color: black;
 }
 .com__aim-chat .com__message-list .c-virtual_list__item {
   padding-bottom: 2px;

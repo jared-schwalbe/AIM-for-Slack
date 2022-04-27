@@ -50,26 +50,26 @@ function Balloon({
   );
 }
 const fadein = keyframes`
-  0% { 
-    display: block;
+  0% {
+    margin-top: 0;
     opacity: 0;
   }
   100% {
-    display: block;
+    margin-top: 0;
     opacity: 1;
   }
 `;
 const fadeout = keyframes`
-  0% { 
-    display: block;
+  0% {
+    margin-top: 0;
     opacity: 1;
   }
   99% {
-    display: block;
+    margin-top: 0;
     opacity: 0;
   }
   100% {
-    display: none;
+    margin-top: 100vh;
     opacity: 0;
   }
 `;

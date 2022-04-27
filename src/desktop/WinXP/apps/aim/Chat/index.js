@@ -43,6 +43,10 @@ function Chat({ onClose, isFocus, channelName, sidebarItem, sidebarGroup }) {
 
   function processListItem(element) {
     if (element.classList && element.classList.contains('c-virtual_list__item')) {
+      if (element.querySelector('.p-file_image_thumbnail__wrapper')) {
+        const thumbnailLinks = element.querySelectorAll('.p-file_image_thumbnail__wrapper');
+        Array.from(thumbnailLinks).forEach(a => a.setAttribute('target', '_blank'));
+      }
       const gutterRight = element.querySelector('.c-message_kit__gutter__right');
       if (gutterRight) {
         gutterRight.innerHTML = gutterRight.innerHTML.replace(/\&nbsp;/g, '');

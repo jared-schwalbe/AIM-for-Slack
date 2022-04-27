@@ -266,13 +266,16 @@
 }
 .com__aim-chat .com__message-list .c-message_kit__sender {
   white-space: nowrap;
-  margin-right: 5px;
+  margin-right: 3px;
 }
 .com__aim-chat .com__message-list .c-message_kit__sender a {
   color: inherit;
 }
 .com__aim-chat .com__message-list .c-message_kit__sender::after {
   content: ':';
+}
+.com__aim-chat .com__message-list * {
+  line-height: 18px;
 }
 .com__aim-chat .com__message-list .c-virtual_list__item {
   padding-bottom: 2px;
@@ -311,6 +314,9 @@
   height: 16px;
   margin-top: -7px;
 }
+.com__aim-chat .com__message-list .c-emoji {
+  display: inline-block;
+}
 .com__aim-chat .com__message-list .margin_left_25 {
   display: none;
 }
@@ -333,11 +339,31 @@
 .com__aim-chat .com__message-list .c-custom_status {
   display: none;
 }
-.com__aim-chat .com__message-list .c-files_container {
+.com__aim-chat .com__message-list .p-file_image_thumbnail__tiny_thumb_wrapper {
+  background-image: unset;
+  filter: unset !important;
+}
+.com__aim-chat .com__message-list .c-file_gallery:not(.c-file_gallery__single_image) .c-file_gallery_image_file {
+  width: 121px !important;
+}
+.com__aim-chat .com__message-list .c-file_gallery__single_image {
+  width: 250px !important;
+}
+.com__aim-chat .com__message-list .c-file_gallery {
+  margin-bottom: 4px;
+}
+.com__aim-chat .com__message-list .c-message_kit__file__meta {
   display: none;
 }
-.com__aim-chat .com__message-list .p-image_block {
+.com__aim-chat .com__message-list .p-image_block_title {
   display: none;
+}
+.com__aim-chat .com__message-list .c-file__actions,
+.com__aim-chat .com__message-list .c-message_actions__container {
+  display: none;
+}
+.com__aim-chat .com__message-list .c-file_gallery {
+  margin-top: 4px;
 }
 .com__aim-chat .com__message-list .p-context_block {
   display: none;
@@ -345,9 +371,9 @@
 .com__aim-chat .com__message-list .c-member_slug--link {
   background: none;
 }
-.com__aim-chat .com__message-list .p-block_kit_renderer__block_wrapper > :not(.p-rich_text_block) {
+/* .com__aim-chat .com__message-list .p-block_kit_renderer__block_wrapper > :not(.p-rich_text_block) {
   display: none;
-}
+} */
 .com__aim-chat .com__message-list .c-scrollbar__track {
   display: none;
 }
@@ -372,4 +398,28 @@
 .com__aim-chat .com__message-list .c-scrollbar__child {
   width: inherit !important;
 }
-
+.com__aim-chat .com__message-list .c-link--button {
+  line-height: 18px;
+}
+.com__aim-chat .com__message-list .c-message_kit__message .c-message__body--automated:after,
+.com__aim-chat .com__message-list .c-message_kit__text:after {
+  content: unset;
+}
+.com__aim-chat .com__message-list .c-mrkdwn__br {
+  display: block;
+  height: 0;
+}
+.com__aim-chat .com__message-list ul {
+  display: block !important;
+}
+.com__aim-chat .com__message-list li {
+  display: list-item !important;
+}
+.com__aim-chat .com__message-list a:not(.c-message__sender_link):not(.p-file_image_thumbnail__wrapper),
+.com__aim-chat .com__message-list .c-link--button:hover {
+  color: blue;
+  text-decoration: underline;
+}
+.com__aim-chat .com__message-list .c-message_kit__labels--pinned {
+  display: none;
+}

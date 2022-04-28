@@ -3,6 +3,7 @@ export const FOCUSING = {
   ICON: 'ICON',
   DESKTOP: 'DESKTOP',
 };
+
 export const POWER_STATE = {
   START: 'START',
   LOG_OFF: 'LOG_OFF',

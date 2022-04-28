@@ -18,13 +18,13 @@
       "matches": ["*://app.slack.com/*"],
       "resources": [
         "app.css",
-        "WinXP/assets/audiostartup.mp3",
-        "WinXP/assets/audioerror.wav",
-        "WinXP/assets/audiodooropen.wav",
-        "WinXP/assets/audiodoorslam.wav",
-        "WinXP/assets/audioimrcv.wav",
-        "WinXP/assets/audioimsend.wav",
-        "WinXP/assets/audioring.wav"
+        "WinXP/assets/audio/startup.mp3",
+        "WinXP/assets/audio/error.wav",
+        "WinXP/assets/audio/dooropen.wav",
+        "WinXP/assets/audio/doorslam.wav",
+        "WinXP/assets/audio/imrcv.wav",
+        "WinXP/assets/audio/imsend.wav",
+        "WinXP/assets/audio/ring.wav"
       ]
     }
   ]

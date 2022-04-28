@@ -29,7 +29,7 @@ const AppContainer = ({ viewPreference }) => {
     div.className = 'p-top_nav__windows_controls';
 
     const button = document.createElement('button');
-    button.className = 'c-button-unstyled p-top_nav__button aim__launcher';
+    button.className = 'aim-for-slack--launcher c-button-unstyled p-top_nav__button';
     button.addEventListener('click', showAIM);
 
     const img = document.createElement('img');
@@ -55,8 +55,8 @@ const AppContainer = ({ viewPreference }) => {
           }
         }
       });
-      const target = document.querySelector('.p-client_container');
-      observer.observe(target, { childList: true });
+      const slackContainer = document.querySelector('.p-client_container');
+      observer.observe(slackContainer, { childList: true });
     }
   }, []);
 

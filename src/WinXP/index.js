@@ -1,11 +1,7 @@
 import React, { useReducer, useRef, useCallback, useMemo, useEffect, useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
+import bemmit from 'bemmit';
 import useMouse from 'react-use/lib/useMouse';
-
-import progressCursor from '../assets/cursor/progress.png';
-import background from '../assets/xp-background.jpeg';
-
-import { getUnreads, createNewMessageObserver } from './utils';
 
 import {
   ADD_APP,
@@ -23,14 +19,15 @@ import {
   AIM_NEW_MESSAGE,
 } from './constants/actions';
 import { FOCUSING, POWER_STATE } from './constants';
+import { Windows, Icons, Footer, DashedBox, Modal } from './components';
 import { defaultIconState, defaultAppState, appSettings } from './apps';
-import Modal from './Modal';
-import Footer from './Footer';
-import Windows from './Windows';
-import Icons from './Icons';
-import { DashedBox } from '../components';
+import { createNewMentionsObserver } from './apps/aim/observers';
+import { playAudio } from './utils';
 
-import './index.css';
+import progressCursor from './assets/cursor/progress.png';
+import './styles.scss';
+
+const c = bemmit('win-xp');
 
 const initState = {
   apps: defaultAppState,
@@ -216,7 +213,7 @@ const reducer = (state, action = { type: '' }) => {
               props: {
                 newChat: true,
                 channelName: action.payload.channelName,
-                sidebarItem: action.payload.sidebarItem,
+                sidebarChannel: action.payload.sidebarChannel,
                 sidebarGroup: action.payload.sidebarGroup,
               },
               id: state.nextAppID,
@@ -232,56 +229,56 @@ const reducer = (state, action = { type: '' }) => {
       return state;
   }
 };
-function WinXP({ onClose }) {
+
+const WinXP = ({ onClose }) => {
   const [state, dispatch] = useReducer(reducer, initState);
   const [loading, setLoading] = useState(true);
+
   const ref = useRef(null);
   const mouse = useMouse(ref);
+
   const focusedAppId = useMemo(() => {
-    if (state.focusing !== FOCUSING.WINDOW) return -1;
+    if (state.focusing !== FOCUSING.WINDOW) {
+      return -1;
+    }
     const focusedApp = [...state.apps]
       .sort((a, b) => b.zIndex - a.zIndex)
       .find(app => !app.minimized);
     return focusedApp ? focusedApp.id : -1;
   }, [state.apps, state.focusing]);
+
   const onFocusApp = useCallback(id => {
     dispatch({ type: FOCUS_APP, payload: id });
   }, []);
-  const onMaximizeWindow = useCallback(
-    id => {
-      if (focusedAppId === id) {
-        dispatch({ type: TOGGLE_MAXIMIZE_APP, payload: id });
-      }
-    },
-    [focusedAppId],
-  );
-  const onMinimizeWindow = useCallback(
-    id => {
-      if (focusedAppId === id) {
-        dispatch({ type: MINIMIZE_APP, payload: id });
-      }
-    },
-    [focusedAppId],
-  );
-  const onCloseApp = useCallback(
-    id => {
-      dispatch({ type: DEL_APP, payload: id });
-    },
-    [],
-  );
-  const onMouseDownFooterApp = useCallback(
-    id => {
-      if (focusedAppId === id) {
-        dispatch({ type: MINIMIZE_APP, payload: id });
-      } else {
-        dispatch({ type: FOCUS_APP, payload: id });
-      }
-    },
-    [focusedAppId],
-  );
+
+  const onMaximizeWindow = useCallback(id => {
+    if (focusedAppId === id) {
+      dispatch({ type: TOGGLE_MAXIMIZE_APP, payload: id });
+    }
+  }, [focusedAppId]);
+
+  const onMinimizeWindow = useCallback(id => {
+    if (focusedAppId === id) {
+      dispatch({ type: MINIMIZE_APP, payload: id });
+    }
+  }, [focusedAppId]);
+
+  const onCloseApp = useCallback(id => {
+    dispatch({ type: DEL_APP, payload: id });
+  }, []);
+
+  const onMouseDownFooterApp = useCallback(id => {
+    if (focusedAppId === id) {
+      dispatch({ type: MINIMIZE_APP, payload: id });
+    } else {
+      dispatch({ type: FOCUS_APP, payload: id });
+    }
+  }, [focusedAppId]);
+
   const onMouseDownIcon = useCallback(id => {
     dispatch({ type: FOCUS_ICON, payload: id });
   }, []);
+
   const onDoubleClickIcon = useCallback((id, component) => {
     const appSetting = Object.values(appSettings).find(
       setting => setting.component === component,
@@ -289,9 +286,11 @@ function WinXP({ onClose }) {
     dispatch({ type: FOCUS_ICON, payload: id });
     dispatch({ type: ADD_APP, payload: appSetting });
   }, []);
+
   const onMouseDownFooter = useCallback(() => {
     dispatch({ type: FOCUS_DESKTOP });
   }, []);
+
   const onClickMenuItem = useCallback(o => {
     if (o === 'Internet')
       dispatch({ type: ADD_APP, payload: appSettings['Internet Explorer'] });
@@ -320,80 +319,82 @@ function WinXP({ onClose }) {
         },
       });
   }, []);
-  const onMouseDownDesktop = useCallback(
-    e => {
-      if (e.target === e.currentTarget)
-        dispatch({
-          type: START_SELECT,
-          payload: { x: mouse.docX, y: mouse.docY },
-        });
-    },
-    [mouse.docX, mouse.docY],
-  );
+
+  const onMouseDownDesktop = useCallback(e => {
+    if (e.target === e.currentTarget)
+      dispatch({
+        type: START_SELECT,
+        payload: { x: mouse.docX, y: mouse.docY },
+      });
+  }, [mouse.docX, mouse.docY]);
+
   const onMouseUpDesktop = useCallback(e => {
     dispatch({ type: END_SELECT });
   }, []);
+
   const onIconsSelected = useCallback(iconIds => {
     dispatch({ type: SELECT_ICONS, payload: iconIds });
   }, []);
-  const onClickModalButton = useCallback(text => {
+
+  const onClickModalButton = useCallback(() => {
     onClose();
   }, [onClose]);
+
   const onModalClose = useCallback(() => {
     dispatch({ type: CANCEL_POWER_OFF });
   }, []);
-  useEffect(() => {
-    new Audio(chrome.runtime.getURL("WinXP/assets/audiostartup.mp3")).play().catch(() => {});
-  }, []);
-  useEffect(() => {
-    document.getElementById('win-xp').style.cursor = `url(${progressCursor}) 11 11, auto`;
 
-    let t1;
-    let t2;
-    let loaded = false;
+  useEffect(() => {
+    playAudio('audiostartup.mp3');
+  }, []);
+
+  useEffect(() => {
+    const winXP = document.getElementById('win-xp');
+    winXP.style.cursor = `url(${progressCursor}) 11 11, auto`;
+
+    let loadingTimer;
+    let slackLoaded = Boolean(document.querySelector('.p-client'));
     let timeElapsed = false;
 
-    const setup = () => {
-      document.getElementById('win-xp').style.removeProperty('cursor');
-      t2 = setTimeout(() => {
-        setLoading(false);
-        if (state.apps.length) {
-          onFocusApp(state.apps[0].id);
-        }
-      }, 1);
-    };
-  
-    t1 = setTimeout(() => {
-      timeElapsed = true;
-      if (loaded) {
-        setup();
+    const doneLoading = () => {
+      setLoading(false);
+      winXP.style.removeProperty('cursor');
+      if (state.apps.length) {
+        onFocusApp(state.apps[0].id);
       }
-    }, 1000);
-  
-    if (!document.querySelector('.p-client')) {
-      document.addEventListener("DOMNodeInserted", (e) => {
-        if (e.target.classList && e.target.classList.contains('p-client')) {
-          loaded = true;
-          if (timeElapsed) {
-            setup();
+    };
+
+    if (!slackLoaded) {
+      const observer = new MutationObserver((mutationsList, observer) => {
+        for (const mutation of mutationsList) {
+          if (mutation.addedNodes?.[0]?.classList?.contains('p-client')) {
+            slackLoaded = true;
+            if (timeElapsed) {
+              doneLoading();
+            }
           }
         }
-      }, true);
-    } else {
-      loaded = true;
+      });
+      const slackContainer = document.querySelector('.p-client_container');
+      observer.observe(slackContainer, { childList: true });
     }
 
+    loadingTimer = setTimeout(() => {
+      timeElapsed = true;
+      if (slackLoaded) {
+        doneLoading();
+      }
+    }, 1000);
+
     return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
+      clearTimeout(loadingTimer);
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    let newMessageObserver;
+    let newMentionsObserver;
 
     const onAimSignIn = () => {
-      const unreads = getUnreads();
       const dispatchNewMessage = payload => {
         dispatch({
           type: AIM_NEW_MESSAGE,
@@ -401,107 +402,82 @@ function WinXP({ onClose }) {
         });
       };
 
-      newMessageObserver = createNewMessageObserver(unreads, dispatchNewMessage);
+      newMentionsObserver = createNewMentionsObserver(dispatchNewMessage);
 
-      const sidebarList = document.querySelector('.c-virtual_list__scroll_container');
-      newMessageObserver.observe(sidebarList, {
+      const sidebarList = document.querySelector('.p-channel_sidebar__list .c-virtual_list__scroll_container');
+      newMentionsObserver.observe(sidebarList, {
         characterData: true,
         childList: true,
         subtree: true,
       });
-    }
+    };
 
     const onAimSignOut = () => {
-      newMessageObserver.disconnect();
-    }
+      newMentionsObserver.disconnect();
+    };
 
     window.addEventListener('aimsignin', onAimSignIn);
     window.addEventListener('aimsignout', onAimSignOut);
 
     return () => {
-      newMessageObserver.disconnect();
-
+      newMentionsObserver.disconnect();
       window.removeEventListener('aimsignin', onAimSignIn);
       window.removeEventListener('aimsignout', onAimSignOut);
     }
   }, []);
 
+  const powerOff = [POWER_STATE.LOG_OFF, POWER_STATE.TURN_OFF].includes(state.powerState);
+
   return (
-    <Container
-      ref={ref}
+    <div
+      className={c('', [powerOff ? 'power-off' : ''])}
       id="win-xp"
       onMouseUp={onMouseUpDesktop}
       onMouseDown={onMouseDownDesktop}
-      state={state.powerState}
+      ref={ref}
     >
       <Icons
-        icons={state.icons}
-        onMouseDown={onMouseDownIcon}
-        onDoubleClick={onDoubleClickIcon}
-        displayFocus={state.focusing === FOCUSING.ICON}
         appSettings={appSettings}
+        displayFocus={state.focusing === FOCUSING.ICON}
+        icons={state.icons}
+        onDoubleClick={onDoubleClickIcon}
+        onMouseDown={onMouseDownIcon}
         mouse={mouse}
         selecting={state.selecting}
         setSelectedIcons={onIconsSelected}
       />
-      <DashedBox startPos={state.selecting} mouse={mouse} />
+      <DashedBox mouse={mouse} startPos={state.selecting} />
       {!loading && (
         <Windows
           apps={state.apps}
           dispatch={dispatch}
-          onMouseDown={onFocusApp}
-          onClose={onCloseApp}
-          onMinimize={onMinimizeWindow}
-          onMaximize={onMaximizeWindow}
           focusedAppId={focusedAppId}
+          onClose={onCloseApp}
+          onMaximize={onMaximizeWindow}
+          onMinimize={onMinimizeWindow}
+          onMouseDown={onFocusApp}
         />
       )}
       <Footer
-        apps={state.apps}
-        onMouseDownApp={onMouseDownFooterApp}
+        apps={!loading ? state.apps : []}
         focusedAppId={focusedAppId}
-        onMouseDown={onMouseDownFooter}
         onClickMenuItem={onClickMenuItem}
+        onMouseDown={onMouseDownFooter}
+        onMouseDownApp={onMouseDownFooterApp}
       />
       {state.powerState !== POWER_STATE.START && (
         <Modal
+          mode={state.powerState}
           onClose={onModalClose}
           onClickButton={onClickModalButton}
-          mode={state.powerState}
         />
       )}
-    </Container>
+    </div>
   );
 }
 
-const powerOffAnimation = keyframes`
-  0% {
-    filter: brightness(1) grayscale(0);
-  }
-  30% {
-    filter: brightness(1) grayscale(0);
-  }
-  100% {
-    filter: brightness(0.6) grayscale(1);
-  }
-`;
-const animation = {
-  [POWER_STATE.START]: '',
-  [POWER_STATE.TURN_OFF]: powerOffAnimation,
-  [POWER_STATE.LOG_OFF]: powerOffAnimation,
+WinXP.propTypes = {
+  onClose: PropTypes.func.isRequired,
 };
-
-const Container = styled.div`
-  font-family: Tahoma, 'Noto Sans', sans-serif;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  background: url(${background}) no-repeat center center fixed;
-  background-size: cover;
-  animation: ${({ state }) => animation[state]} 5s forwards;
-  *:not(input):not(textarea) {
-    user-select: none;
-  }
-`;
 
 export default WinXP;

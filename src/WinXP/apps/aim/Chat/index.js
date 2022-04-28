@@ -14,7 +14,7 @@ import sendEnabled from '../../../../assets/aim/chat/send-enabled.png';
 
 import './index.css';
 
-function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarItem, sidebarGroup }) {
+function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarChannel, sidebarGroup }) {
   useEffect(() => {
     if (newChat) {
       new Audio(chrome.runtime.getURL("WinXP/assets/audioring.wav")).play().catch(() => {});
@@ -112,7 +112,7 @@ function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarItem,
         // CLICK ON THE CHANNEL
         // IF IT'S NOT VISIBLE THEN EXPAND THE GROUP, CLICK IT, AND COLLAPSE THE GROUP
         if (sidebarGroup.getAttribute('aria-expanded') === 'true') {
-          sidebarItem.querySelector('.p-channel_sidebar__channel').click();
+          sidebarChannel.querySelector('.p-channel_sidebar__channel').click();
         } else {
           const callback = function (mutationsList, observer) {
             for (const mutation of mutationsList) {

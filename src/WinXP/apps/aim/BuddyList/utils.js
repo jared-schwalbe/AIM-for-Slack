@@ -24,10 +24,10 @@ export function getHiddenCounts(updateCount) {
     subtree: true,
   });
 
-  const sidebarItems = document.querySelectorAll('.p-channel_sidebar__static_list__item');
+  const sidebarChannels = document.querySelectorAll('.p-channel_sidebar__static_list__item');
 
   let collpasedCount = 0;
-  Array.from(sidebarItems).forEach(item => {
+  Array.from(sidebarChannels).forEach(item => {
     if (item.id && item.id.includes('sectionHeading') && item.getAttribute('aria-expanded') === 'false') {
       collpasedCount++;
       window.aimForSlack.ignoreNextExpansion[item.id] = true;

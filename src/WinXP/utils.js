@@ -24,7 +24,7 @@ function createGroupUnreadsObserver(addUnread) {
   return new MutationObserver(callback);
 }
 
-export function getUnreads() {
+function getUnreads() {
   const unreads = {};
   const addUnread = (channel, count) => {
     unreads[channel] = count;
@@ -38,10 +38,10 @@ export function getUnreads() {
     subtree: true,
   });
 
-  const sidebarItems = document.querySelectorAll('.p-channel_sidebar__static_list__item');
+  const sidebarChannels = document.querySelectorAll('.p-channel_sidebar__static_list__item');
 
   let collpasedCount = 0;
-  Array.from(sidebarItems).forEach(item => {
+  Array.from(sidebarChannels).forEach(item => {
     if (item.querySelector('.p-channel_sidebar__channel')) {
       // channels: check unread badge
       const channel = item.querySelector('.p-channel_sidebar__name');
@@ -64,7 +64,9 @@ export function getUnreads() {
   return unreads;
 }
 
-export function createNewMessageObserver(unreads, dispatchNewMessage) {
+export default function createNewMessageObserver(dispatchNewMessage) {
+  const unreads = getUnreads();
+
   let groupToWatch = null;
   let watchItems = false;
   let checkingItems = false;
@@ -85,14 +87,14 @@ export function createNewMessageObserver(unreads, dispatchNewMessage) {
         if (channel) {
           if (mutation.addedNodes.length) {
             unreads[channel.textContent] = 1;
-            const sidebarItem = mutation.addedNodes[0].closest('.p-channel_sidebar__static_list__item');
+            const sidebarChannel = mutation.addedNodes[0].closest('.p-channel_sidebar__static_list__item');
             let sidebarGroup = mutation.addedNodes[0].closest('.p-channel_sidebar__static_list__item');
             while (sidebarGroup && !sidebarGroup.id?.includes('sectionHeading')) {
               sidebarGroup = sidebarGroup.previousSibling;
             }
             dispatchNewMessage({
               channelName: channel.textContent,
-              sidebarItem,
+              sidebarChannel,
               sidebarGroup,
             });
           } else {
@@ -135,7 +137,7 @@ export function createNewMessageObserver(unreads, dispatchNewMessage) {
               }
               dispatchNewMessage({
                 channelName: channel.textContent,
-                sidebarItem: mutation.addedNodes[0],
+                sidebarChannel: mutation.addedNodes[0],
                 sidebarGroup,
               });
             }

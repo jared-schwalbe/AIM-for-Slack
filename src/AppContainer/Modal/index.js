@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import bemmit from 'bemmit';
 
-import './style.scss';
+import './styles.scss';
 
 const c = bemmit('aim-for-slack--modal');
 

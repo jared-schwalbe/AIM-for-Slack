@@ -47,7 +47,7 @@ function BuddyList({ onClose, isFocus, dispatch }) {
         const nameEl = item.querySelector('.p-channel_sidebar__name');
         groups[groups.length - 1].children.push({
           element: item.querySelector('.p-channel_sidebar__channel'),
-          sidebarItem: item,
+          sidebarChannel: item,
           sidebarGroup: groups[groups.length - 1].sidebarGroup,
           name: nameEl ? nameEl.textContent : '',
         });
@@ -126,7 +126,7 @@ function BuddyList({ onClose, isFocus, dispatch }) {
       },
       props: {
         channelName: c.name,
-        sidebarItem: c.sidebarItem,
+        sidebarChannel: c.sidebarChannel,
         sidebarGroup: c.sidebarGroup,
       }
     },

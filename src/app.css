@@ -13,15 +13,15 @@ body {
  * This button will be injected into Slack's top-right nav bar
  */
 
-#aim-launcher {
+.aim-for-slack--launcher {
   margin-right: 6px;
   opacity: 1;
 }
 
-#aim-launcher:active {
+.aim-for-slack--launcher:active {
   opacity: 0.8;
 }
 
-#aim-launcher:hover {
+.aim-for-slack--launcher:hover {
   filter: brightness(1.15);
 }

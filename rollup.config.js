@@ -4,6 +4,7 @@ import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import image from '@rollup/plugin-image';
 import styles from 'rollup-plugin-styles';
+import scss from 'rollup-plugin-scss';
 
 import { chromeExtension, simpleReloader } from 'rollup-plugin-chrome-extension';
 
@@ -35,5 +36,6 @@ export default {
     commonjs(),
     image(),
     styles(),
+    scss()
   ],
 };

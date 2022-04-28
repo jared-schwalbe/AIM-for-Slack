@@ -4,29 +4,27 @@
   "author": "Jared Schwalbe",
   "version": "1.0.0",
   "manifest_version": 3,
-  "permissions": [
-    "storage"
-  ],
+  "permissions": ["storage"],
   "content_scripts": [
     {
       "run_at": "document_start",
       "matches": ["*://app.slack.com/client/*"],
-      "js": ["app.js"],
-      "css": ["hide.css"]
+      "css": ["app.css"],
+      "js": ["app.js"]
     }
   ],
   "web_accessible_resources": [
     {
       "matches": ["*://app.slack.com/*"],
       "resources": [
-        "audio/startup.mp3",
-        "audio/error.wav",
-        "audio/dooropen.wav",
-        "audio/doorslam.wav",
-        "audio/imrcv.wav",
-        "audio/imsend.wav",
-        "audio/ring.wav",
-        "hide.css"
+        "app.css",
+        "WinXP/assets/audiostartup.mp3",
+        "WinXP/assets/audioerror.wav",
+        "WinXP/assets/audiodooropen.wav",
+        "WinXP/assets/audiodoorslam.wav",
+        "WinXP/assets/audioimrcv.wav",
+        "WinXP/assets/audioimsend.wav",
+        "WinXP/assets/audioring.wav"
       ]
     }
   ]

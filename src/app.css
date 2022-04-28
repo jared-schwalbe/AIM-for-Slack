@@ -1,0 +1,27 @@
+/*
+ * Sets the body to hidden before the DOM is constructed.
+ * If the user preference is set to load AIM immediately,
+ * we don't want the Slack placeholder to be shown first.
+ */
+
+body {
+  visibility: hidden;
+}
+
+/*
+ * These are for the button that switches to the Windows XP view
+ * This button will be injected into Slack's top-right nav bar
+ */
+
+#aim-launcher {
+  margin-right: 6px;
+  opacity: 1;
+}
+
+#aim-launcher:active {
+  opacity: 0.8;
+}
+
+#aim-launcher:hover {
+  filter: brightness(1.15);
+}

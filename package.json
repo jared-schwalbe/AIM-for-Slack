@@ -5,13 +5,14 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "bemmit": "^1.0.4",
     "html-react-parser": "^1.4.10",
     "lodash.samplesize": "^4.2.0",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-use": "^17.0.2",
-    "styled-components": "^5.3.5",
-    "uuid": "^8.3.2"
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^5.3.1",
@@ -29,6 +30,8 @@
     "rollup": "^2.70.1",
     "rollup-plugin-chrome-extension": "^3.6.7",
     "rollup-plugin-import-file": "^1.0.1",
-    "rollup-plugin-styles": "^4.0.0"
+    "rollup-plugin-scss": "^3.0.0",
+    "rollup-plugin-styles": "^4.0.0",
+    "sass": "^1.51.0"
   }
 }

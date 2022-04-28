@@ -18,12 +18,18 @@ function useElementResize(ref, options) {
       height: 200,
     },
   } = options;
+
   const [offset, setOffset] = useState(defaultOffset);
   const [size, setSize] = useState(defaultSize);
+
   const cursorPos = useCursor(ref, resizeThreshold, resizable);
+
   useEffect(() => {
     const target = ref.current;
-    if (!target) return;
+    if (!target) {
+      return;
+    }
+
     const dragTarget = options.dragRef && options.dragRef.current;
     const cover = document.createElement('div');
     cover.style.position = 'fixed';
@@ -65,12 +71,14 @@ function useElementResize(ref, options) {
         }
       }, 250);
     }
+
     function onDragging(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       const x = pageX - originMouseX + previousOffset.x;
       const y = pageY - originMouseY + previousOffset.y;
       setOffset({ x, y });
     }
+  
     function onDragEnd(e) {
       cover.remove();
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
@@ -79,112 +87,133 @@ function useElementResize(ref, options) {
       window.removeEventListener('mousemove', onDragging);
       window.removeEventListener('mouseup', onDragEnd);
     }
+
     function onDragStart(e) {
       window.addEventListener('mousemove', onDragging);
       window.addEventListener('mouseup', onDragEnd);
     }
+
     function onDraggingTop(e) {
       const { pageY } = getComputedPagePosition(e, _boundary);
       const { x } = previousOffset;
       const y = pageY - originMouseY + previousOffset.y;
       setOffset({ x, y });
     }
+
     function onDragEndTop(e) {
       const { pageY } = getComputedPagePosition(e, _boundary);
       previousOffset.y += pageY - originMouseY;
       window.removeEventListener('mousemove', onDraggingTop);
       window.removeEventListener('mouseup', onDragEndTop);
     }
+
     function onDragStartTop(e) {
       window.addEventListener('mousemove', onDraggingTop);
       window.addEventListener('mouseup', onDragEndTop);
     }
+
     function onDraggingLeft(e) {
       const { pageX } = getComputedPagePosition(e, _boundary);
       const x = pageX - originMouseX + previousOffset.x;
       const { y } = previousOffset;
       setOffset({ x, y });
     }
+
     function onDragEndLeft(e) {
       const { pageX } = getComputedPagePosition(e, _boundary);
       previousOffset.x += pageX - originMouseX;
       window.removeEventListener('mousemove', onDraggingLeft);
       window.removeEventListener('mouseup', onDragEndLeft);
     }
+
     function onDragStartLeft(e) {
       window.addEventListener('mousemove', onDraggingLeft);
       window.addEventListener('mouseup', onDragEndLeft);
     }
+
     function onResizingRight(e) {
       const { pageX } = getComputedPagePosition(e, _boundary);
       const width = pageX - originMouseX + previousSize.width;
       const { height } = previousSize;
       setSize({ width, height });
     }
+
     function onResizeEndRight(e) {
       const { pageX } = getComputedPagePosition(e, _boundary);
       previousSize.width += pageX - originMouseX;
       window.removeEventListener('mousemove', onResizingRight);
       window.removeEventListener('mouseup', onResizeEndRight);
     }
+
     function onResizeStartRight(e) {
       window.addEventListener('mousemove', onResizingRight);
       window.addEventListener('mouseup', onResizeEndRight);
     }
+
     function onResizingBottom(e) {
       const { pageY } = getComputedPagePosition(e, _boundary);
       const { width } = previousSize;
       const height = pageY - originMouseY + previousSize.height;
       setSize({ width, height });
     }
+
     function onResizeEndBottom(e) {
       const { pageY } = getComputedPagePosition(e, _boundary);
       previousSize.height += pageY - originMouseY;
       window.removeEventListener('mousemove', onResizingBottom);
       window.removeEventListener('mouseup', onResizeEndBottom);
     }
+
     function onResizeStartBottom(e) {
       window.addEventListener('mousemove', onResizingBottom);
       window.addEventListener('mouseup', onResizeEndBottom);
     }
+
     function onResizingLeft(e) {
       const { pageX } = getComputedPagePosition(e, _boundary);
       const width = -pageX + originMouseX + previousSize.width;
       const { height } = previousSize;
       setSize({ width, height });
     }
+
     function onResizeEndLeft(e) {
       const { pageX } = getComputedPagePosition(e, _boundary);
       previousSize.width += -pageX + originMouseX;
       window.removeEventListener('mousemove', onResizingLeft);
       window.removeEventListener('mouseup', onResizeEndLeft);
     }
+
     function onResizeStartLeft(e) {
       window.addEventListener('mousemove', onResizingLeft);
       window.addEventListener('mouseup', onResizeEndLeft);
     }
+
     function onResizingTop(e) {
       const { pageY } = getComputedPagePosition(e, _boundary);
       const height = -pageY + originMouseY + previousSize.height;
       const { width } = previousSize;
       setSize({ width, height });
     }
+
     function onResizeEndTop(e) {
       const { pageY } = getComputedPagePosition(e, _boundary);
       previousSize.height += -pageY + originMouseY;
       window.removeEventListener('mousemove', onResizingTop);
       window.removeEventListener('mouseup', onResizeEndTop);
     }
+
     function onResizeStartTop(e) {
       window.addEventListener('mousemove', onResizingTop);
       window.addEventListener('mouseup', onResizeEndTop);
     }
+
     function onResizingTopLeft(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       const width = -pageX + originMouseX + previousSize.width;
       const height = -pageY + originMouseY + previousSize.height;
       setSize({ width, height });
     }
+
     function onResizeEndTopLeft(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       previousSize.width += -pageX + originMouseX;
@@ -192,16 +221,19 @@ function useElementResize(ref, options) {
       window.removeEventListener('mousemove', onResizingTopLeft);
       window.removeEventListener('mouseup', onResizeEndTopLeft);
     }
+
     function onResizeStartTopLeft(e) {
       window.addEventListener('mousemove', onResizingTopLeft);
       window.addEventListener('mouseup', onResizeEndTopLeft);
     }
+
     function onResizingTopRight(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       const width = pageX - originMouseX + previousSize.width;
       const height = -pageY + originMouseY + previousSize.height;
       setSize({ width, height });
     }
+
     function onResizeEndTopRight(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       previousSize.width += pageX - originMouseX;
@@ -209,16 +241,19 @@ function useElementResize(ref, options) {
       window.removeEventListener('mousemove', onResizingTopRight);
       window.removeEventListener('mouseup', onResizeEndTopRight);
     }
+
     function onResizeStartTopRight(e) {
       window.addEventListener('mousemove', onResizingTopRight);
       window.addEventListener('mouseup', onResizeEndTopRight);
     }
+
     function onResizingBottomLeft(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       const width = -pageX + originMouseX + previousSize.width;
       const height = pageY - originMouseY + previousSize.height;
       setSize({ width, height });
     }
+
     function onResizeEndBottomLeft(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       previousSize.width += -pageX + originMouseX;
@@ -226,16 +261,19 @@ function useElementResize(ref, options) {
       window.removeEventListener('mousemove', onResizingBottomLeft);
       window.removeEventListener('mouseup', onResizeEndBottomLeft);
     }
+
     function onResizeStartBottomLeft(e) {
       window.addEventListener('mousemove', onResizingBottomLeft);
       window.addEventListener('mouseup', onResizeEndBottomLeft);
     }
+
     function onResizingBottomRight(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       const width = pageX - originMouseX + previousSize.width;
       const height = pageY - originMouseY + previousSize.height;
       setSize({ width, height });
     }
+
     function onResizeEndBottomRight(e) {
       const { pageX, pageY } = getComputedPagePosition(e, _boundary);
       previousSize.width += pageX - originMouseX;
@@ -243,20 +281,30 @@ function useElementResize(ref, options) {
       window.removeEventListener('mousemove', onResizingBottomRight);
       window.removeEventListener('mouseup', onResizeEndBottomRight);
     }
+
     function onResizeStartBottomRight(e) {
       window.addEventListener('mousemove', onResizingBottomRight);
       window.addEventListener('mouseup', onResizeEndBottomRight);
     }
+
     function onMouseDown(e) {
-      if (e.which !== 1) return;
+      if (e.which !== 1) {
+        return;
+      }
+
       originMouseX = e.pageX;
       originMouseY = e.pageY;
       _boundary = { ...boundary };
+  
       if (dragTarget && e.target === dragTarget) {
         document.body.appendChild(cover);
         return onDragStart(e);
       }
-      if (e.target !== target || !resizable) return;
+
+      if (e.target !== target || !resizable) {
+        return;
+      }
+
       switch (cursorPos) {
         case 'topLeft':
           _boundary.right = originMouseX + previousSize.width - constraintSize.width;
@@ -305,8 +353,10 @@ function useElementResize(ref, options) {
         default:
       }
     }
+
     target.addEventListener('mousedown', onMouseDown);
     window.addEventListener('resize', onWindowResize);
+
     return () => {
       target.removeEventListener('mousedown', onMouseDown);
       window.removeEventListener('resize', onWindowResize);
@@ -336,35 +386,47 @@ function useElementResize(ref, options) {
     };
     // eslint-disable-next-line
   }, [boundary.top, boundary.right, boundary.bottom, boundary.left, cursorPos]);
+
   return { offset, size };
 }
+
 function useCursor(ref, threshold, resizable) {
   const [position, setPosition] = useState('');
+
   useEffect(() => {
     const target = ref.current;
-    if (!target || !resizable) return;
+    if (!target || !resizable) {
+      return;
+    }
+
     const cover = document.createElement('div');
     cover.style.position = 'fixed';
     cover.style.top = 0;
     cover.style.left = 0;
     cover.style.right = 0;
     cover.style.bottom = 0;
+
     let lock = false;
+
     function _setPosition(p) {
       setPosition(p);
       target.style.cursor = getCursorStyle(p);
       cover.style.cursor = getCursorStyle(p);
       document.getElementById('win-xp').style.cursor = getCursorStyle(p);
     }
+
     function onMouseDown(e) {
-      if (e.which !== 1) return;
       const headerClicked = e.target.className === 'app__header';
-      if (e.target !== target && !headerClicked) return;
+      if (e.which !== 1 || (e.target !== target && !headerClicked)) {
+        return;
+      }
+  
       onHover(e);
       lock = true;
       document.body.appendChild(cover);
       window.addEventListener('mouseup', onMouseUp);
     }
+
     function onMouseUp(e) {
       lock = false;
       cover.remove();
@@ -372,14 +434,23 @@ function useCursor(ref, threshold, resizable) {
       window.removeEventListener('mouseup', onMouseUp);
     }
     function onHoverEnd(e) {
-      if (lock) return;
+      if (lock) {
+        return;
+      }
       _setPosition('');
     }
+
     function onHover(e) {
-      if (lock) return;
-      if (e.target !== target) return _setPosition('');
+      if (lock) {
+        return;
+      }
+      if (e.target !== target) {
+        return _setPosition('');
+      }
+
       const { offsetX, offsetY } = e;
       const { width, height } = target.getBoundingClientRect();
+
       if (offsetX < threshold) {
         if (offsetY < threshold) {
           _setPosition('topLeft');
@@ -403,9 +474,11 @@ function useCursor(ref, threshold, resizable) {
         _setPosition('');
       }
     }
+
     target.addEventListener('mouseleave', onHoverEnd);
     target.addEventListener('mousemove', onHover);
     target.addEventListener('mousedown', onMouseDown);
+
     return () => {
       cover.remove();
       target.removeEventListener('mouseleave', onHoverEnd);
@@ -415,19 +488,33 @@ function useCursor(ref, threshold, resizable) {
     };
     // eslint-disable-next-line
   }, []);
+
   return position;
 }
 
 function getComputedPagePosition(e, boundary) {
   let { pageX, pageY } = e;
-  if (!boundary) return { pageX, pageY };
+  if (!boundary) {
+    return { pageX, pageY };
+  }
+
   const { top, right, bottom, left } = boundary;
-  if (pageX <= left) pageX = left;
-  else if (pageX >= right) pageX = right;
-  if (pageY <= top) pageY = top;
-  else if (pageY >= bottom) pageY = bottom;
+  if (pageX <= left) {
+    pageX = left;
+  }
+  else if (pageX >= right) {
+    pageX = right;
+  }
+  if (pageY <= top) {
+    pageY = top;
+  }
+  else if (pageY >= bottom) {
+    pageY = bottom;
+  }
+
   return { pageX, pageY };
 }
+
 function getCursorStyle(pos) {
   switch (pos) {
     case 'top':
@@ -450,4 +537,5 @@ function getCursorStyle(pos) {
       return `url(${defaultCursor}) 11 11, default`;
   }
 }
+
 export default useElementResize;

@@ -1,32 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import WindowDropDown from './WindowDropDown';
 
-export function WindowDropDowns({
-  items,
-  onClickItem,
-  className,
-  height = 20,
-}) {
+const WindowDropDowns = ({ className, height, items, onClickItem }) => {
   const dropDown = useRef(null);
   const [openOption, setOpenOption] = useState('');
-  function hoverOption(option) {
-    if (openOption) setOpenOption(option);
-  }
-  function _onClickItem(name) {
+
+  const hoverOption = (option) => {
+    if (openOption) {
+      setOpenOption(option);
+    }
+  };
+
+  const _onClickItem = (name) => {
     setOpenOption('');
     onClickItem(name);
-  }
-  function onMouseUp(e) {
-    if (!dropDown.current?.contains(e.target)) setOpenOption('');
-  }
+  };
+
+  const onMouseUp = (e) => {
+    if (!dropDown.current?.contains(e.target)) {
+      setOpenOption('');
+    }
+  };
+
   useEffect(() => {
     window.addEventListener('mousedown', onMouseUp);
+
     return () => {
       window.removeEventListener('mousedown', onMouseUp);
     };
   }, []);
+
   return (
     <div className={className} ref={dropDown}>
       {Object.keys(items).map(name => (
@@ -54,6 +60,17 @@ export function WindowDropDowns({
       ))}
     </div>
   );
+};
+
+WindowDropDown.defaultProps = {
+  height: 20,
+};
+
+WindowDropDown.propTypes = {
+  className: PropTypes.string.isRequired,
+  height: PropTypes.number,
+  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  onClickItem: PropTypes.func.isRequired,
 }
 
 export default styled(WindowDropDowns)`

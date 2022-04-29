@@ -13,9 +13,11 @@ export function WindowDropDown({ items, position = {}, onClick, isSubmenu }) {
 
   useLayoutEffect(() => {
     const menuRect = menuRef.current?.getBoundingClientRect() ?? {};
+
     if (!isSubmenu && menuRect.x < 0) {
       menuRef.current.style.left = `${-menuRect.x}px`;
     }
+
     if (menuRect.x + menuRect.width > window.innerWidth) {
       if (isSubmenu) {
         const parentMenu = menuRef.current.parentElement.closest('.drop-down__menu');
@@ -25,6 +27,7 @@ export function WindowDropDown({ items, position = {}, onClick, isSubmenu }) {
         menuRef.current.style.left = `-${menuRect.x + menuRect.width - window.innerWidth}px`;
       }
     }
+
     if (!isSubmenu && menuRect.y + menuRect.height > window.innerHeight) {
       menuRef.current.style.top = `-${menuRect.height + 20}px`;
     }

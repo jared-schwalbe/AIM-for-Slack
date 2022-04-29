@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 
-function Balloon({
+const Balloon = ({
+  duration,
   imgHeaderSrc,
-  textHeader,
   textFirst,
+  textHeader,
   textSecond,
   startAfter,
-  duration,
-  style = {},
-}) {
+  style,
+}) => {
   const [show, setShow] = useState(true);
   const [start, setStart] = useState(false);
+
   useEffect(() => {
     const openTimer = setTimeout(() => setStart(true), startAfter);
     const fadeTimer = setTimeout(() => setShow(false), startAfter + duration);
@@ -19,16 +21,18 @@ function Balloon({
       () => setStart(false),
       startAfter + duration + 1000,
     );
+
     return () => {
       clearTimeout(openTimer);
       clearTimeout(fadeTimer);
       clearTimeout(closeTimer);
     };
   }, [startAfter, duration]);
+
   return (
     start && (
-      <Div show={show}>
-        <div className="balloon__container" style={style}>
+      <Container show={show}>
+        <div className="balloon" style={style}>
           <button onClick={() => setShow(false)} className="balloon__close" />
           <div className="balloon__header">
             <img className="balloon__header__img" src={imgHeaderSrc} alt="" />
@@ -45,10 +49,27 @@ function Balloon({
             </p>
           )}
         </div>
-      </Div>
+      </Container>
     )
   );
-}
+};
+
+Balloon.defaultProps = {
+  duration: 10000,
+  style: {},
+  textSecond: '',
+};
+
+Balloon.propTypes = {
+  duration: PropTypes.number,
+  imgHeaderSrc: PropTypes.string.isRequired,
+  startAfter: PropTypes.number.isRequired,
+  style: PropTypes.object,
+  textFirst: PropTypes.string.isRequired,
+  textHeader: PropTypes.string.isRequired,
+  textSecond: PropTypes.string,
+};
+
 const fadein = keyframes`
   0% {
     margin-top: 0;
@@ -59,6 +80,7 @@ const fadein = keyframes`
     opacity: 1;
   }
 `;
+
 const fadeout = keyframes`
   0% {
     margin-top: 0;
@@ -73,13 +95,14 @@ const fadeout = keyframes`
     opacity: 0;
   }
 `;
-const Div = styled.div`
+
+const Container = styled.div`
   position: absolute;
   display: block;
   opacity: 0;
   animation: ${({ show }) => (show ? fadein : fadeout)} 1s forwards;
   filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, 0.4));
-  .balloon__container {
+  .balloon {
     position: absolute;
     bottom: 19px;
     border: 1px solid black;
@@ -170,4 +193,5 @@ const Div = styled.div`
     margin-bottom: 0;
   }
 `;
+
 export default Balloon;

@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import pointer from '../../assets/cursor/pointer.png';
 import find from './find.svg';
-import smile from './smile.svg';
+import pointer from '../../assets/cursor/pointer.png';
 
-function Search({ className, goMain, onSearch, query }) {
-  const [value, setValue] = useState(query);
+const Search = ({ className, goMain, onSearch, query }) => {
   const [tag, setTag] = useState('All');
-  function onChange(e) {
+  const [value, setValue] = useState(query);
+
+  const onChange = (e) => {
     setValue(e.target.value);
-  }
-  function onClick() {
+  };
+
+  const onClick = () => {
+    onSearch(value);
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key !== 'Enter') {
+      return;
+    }
     onSearch(value);
   }
-  function onKeyDown(e) {
-    if (e.key !== 'Enter') return;
-    onSearch(value);
-  }
-  function renderTags() {
+
+  const renderTags = () => {
     return 'All,Maps,Images,News,Videos,More'.split(',').map(tagName => (
       <div
         onClick={() => setTag(tagName)}
@@ -28,7 +34,8 @@ function Search({ className, goMain, onSearch, query }) {
         {tagName}
       </div>
     ));
-  }
+  };
+
   return (
     <div className={className}>
       <section className="top-bars">
@@ -60,11 +67,6 @@ function Search({ className, goMain, onSearch, query }) {
               </div>
             </div>
           </div>
-          <div className="bar-items right">
-            <div className="functions">
-              <img src={smile} alt="smile" />
-            </div>
-          </div>
         </div>
         <div className="app-bar">
           <div className="tags left">{renderTags()}</div>
@@ -87,11 +89,6 @@ function Search({ className, goMain, onSearch, query }) {
         </ul>
       </section>
       <footer>
-        <section className="upper">
-          <div className="footer-items left">
-            <div className="item">Taiwan</div>
-          </div>
-        </section>
         <section className="lower">
           <div className="footer-items left">
             <div className="item">Help</div>
@@ -103,7 +100,14 @@ function Search({ className, goMain, onSearch, query }) {
       </footer>
     </div>
   );
-}
+};
+
+Search.propTypes = {
+  className: PropTypes.string.isRequired,
+  goMain: PropTypes.func.isRequired,
+  onSearch: PropTypes.func.isRequired,
+  query: PropTypes.string.isRequired,
+};
 
 export default styled(Search)`
   height: 100%;
@@ -216,10 +220,12 @@ export default styled(Search)`
     font-weight: 700;
   }
   footer {
+    display: flex;
+    align-items: center;
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 83px;
+    height: 44px;
     border-top: 1px solid rgba(0, 0, 0, 0.07);
     background-color: rgba(0, 0, 0, 0.05);
     .upper {
@@ -232,7 +238,6 @@ export default styled(Search)`
     }
     .lower {
       position: relative;
-      border-top: 1px solid rgba(0, 0, 0, 0.07);
       height: 50%;
       color: rgb(95, 99, 104);
       font-size: 13px;

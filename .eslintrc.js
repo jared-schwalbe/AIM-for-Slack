@@ -4,9 +4,7 @@ module.exports = {
     es2021: true,
   },
   globals: {
-    $: 'readonly',
     chrome: 'readonly',
-    state: 'readonly',
   },
   extends: ['react-app'],
   parserOptions: {

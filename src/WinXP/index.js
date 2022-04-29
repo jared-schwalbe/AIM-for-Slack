@@ -35,7 +35,7 @@ const initState = {
   nextZIndex: defaultAppState.length,
   focusing: FOCUSING.WINDOW,
   icons: defaultIconState,
-  selecting: false,
+  selecting: null,
   powerState: POWER_STATE.START,
 };
 
@@ -384,7 +384,7 @@ const WinXP = ({ onClose }) => {
       if (slackLoaded) {
         doneLoading();
       }
-    }, 1000);
+    }, 2000);
 
     return () => {
       clearTimeout(loadingTimer);

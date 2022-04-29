@@ -1,20 +1,27 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import pointer from '../../assets/cursor/pointer.png';
 
-function Main({ onSearch, className }) {
+const Main = ({ className, onSearch }) => {
   const [value, setValue] = useState('');
-  function onChange(e) {
+
+  const onChange = (e) => {
     setValue(e.target.value);
-  }
-  function onClick() {
+  };
+
+  const onClick = () => {
     onSearch(value);
   }
-  function onKeyDown(e) {
-    if (e.key !== 'Enter') return;
+
+  const onKeyDown = (e) => {
+    if (e.key !== 'Enter') {
+      return;
+    }
     onSearch(value);
   }
+
   return (
     <div className={className}>
       <header>
@@ -66,7 +73,12 @@ function Main({ onSearch, className }) {
       </footer>
     </div>
   );
-}
+};
+
+Main.propTypes = {
+  className: PropTypes.string.isRequired,
+  onSearch: PropTypes.func.isRequired, 
+};
 
 export default styled(Main)`
   height: 100%;
@@ -219,7 +231,6 @@ export default styled(Main)`
       padding-right: 27px;
     }
   }
-
   @media (max-width: 768px) {
     header {
       img {

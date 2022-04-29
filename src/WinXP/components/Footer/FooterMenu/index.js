@@ -1,42 +1,44 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import SubMenu from '../SubMenu';
-import { AllPrograms, ConnectTo, MyRecentDocuments } from './FooterMenuData';
+import SubMenu from '../../SubMenu';
+import { AllPrograms, ConnectTo, MyRecentDocuments } from './footerMenuData';
 
-import ie from '../../assets/icons/ie.png';
-import aim from '../../assets/icons/aim.png';
-import mine from '../../assets/minesweeper/mine-icon.png';
-import setAccess from '../../assets/icons/227(32x32).png';
-import outlook from '../../assets/icons/887(32x32).png';
-import mediaPlayer from '../../assets/icons/846(32x32).png';
-import messenger from '../../assets/icons/msn.png';
-import documents from '../../assets/icons/308(32x32).png';
-import recentDocuments from '../../assets/icons/301(32x32).png';
-import pictures from '../../assets/icons/307(32x32).png';
-import music from '../../assets/icons/550(32x32).png';
-import computer from '../../assets/icons/676(32x32).png';
-import controlPanel from '../../assets/icons/300(32x32).png';
-import connect from '../../assets/icons/309(32x32).png';
-import printer from '../../assets/icons/549(32x32).png';
-import paint from '../../assets/icons/680(32x32).png';
-import help from '../../assets/icons/747(32x32).png';
-import search from '../../assets/icons/299(32x32).png';
-import run from '../../assets/icons/743(32x32).png';
-import lock from '../../assets/icons/546(32x32).png';
-import user from '../../assets/icons/user.png';
-import shut from '../../assets/icons/310(32x32).png';
-import allProgramsIcon from '../../assets/icons/all-programs.png';
-import notepad from '../../assets/icons/327(32x32).png';
-import empty from '../../assets/empty.png';
+import ie from '../../../assets/icons/ie.png';
+import aim from '../../../assets/icons/aim.png';
+import mine from '../../../assets/minesweeper/mine-icon.png';
+import setAccess from '../../../assets/icons/227(32x32).png';
+import outlook from '../../../assets/icons/887(32x32).png';
+import mediaPlayer from '../../../assets/icons/846(32x32).png';
+import messenger from '../../../assets/icons/msn.png';
+import documents from '../../../assets/icons/308(32x32).png';
+import recentDocuments from '../../../assets/icons/301(32x32).png';
+import pictures from '../../../assets/icons/307(32x32).png';
+import music from '../../../assets/icons/550(32x32).png';
+import computer from '../../../assets/icons/676(32x32).png';
+import controlPanel from '../../../assets/icons/300(32x32).png';
+import connect from '../../../assets/icons/309(32x32).png';
+import printer from '../../../assets/icons/549(32x32).png';
+import paint from '../../../assets/icons/680(32x32).png';
+import help from '../../../assets/icons/747(32x32).png';
+import search from '../../../assets/icons/299(32x32).png';
+import run from '../../../assets/icons/743(32x32).png';
+import lock from '../../../assets/icons/546(32x32).png';
+import user from '../../../assets/icons/user.png';
+import shut from '../../../assets/icons/310(32x32).png';
+import allProgramsIcon from '../../../assets/icons/all-programs.png';
+import notepad from '../../../assets/icons/327(32x32).png';
+import empty from '../../../assets/empty.png';
 
-function FooterMenu({ className, onClick }) {
+const FooterMenu = ({ className, onClick }) => {
   const [hovering, setHovering] = useState('');
-  function onMouseOver(e) {
+
+  const onMouseOver = (e) => {
     const item = e.target.closest('.menu__item');
     if (!item) return;
     setHovering(item.querySelector('.menu__item__text').textContent);
   }
+
   return (
     <div className={className}>
       <header>
@@ -190,23 +192,27 @@ function FooterMenu({ className, onClick }) {
     </div>
   );
 }
-function Items({ items, ...rest }) {
+
+const Items = ({ items, ...rest }) => {
   return items.map((item, i) => <Item key={i} {...item} {...rest} />);
 }
-function Item({
+
+const Item = ({
   style,
   text,
   icon,
   onHover = () => {},
   onClick = () => {},
   children,
-}) {
-  function _onClick() {
+}) => {
+  const _onClick = () => {
     onClick(text);
   }
-  function onMouseEnter() {
+
+  const onMouseEnter = () => {
     onHover(text);
   }
+
   return (
     <div
       className="menu__item"
@@ -222,6 +228,7 @@ function Item({
     </div>
   );
 }
+
 export default styled(FooterMenu)`
   font-size: 11px;
   line-height: 14px;
@@ -319,7 +326,6 @@ export default styled(FooterMenu)`
       #0f61cb 88%
     );
   }
-
   .footer__item {
     padding: 3px;
     display: flex;

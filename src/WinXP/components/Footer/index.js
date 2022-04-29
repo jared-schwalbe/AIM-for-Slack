@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import FooterMenu from './FooterMenu';
 import Balloon from '../../components/Balloon';
+import FooterMenu from './FooterMenu';
+import FooterWindow from './FooterWindow';
+
 import startButton from '../../assets/icons/start.png';
 import sound from '../../assets/icons/690(16x16).png';
 import media from '../../assets/icons/846(16x16)_small.png';
@@ -27,42 +30,58 @@ const getTime = () => {
   return `${hour}:${min} ${hourPostFix}`;
 };
 
-function Footer({
-  onMouseDownApp,
+const Footer = ({
   apps,
   focusedAppId,
-  onMouseDown,
   onClickMenuItem,
-}) {
+  onMouseDown,
+  onMouseDownApp,
+}) => {
   const [time, setTime] = useState(getTime);
   const [menuOn, setMenuOn] = useState(false);
   const menu = useRef(null);
-  function toggleMenu() {
+
+  const toggleMenu = () => {
     setMenuOn(on => !on);
   }
-  function _onMouseDown(e) {
-    if (e.target.closest('.footer__window')) return;
+
+  const _onMouseDown = () => {
     onMouseDown();
   }
-  function _onClickMenuItem(name) {
+
+  const _onClickMenuItem = (name) => {
     onClickMenuItem(name);
     setMenuOn(false);
   }
+
   useEffect(() => {
     const timer = setInterval(() => {
       const newTime = getTime();
       newTime !== time && setTime(newTime);
     }, 1000);
-    return () => clearInterval(timer);
+  
+    return () => {
+      clearInterval(timer);
+    };
   }, [time]);
+
   useEffect(() => {
     const target = menu.current;
-    if (!target) return;
-    function onMouseDown(e) {
-      if (!target.contains(e.target) && menuOn) setMenuOn(false);
+    if (!target) {
+      return;
     }
+  
+    const onMouseDown = (e) => {
+      if (!target.contains(e.target) && menuOn) {
+        setMenuOn(false);
+      }
+    }
+
     window.addEventListener('mousedown', onMouseDown);
-    return () => window.removeEventListener('mousedown', onMouseDown);
+
+    return () => {
+      window.removeEventListener('mousedown', onMouseDown);
+    };
   }, [menuOn]);
 
   return (
@@ -81,18 +100,17 @@ function Footer({
           app =>
             !app.header.noFooterWindow && (
               <FooterWindow
-                key={app.id}
-                id={app.id}
-                icon={app.header.icon}
-                title={app.header.title}
-                onMouseDown={onMouseDownApp}
-                isFocus={focusedAppId === app.id}
                 hasNotification={app.hasNotification}
+                icon={app.header.icon}
+                id={app.id}
+                isFocus={focusedAppId === app.id}
+                key={app.id}
+                onMouseDown={onMouseDownApp}
+                title={app.header.title}
               />
             ),
         )}
       </div>
-
       <div className="footer__items right">
         <img className="footer__icon" src={sound} alt="" />
         <img className="footer__icon" src={media} alt="" />
@@ -104,7 +122,6 @@ function Footer({
             textFirst="Antivirus software might not be installed"
             textSecond="Click this balloon to fix this problem."
             startAfter={3000}
-            duration={12000}
             style={{ whiteSpace: 'nowrap', right: "-6px" }}
           />
           <Balloon
@@ -112,7 +129,6 @@ function Footer({
             textHeader="Take a tour of Windows XP"
             textFirst="To learn about the exciting new features in XP now, click here. To take the tour later, click All Programs on the Start menu, and then click Accessories."
             startAfter={22000}
-            duration={12000}
             style={{ width: "345px", right: "11px" }}
           />
         </div>
@@ -120,22 +136,28 @@ function Footer({
       </div>
     </Container>
   );
-}
+};
 
-function FooterWindow({ id, icon, title, onMouseDown, isFocus, hasNotification }) {
-  function _onMouseDown() {
-    onMouseDown(id);
-  }
-  return (
-    <div
-      onMouseDown={_onMouseDown}
-      className={`footer__window ${isFocus ? 'focus' : 'cover'} ${hasNotification ? 'notification' : ''}`}
-    >
-      <img className="footer__icon" src={icon} alt={title} />
-      <div className="footer__text">{title}</div>
-    </div>
-  );
-}
+Footer.defaultProps = {
+  focusedAppId: null,
+};
+
+Footer.propTypes = {
+  apps: PropTypes.arrayOf(
+    PropTypes.shape({
+      hasNotification: PropTypes.bool,
+      id: PropTypes.number.isRequired,
+      header: PropTypes.shape({
+        icon: PropTypes.string,
+        title: PropTypes.string.isRequired,
+      }).isRequired,
+    }),
+  ).isRequired,
+  focusedAppId: PropTypes.number,
+  onClickMenuItem: PropTypes.func.isRequired,
+  onMouseDown: PropTypes.func.isRequired,
+  onMouseDownApp: PropTypes.func.isRequired,
+};
 
 const Container = styled.footer`
   height: 30px;
@@ -212,81 +234,6 @@ const Container = styled.footer`
     left: 0;
     box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.5);
     bottom: 100%;
-  }
-  .footer__window {
-    flex: 1;
-    max-width: 150px;
-    color: #fff;
-    border-radius: 2px;
-    margin-top: 2px;
-    padding: 0 8px;
-    height: 22px;
-    font-size: 11px;
-    background-color: #3c81f3;
-    box-shadow: inset -1px 0px rgba(0, 0, 0, 0.3),
-      inset 1px 1px 1px rgba(255, 255, 255, 0.2);
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-  .footer__icon {
-    height: 15px;
-    width: 15px;
-    margin: 0 1px;
-  }
-  .footer__text {
-    position: absolute;
-    left: 27px;
-    right: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .footer__window.cover:hover {
-    background-color: #53a3ff;
-    box-shadow: 1px 0px 1px rgba(0, 0, 0, 0.2),
-      inset 1px 1px 1px rgba(255, 255, 255, 0.3);
-  }
-  .footer__window.cover:before {
-    display: block;
-    content: '';
-    position: absolute;
-    left: -2px;
-    top: -2px;
-    width: 10px;
-    height: 1px;
-    border-bottom-right-radius: 50%;
-    box-shadow: 2px 2px 3px rgba(255, 255, 255, 0.5);
-  }
-  .footer__window.cover:hover:active {
-    background-color: #1e52b7;
-    box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.3),
-      inset 1px 0 1px rgba(0, 0, 0, 0.7);
-  }
-  .footer__window.focus:hover {
-    background-color: #3576f3;
-  }
-  .footer__window.focus:hover:active {
-    background-color: #1e52b7;
-  }
-  .footer__window.focus {
-    background-color: #1e52b7;
-    box-shadow: inset 0 0 1px 1px rgba(0, 0, 0, 0.2),
-      inset 1px 0 1px rgba(0, 0, 0, 0.7);
-  }
-  @keyframes footer-blink {
-    0%, 38% {
-      background-color: #e27907;
-    }
-    39%, 52% {
-      background-color: #3c81f3;
-    }
-    53%, 100% {
-      background-color: #e27907;
-    }
-  }
-  .footer__window.notification {
-    animation: footer-blink 1.6s infinite;
   }
   .footer__time {
     margin: 0 5px;

@@ -24,6 +24,7 @@ import recycleBin from '../assets/icons/recycle-bin(16x16).png';
 import recycleBinLarge from '../assets/icons/recycle-bin.png';
 
 const randomPos = (max, min) => Math.round(Math.random() * (max - min)) + min;
+
 const gen = () => {
   let id = -1;
   return () => {
@@ -31,8 +32,10 @@ const gen = () => {
     return id;
   };
 };
+
 const genId = gen();
 const genIndex = gen();
+
 export const defaultAppState = [
   {
     header: {
@@ -282,8 +285,8 @@ export const appSettings = {
       height: 340,
     },
     defaultSize: {
-      width: 475,
-      height: 415,
+      width: 500,
+      height: 435,
     },
     defaultOffset: {
       x: (window.innerWidth / 2) - (500 / 2),
@@ -304,4 +307,13 @@ export const appSettings = {
   },
 };
 
-export { InternetExplorer, Minesweeper, ErrorBox, MyComputer, RecycleBin, Notepad, AIMBuddyList, AIMChat };
+export {
+  InternetExplorer,
+  Minesweeper,
+  ErrorBox,
+  MyComputer,
+  RecycleBin,
+  Notepad,
+  AIMBuddyList,
+  AIMChat,
+};

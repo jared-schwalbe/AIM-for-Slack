@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function DashedBox({ mouse, startPos }) {
-  function getRect() {
+const DashedBox = ({ mouse, startPos }) => {
+  const getRect = () => {
     return {
       x: Math.min(startPos.x, mouse.docX),
       y: Math.min(startPos.y, mouse.docY),
@@ -9,6 +10,7 @@ function DashedBox({ mouse, startPos }) {
       h: Math.abs(startPos.y - mouse.docY),
     };
   }
+
   if (startPos) {
     const { x, y, w, h } = getRect();
     return (
@@ -23,7 +25,23 @@ function DashedBox({ mouse, startPos }) {
       />
     );
   }
+
   return null;
-}
+};
+
+DashedBox.defaultProps = {
+  startPos: null,
+};
+
+DashedBox.propTypes = {
+  mouse: PropTypes.shape({
+    docX: PropTypes.number.isRequired,
+    docY: PropTypes.number.isRequired,
+  }).isRequired,
+  startPos: PropTypes.shape({
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
+  }),
+};
 
 export default DashedBox;

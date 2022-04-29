@@ -1,24 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { WindowDropDowns } from '../../../components';
+import { WindowDropDowns } from '../../components';
 import dropDownData from './dropDownData';
-import go from '../../../assets/icons/290.png';
-import search from '../../../assets/icons/299(32x32).png';
-import recycleBin from '../../../assets/icons/recycle-bin(16x16).png';
-import back from '../../../assets/icons/back.png';
-import forward from '../../../assets/icons/forward.png';
-import up from '../../../assets/icons/up.png';
-import control from '../../../assets/icons/300(16x16).png';
-import network from '../../../assets/icons/693(16x16).png';
-import document from '../../../assets/icons/308(16x16).png';
-import folderSmall from '../../../assets/icons/318(16x16).png';
-import menu from '../../../assets/icons/358(32x32).png';
-import folderOpen from '../../../assets/icons/337(32x32).png';
-import dropdown from '../../../assets/icons/dropdown.png';
-import pullup from '../../../assets/icons/pullup.png';
-import windows from '../../../assets/icons/windows.png';
-import pointer from '../../../assets/cursor/pointer.png';
+
+import go from '../../assets/icons/290.png';
+import search from '../../assets/icons/299(32x32).png';
+import recycleBin from '../../assets/icons/recycle-bin(16x16).png';
+import back from '../../assets/icons/back.png';
+import forward from '../../assets/icons/forward.png';
+import up from '../../assets/icons/up.png';
+import control from '../../assets/icons/300(16x16).png';
+import network from '../../assets/icons/693(16x16).png';
+import document from '../../assets/icons/308(16x16).png';
+import folderSmall from '../../assets/icons/318(16x16).png';
+import menu from '../../assets/icons/358(32x32).png';
+import folderOpen from '../../assets/icons/337(32x32).png';
+import dropdown from '../../assets/icons/dropdown.png';
+import pullup from '../../assets/icons/pullup.png';
+import windows from '../../assets/icons/windows.png';
+import pointer from '../../assets/cursor/pointer.png';
 
 function RecycleBin({ onClose }) {
   function onClickOptionItem(item) {

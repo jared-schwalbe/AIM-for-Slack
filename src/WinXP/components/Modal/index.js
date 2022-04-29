@@ -2,7 +2,7 @@ import React from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
 
-import { POWER_STATE } from '../constants';
+import { POWER_STATE } from '../../constants';
 import windowsLogo from '../../assets/icons/windows-off.png';
 import off from '../../assets/icons/310(32x32).png';
 import lock from '../../assets/icons/546(32x32).png';

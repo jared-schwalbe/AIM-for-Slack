@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
-import error from '../../../assets/icons/897(32x32).png';
+import error from '../../assets/icons/897(32x32).png';
 
 function lineBreak(str) {
   return str.split('\n').map((s, i) => (

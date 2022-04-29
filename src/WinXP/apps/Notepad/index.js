@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { WindowDropDowns } from '../../../components';
+import { WindowDropDowns } from '../../components';
 import dropDownData from './dropDownData';
 
 export default function Notepad({ onClose }) {

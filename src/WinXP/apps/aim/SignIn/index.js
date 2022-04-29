@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { ADD_APP } from '../../../constants/actions';
 import { appSettings } from '../../';
 
-import signIn from '../../../../assets/aim/sign-in.png';
-import defaultCursor from '../../../../assets/cursor/default.png';
+import signIn from '../../../assets/aim/sign-in.png';
+import defaultCursor from '../../../assets/cursor/default.png';
 
 function SignIn({ onClose, dispatch }) {
   const [stage, setStage] = useState('1. Connecting ...');

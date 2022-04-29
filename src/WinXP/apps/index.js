@@ -8,19 +8,20 @@ import AIMBuddyList from './aim/BuddyList';
 import AIMChat from './aim/Chat';
 import Notepad from './Notepad';
 import Paint from './Paint';
-import iePaper from '../../assets/icons/ie-paper.png';
-import ie from '../../assets/icons/ie.png';
-import mine from '../../assets/minesweeper/mine-icon.png';
-import error from '../../assets/icons/897(16x16).png';
-import computer from '../../assets/icons/676(16x16).png';
-import computerLarge from '../../assets/icons/676(32x32).png';
-import notepad from '../../assets/icons/327(16x16).png';
-import paint from '../../assets/icons/680(16x16).png';
-import aim from '../../assets/icons/aim.png';
-import aimBuddyList from '../../assets/icons/aim-buddy-list.png';
-import aimChat from '../../assets/icons/aim-chat.png';
-import recycleBin from '../../assets/icons/recycle-bin(16x16).png';
-import recycleBinLarge from '../../assets/icons/recycle-bin.png';
+
+import iePaper from '../assets/icons/ie-paper.png';
+import ie from '../assets/icons/ie.png';
+import mine from '../assets/minesweeper/mine-icon.png';
+import error from '../assets/icons/897(16x16).png';
+import computer from '../assets/icons/676(16x16).png';
+import computerLarge from '../assets/icons/676(32x32).png';
+import notepad from '../assets/icons/327(16x16).png';
+import paint from '../assets/icons/680(16x16).png';
+import aim from '../assets/icons/aim.png';
+import aimBuddyList from '../assets/icons/aim-buddy-list.png';
+import aimChat from '../assets/icons/aim-chat.png';
+import recycleBin from '../assets/icons/recycle-bin(16x16).png';
+import recycleBinLarge from '../assets/icons/recycle-bin.png';
 
 const randomPos = (max, min) => Math.round(Math.random() * (max - min)) + min;
 const gen = () => {

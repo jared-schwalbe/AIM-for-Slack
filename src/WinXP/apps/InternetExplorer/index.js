@@ -1,26 +1,27 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { WindowDropDowns, Google } from '../../../components';
+import { WindowDropDowns, Google } from '../../components';
 import dropDownData from './dropDownData';
-import ie from '../../../assets/icons/ie-paper.png';
-import printer from '../../../assets/icons/17(32x32).png';
-import go from '../../../assets/icons/290.png';
-import links from '../../../assets/icons/links.png';
-import search from '../../../assets/icons/299(32x32).png';
-import favorite from '../../../assets/icons/744(32x32).png';
-import back from '../../../assets/icons/back.png';
-import earth from '../../../assets/icons/earth.png';
-import edit from '../../../assets/icons/edit.png';
-import forward from '../../../assets/icons/forward.png';
-import history from '../../../assets/icons/history.png';
-import home from '../../../assets/icons/home.png';
-import mail from '../../../assets/icons/mail.png';
-import msn from '../../../assets/icons/msn.png';
-import refresh from '../../../assets/icons/refresh.png';
-import stop from '../../../assets/icons/stop.png';
-import windows from '../../../assets/icons/windows.png';
-import dropdown from '../../../assets/icons/dropdown.png';
+
+import ie from '../../assets/icons/ie-paper.png';
+import printer from '../../assets/icons/17(32x32).png';
+import go from '../../assets/icons/290.png';
+import links from '../../assets/icons/links.png';
+import search from '../../assets/icons/299(32x32).png';
+import favorite from '../../assets/icons/744(32x32).png';
+import back from '../../assets/icons/back.png';
+import earth from '../../assets/icons/earth.png';
+import edit from '../../assets/icons/edit.png';
+import forward from '../../assets/icons/forward.png';
+import history from '../../assets/icons/history.png';
+import home from '../../assets/icons/home.png';
+import mail from '../../assets/icons/mail.png';
+import msn from '../../assets/icons/msn.png';
+import refresh from '../../assets/icons/refresh.png';
+import stop from '../../assets/icons/stop.png';
+import windows from '../../assets/icons/windows.png';
+import dropdown from '../../assets/icons/dropdown.png';
 
 function InternetExplorer({ onClose }) {
   const [state, setState] = useState({

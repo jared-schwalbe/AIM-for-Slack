@@ -1,17 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-import { WindowDropDowns } from '../../../../components';
+import { WindowDropDowns } from '../../../components';
 import dropDownData from './dropDownData';
 
-import formatting from '../../../../assets/aim/chat/formatting.png';
-import warn from '../../../../assets/aim/chat/warn.png';
-import block from '../../../../assets/aim/chat/block.png';
-import addBuddy from '../../../../assets/aim/chat/add-buddy.png';
-import talk from '../../../../assets/aim/chat/talk.png';
-import getInfo from '../../../../assets/aim/chat/get-info.png';
-import sendDisabled from '../../../../assets/aim/chat/send-disabled.png';
-import sendEnabled from '../../../../assets/aim/chat/send-enabled.png';
-
+import formatting from '../../../assets/aim/chat/formatting.png';
+import warn from '../../../assets/aim/chat/warn.png';
+import block from '../../../assets/aim/chat/block.png';
+import addBuddy from '../../../assets/aim/chat/add-buddy.png';
+import talk from '../../../assets/aim/chat/talk.png';
+import getInfo from '../../../assets/aim/chat/get-info.png';
+import sendDisabled from '../../../assets/aim/chat/send-disabled.png';
+import sendEnabled from '../../../assets/aim/chat/send-enabled.png';
 import './index.css';
 
 function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarChannel, sidebarGroup }) {

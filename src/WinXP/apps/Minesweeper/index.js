@@ -1,8 +1,8 @@
 import React, { useReducer, useEffect, useState } from 'react';
 import sampleSize from 'lodash.samplesize';
 
-import { Config } from './config';
 import MinesweeperView from './MinesweeperView';
+import { Config } from './config';
 
 // state: {
 //   difficulty: 'Beginner' || 'Intermediate' || 'Expert',

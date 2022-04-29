@@ -1,29 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { WindowDropDowns } from '../../../components';
+import { WindowDropDowns } from '../../components';
 import dropDownData from './dropDownData';
 
-import go from '../../../assets/icons/290.png';
-import search from '../../../assets/icons/299(32x32).png';
-import computer from '../../../assets/icons/676(16x16).png';
-import back from '../../../assets/icons/back.png';
-import forward from '../../../assets/icons/forward.png';
-import up from '../../../assets/icons/up.png';
-import remove from '../../../assets/icons/302(16x16).png';
-import control from '../../../assets/icons/300(16x16).png';
-import network from '../../../assets/icons/693(16x16).png';
-import document from '../../../assets/icons/308(16x16).png';
-import folderSmall from '../../../assets/icons/318(16x16).png';
-import menu from '../../../assets/icons/358(32x32).png';
-import folder from '../../../assets/icons/318(48x48).png';
-import folderOpen from '../../../assets/icons/337(32x32).png';
-import disk from '../../../assets/icons/334(48x48).png';
-import cd from '../../../assets/icons/111(48x48).png';
-import dropdown from '../../../assets/icons/dropdown.png';
-import pullup from '../../../assets/icons/pullup.png';
-import windows from '../../../assets/icons/windows.png';
-import pointer from '../../../assets/cursor/pointer.png';
+import go from '../../assets/icons/290.png';
+import search from '../../assets/icons/299(32x32).png';
+import computer from '../../assets/icons/676(16x16).png';
+import back from '../../assets/icons/back.png';
+import forward from '../../assets/icons/forward.png';
+import up from '../../assets/icons/up.png';
+import remove from '../../assets/icons/302(16x16).png';
+import control from '../../assets/icons/300(16x16).png';
+import network from '../../assets/icons/693(16x16).png';
+import document from '../../assets/icons/308(16x16).png';
+import folderSmall from '../../assets/icons/318(16x16).png';
+import menu from '../../assets/icons/358(32x32).png';
+import folder from '../../assets/icons/318(48x48).png';
+import folderOpen from '../../assets/icons/337(32x32).png';
+import disk from '../../assets/icons/334(48x48).png';
+import cd from '../../assets/icons/111(48x48).png';
+import dropdown from '../../assets/icons/dropdown.png';
+import pullup from '../../assets/icons/pullup.png';
+import windows from '../../assets/icons/windows.png';
+import pointer from '../../assets/cursor/pointer.png';
 
 function MyComputer({ onClose }) {
   function onClickOptionItem(item) {

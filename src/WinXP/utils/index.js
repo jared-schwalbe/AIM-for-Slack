@@ -1,7 +1,2 @@
-import playAudio from './playAudio';
-import useElementResize from './useElementResize';
-
-export default {
-  playAudio,
-  useElementResize,
-};
+export { default as playAudio } from './playAudio';
+export { default as useElementResize } from './useElementResize';

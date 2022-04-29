@@ -1,21 +1,9 @@
-import Ballon from './Balloon';
-import DashedBox from './DashedBox';
-import Footer from './Footer';
-import Google from './Google';
-import Icons from './Icons';
-import Modal from './Modal';
-import SubMenu from './SubMenu';
-import WindowDropDowns from './WindowDropDowns';
-import Windows from './Windows';
-
-export default {
-  Ballon,
-  DashedBox,
-  Footer,
-  Google,
-  Icons,
-  Modal,
-  SubMenu,
-  WindowDropDowns,
-  Windows,
-};
+export { default as Balloon } from './Balloon';
+export { default as DashedBox } from './DashedBox';
+export { default as Footer } from './Footer';
+export { default as Google } from './Google';
+export { default as Icons } from './Icons';
+export { default as Modal } from './Modal';
+export { default as SubMenu } from './SubMenu';
+export { default as WindowDropDowns } from './WindowDropDowns';
+export { default as Windows } from './Windows';

@@ -3,18 +3,17 @@ import styled from 'styled-components';
 
 import { appSettings } from '../../';
 import { ADD_APP } from '../../../constants/actions';
-import { WindowDropDowns } from '../../../../components';
+import { WindowDropDowns } from '../../../components'
+import { getHiddenCounts } from './utils';
 import dropDownData from './dropDownData';
 
-import banner from '../../../../assets/aim/buddy-list/banner.png';
-import options from '../../../../assets/aim/buddy-list/options.png';
-import background from '../../../../assets/aim/buddy-list/background.png';
-import actionsTop from '../../../../assets/aim/buddy-list/actions-top.png';
-import actionsBottom from '../../../../assets/aim/buddy-list/actions-bottom.png';
-import ticker from '../../../../assets/aim/buddy-list/ticker.png';
-import pointer from '../../../../assets/cursor/pointer.png';
-
-import { getHiddenCounts } from './utils';
+import banner from '../../../assets/aim/buddy-list/banner.png';
+import options from '../../../assets/aim/buddy-list/options.png';
+import background from '../../../assets/aim/buddy-list/background.png';
+import actionsTop from '../../../assets/aim/buddy-list/actions-top.png';
+import actionsBottom from '../../../assets/aim/buddy-list/actions-bottom.png';
+import ticker from '../../../assets/aim/buddy-list/ticker.png';
+import pointer from '../../../assets/cursor/pointer.png';
 
 function BuddyList({ onClose, isFocus, dispatch }) {
   const counts = useRef({});

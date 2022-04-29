@@ -1,5 +1,2 @@
-import createNewMentionsObserver from './createNewMentionsObserver';
 
-export default {
-  createNewMentionsObserver,
-};
+export { default as createNewMentionsObserver } from './newMentions';

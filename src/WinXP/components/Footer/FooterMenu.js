@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import SubMenu from '../../components/SubMenu';
+import SubMenu from '../SubMenu';
+import { AllPrograms, ConnectTo, MyRecentDocuments } from './FooterMenuData';
+
 import ie from '../../assets/icons/ie.png';
 import aim from '../../assets/icons/aim.png';
 import mine from '../../assets/minesweeper/mine-icon.png';
@@ -27,8 +29,6 @@ import shut from '../../assets/icons/310(32x32).png';
 import allProgramsIcon from '../../assets/icons/all-programs.png';
 import notepad from '../../assets/icons/327(32x32).png';
 import empty from '../../assets/empty.png';
-
-import { AllPrograms, ConnectTo, MyRecentDocuments } from './FooterMenuData';
 
 function FooterMenu({ className, onClick }) {
   const [hovering, setHovering] = useState('');

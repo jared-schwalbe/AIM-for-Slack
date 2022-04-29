@@ -16,13 +16,13 @@ import './index.css';
 function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarChannel, sidebarGroup }) {
   useEffect(() => {
     if (newChat) {
-      new Audio(chrome.runtime.getURL("WinXP/assets/audioring.wav")).play().catch(() => {});
+      new Audio(chrome.runtime.getURL("WinXP/assets/audio/ring.wav")).play().catch(() => {});
     }
   }, []);
 
   useEffect(() => {
     if (newMessage) {
-      new Audio(chrome.runtime.getURL("WinXP/assets/audioimrcv.wav")).play().catch(() => {});
+      new Audio(chrome.runtime.getURL("WinXP/assets/audio/imrcv.wav")).play().catch(() => {});
     }
   }, [newMessage]);
 
@@ -44,7 +44,7 @@ function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarChann
       if (sendBtn && sendBtn.getAttribute('aria-disabled') !== 'true') {
         setTimeout(() => {
           sendBtn.click();
-          new Audio(chrome.runtime.getURL("WinXP/assets/audioimsend.wav")).play().catch(() => {});
+          new Audio(chrome.runtime.getURL("WinXP/assets/audio/imsend.wav")).play().catch(() => {});
           setDraft('');
         }, 500);
       }
@@ -91,7 +91,7 @@ function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarChann
           const timestamp = timestampElement ? Number(timestampElement.getAttribute('data-ts')) * 1000 : 0;
           const isNew = Math.abs(timestamp - Date.now()) < 1000;
           if (inserted && !element.nextSibling && isNew) {
-            new Audio(chrome.runtime.getURL("WinXP/assets/audioimrcv.wav")).play().catch(() => {});
+            new Audio(chrome.runtime.getURL("WinXP/assets/audio/imrcv.wav")).play().catch(() => {});
           }
         }
         // if the next element does not have a sender, its because we could not find it earlier

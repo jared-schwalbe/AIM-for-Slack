@@ -1,4 +1,4 @@
-$aim: url('./view-slack.png');
+$aim: url('./view-aim.png');
 $slack: url('./view-slack.png');
 
 .aim-for-slack--modal {
@@ -11,14 +11,14 @@ $slack: url('./view-slack.png');
   }
 
   &__content {
-    padding: 19px 28px 40px;
+    padding: 14px 28px 40px;
     width: 100%;
   }
 
   &__views {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 39px;
+    margin-bottom: 35px;
     width: 100%;
   }
 

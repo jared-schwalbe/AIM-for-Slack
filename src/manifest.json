@@ -18,13 +18,7 @@
       "matches": ["*://app.slack.com/*"],
       "resources": [
         "app.css",
-        "WinXP/assets/audio/startup.mp3",
-        "WinXP/assets/audio/error.wav",
-        "WinXP/assets/audio/dooropen.wav",
-        "WinXP/assets/audio/doorslam.wav",
-        "WinXP/assets/audio/imrcv.wav",
-        "WinXP/assets/audio/imsend.wav",
-        "WinXP/assets/audio/ring.wav"
+        "WinXP/assets/audio/*"
       ]
     }
   ]

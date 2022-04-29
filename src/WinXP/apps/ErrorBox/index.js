@@ -13,7 +13,7 @@ function lineBreak(str) {
 
 function Error({ onClose, message = "Something's wrong!" }) {
   useEffect(() => {
-    new Audio(chrome.runtime.getURL("WinXP/assets/audioerror.wav")).play().catch(() => {});
+    new Audio(chrome.runtime.getURL("WinXP/assets/audio/error.wav")).play().catch(() => {});
   }, []);
   return (
     <Div>

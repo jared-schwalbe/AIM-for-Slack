@@ -25,7 +25,7 @@ function SignIn({ onClose, dispatch }) {
         type: ADD_APP,
         payload: appSettings.AIMBuddyList,
       });
-      new Audio(chrome.runtime.getURL("WinXP/assets/audiodooropen.wav")).play().catch(() => {});
+      new Audio(chrome.runtime.getURL("WinXP/assets/audio/dooropen.wav")).play().catch(() => {});
       window.aimForSlack.signedIn = true;
       window.dispatchEvent(new CustomEvent('aimsignin'));
       onClose();

@@ -1,3 +1,23 @@
+@font-face {
+  font-family: 'Noto Sans';
+  src: url('./assets/fonts/Noto-Sans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Noto Sans Bold';
+  src: url('./assets/fonts/Noto-Sans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'MS Sans Serif';
+  src: url('./assets/fonts/MS-Sans-Serif-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'MS Sans Serif Bold';
+  src: url('./assets/fonts/MS-Sans-Serif-Bold.ttf');
+}
+
 .win-xp {
   animation: none;
   background: url('./assets/xp-background.jpeg') no-repeat center center fixed;
@@ -83,7 +103,15 @@
 
     &:vertical {
       background-image: url('./assets/scroll/scroll-thumb.svg');
+    }
 
+    &:horizontal {
+      background-image: url('./assets/scroll/scroll-thumb-horizontal.svg');
+    }
+  }
+
+  *::-webkit-scrollbar-button {
+    &:vertical {
       &:start {
         background-image: url('./assets/scroll/scroll-arrow-up.svg');
         height: 16px;
@@ -96,13 +124,11 @@
     }
 
     &:horizontal {
-      background-image: url('./assets/scroll/scroll-thumb-horizontal.svg');
-
       &:start {
         background-image: url('./assets/scroll/scroll-arrow-left.svg');
         width: 16px;
       }
-      
+
       &:end {
         background-image: url('./assets/scroll/scroll-arrow-right.svg');
         width: 16px;

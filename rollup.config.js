@@ -3,8 +3,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import image from '@rollup/plugin-image';
-import styles from 'rollup-plugin-styles';
-import scss from 'rollup-plugin-scss';
+import postcss from 'rollup-plugin-postcss';
+import postcssurl from 'postcss-url';
 
 import { chromeExtension, simpleReloader } from 'rollup-plugin-chrome-extension';
 
@@ -35,7 +35,12 @@ export default {
     }),
     commonjs(),
     image(),
-    styles(),
-    scss()
+    postcss({
+      plugins: [
+        postcssurl({
+          url: 'inline',
+        }),
+      ],
+    }),
   ],
 };

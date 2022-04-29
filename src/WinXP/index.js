@@ -345,7 +345,7 @@ const WinXP = ({ onClose }) => {
   }, []);
 
   useEffect(() => {
-    playAudio('audiostartup.mp3');
+    playAudio('startup.mp3');
   }, []);
 
   useEffect(() => {

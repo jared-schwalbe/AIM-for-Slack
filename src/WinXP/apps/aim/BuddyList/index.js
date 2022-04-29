@@ -134,7 +134,7 @@ function BuddyList({ onClose, isFocus, dispatch }) {
   function onClickOptionItem(item) {
     switch (item) {
       case 'Sign Off':
-        new Audio(chrome.runtime.getURL("WinXP/assets/audiodoorslam.wav")).play().catch(() => {});
+        new Audio(chrome.runtime.getURL("WinXP/assets/audio/doorslam.wav")).play().catch(() => {});
         window.aimForSlack.signedIn = false;
         onClose();
         break;

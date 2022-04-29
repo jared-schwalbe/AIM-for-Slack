@@ -1,28 +1,4 @@
 /*
- * Load all of the font faces that we'll use in this app
- */
-
-@font-face {
-  font-family: 'Noto Sans';
-  src: url('./WinXP/assets/fonts/Noto-Sans-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'Noto Sans Bold';
-  src: url('./WinXP/assets/fonts/Noto-Sans-Bold.ttf');
-}
-
-@font-face {
-  font-family: 'MS Sans Serif';
-  src: url('./WinXP/assets/fonts/MS-Sans-Serif-Regular.ttf');
-}
-
-@font-face {
-  font-family: 'MS Sans Serif Bold';
-  src: url('./WinXP/assets/fonts/MS-Sans-Serif-Bold.ttf');
-}
-
-/*
  * Sets the body to hidden before the DOM is constructed
  * If the user preference is set to load AIM immediately,
  * we don't want the Slack placeholder to be shown first

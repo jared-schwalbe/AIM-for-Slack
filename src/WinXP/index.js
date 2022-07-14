@@ -16,6 +16,7 @@ import {
   END_SELECT,
   POWER_OFF,
   CANCEL_POWER_OFF,
+  AIM_OPEN_CHAT,
   AIM_NEW_MESSAGE,
 } from './constants/actions';
 import { FOCUSING, POWER_STATE } from './constants';
@@ -175,8 +176,53 @@ const reducer = (state, action = { type: '' }) => {
         ...state,
         powerState: POWER_STATE.START,
       };
-    case AIM_NEW_MESSAGE:
+    case AIM_OPEN_CHAT:
       const chatWindow = state.apps.find(app => app.props?.channelName === action.payload.channelName);
+      if (chatWindow) {
+        if (state.focusing === FOCUSING.WINDOW && chatWindow.zIndex === state.nextZIndex - 1) {
+          // nothing to do if this chat is already open and focused
+          return state;
+        } else {
+          // focus the chat if it is already open
+          const apps = state.apps.map(app =>
+            app.props?.channelName === action.payload.channelName
+              ? { ...app, zIndex: state.nextZIndex, minimized: false, hasNotification: false }
+              : app,
+          );
+          return {
+            ...state,
+            apps,
+            nextZIndex: state.nextZIndex + 1,
+            focusing: FOCUSING.WINDOW,
+          };
+        }
+      } else {
+        // open new chat window
+        return {
+          ...state,
+          apps: [
+            ...state.apps,
+            {
+              ...appSettings.AIMChat,
+              header: {
+                ...appSettings.AIMChat.header,
+                title: `${action.payload.channelName} - Instant Message`,
+              },
+              props: {
+                channelName: action.payload.channelName,
+                sidebarChannel: action.payload.sidebarChannel,
+                sidebarGroup: action.payload.sidebarGroup,
+              },
+              id: state.nextAppID,
+              zIndex: state.nextZIndex,
+            },
+          ],
+          nextAppID: state.nextAppID + 1,
+          nextZIndex: state.nextZIndex + 1,
+          focusing: FOCUSING.WINDOW,
+        };
+      }
+    case AIM_NEW_MESSAGE:
       if (chatWindow) {
         if (state.focusing === FOCUSING.WINDOW && chatWindow.zIndex === state.nextZIndex - 1) {
           // nothing to do if this chat is already open and focused

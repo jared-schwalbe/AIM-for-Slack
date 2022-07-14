@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 
-import { appSettings } from '../../';
-import { ADD_APP } from '../../../constants/actions';
+import { AIM_OPEN_CHAT } from '../../../constants/actions';
 import { WindowDropDowns } from '../../../components'
 import { getHiddenCounts } from './utils';
 import dropDownData from './dropDownData';
@@ -123,18 +122,11 @@ function BuddyList({ onClose, isFocus, dispatch }) {
   const username = profileEl && profileEl.getAttribute('aria-label').replace('User menu: ', '');
 
   const openChat = c => dispatch({
-    type: ADD_APP,
+    type: AIM_OPEN_CHAT,
     payload: {
-      ...appSettings.AIMChat,
-      header: {
-        ...appSettings.AIMChat.header,
-        title: `${c.name} - Instant Message`,
-      },
-      props: {
-        channelName: c.name,
-        sidebarChannel: c.sidebarChannel,
-        sidebarGroup: c.sidebarGroup,
-      }
+      channelName: c.name,
+      sidebarChannel: c.sidebarChannel,
+      sidebarGroup: c.sidebarGroup,
     },
   });
 

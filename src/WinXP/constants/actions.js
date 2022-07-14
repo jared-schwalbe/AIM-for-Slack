@@ -10,4 +10,5 @@ export const START_SELECT = 'START_SELECT';
 export const END_SELECT = 'END_SELECT';
 export const POWER_OFF = 'POWER_OFF';
 export const CANCEL_POWER_OFF = 'CANCEL_POWER_OFF';
+export const AIM_OPEN_CHAT = 'AIM_OPEN_CHAT';
 export const AIM_NEW_MESSAGE = 'AIM_NEW_MESSAGE';

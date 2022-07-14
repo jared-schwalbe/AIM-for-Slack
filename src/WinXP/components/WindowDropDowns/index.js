@@ -62,11 +62,11 @@ const WindowDropDowns = ({ className, height, items, onClickItem }) => {
   );
 };
 
-WindowDropDown.defaultProps = {
+WindowDropDowns.defaultProps = {
   height: 20,
 };
 
-WindowDropDown.propTypes = {
+WindowDropDowns.propTypes = {
   className: PropTypes.string.isRequired,
   height: PropTypes.number,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,

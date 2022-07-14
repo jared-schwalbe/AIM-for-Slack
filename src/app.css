@@ -14,7 +14,7 @@ body {
  */
 
 .aim-for-slack--launcher {
-  margin-right: 6px;
+  margin-right: 6px !important;
   opacity: 1;
 }
 

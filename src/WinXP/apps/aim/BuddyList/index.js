@@ -12,6 +12,8 @@ import options from '../../../assets/aim/buddy-list/options.png';
 import background from '../../../assets/aim/buddy-list/background.png';
 import actionsTop from '../../../assets/aim/buddy-list/actions-top.png';
 import actionsBottom from '../../../assets/aim/buddy-list/actions-bottom.png';
+import doorOpen from '../../../assets/aim/buddy-list/door-open.png';
+import away from '../../../assets/aim/buddy-list/away.png';
 import ticker from '../../../assets/aim/buddy-list/ticker.png';
 import pointer from '../../../assets/cursor/pointer.png';
 
@@ -29,6 +31,12 @@ function BuddyList({ onClose, isFocus, dispatch }) {
     }
   }
 
+  function getChannelName(item) {
+    const nameEl = item.querySelector('.p-channel_sidebar__name');
+    const labelEl = nameEl.querySelector('.p-channel_sidebar__member_label');
+    return nameEl?.textContent?.replace(labelEl?.textContent, ` (${labelEl?.textContent})`) ?? '';
+  }
+
   function getGroups() {
     const groups = [];
     const items = document.getElementsByClassName('p-channel_sidebar__static_list__item');
@@ -43,12 +51,11 @@ function BuddyList({ onClose, isFocus, dispatch }) {
           children: [],
         });
       } else if (item.querySelector('.p-channel_sidebar__channel')) {
-        const nameEl = item.querySelector('.p-channel_sidebar__name');
         groups[groups.length - 1].children.push({
           element: item.querySelector('.p-channel_sidebar__channel'),
           sidebarChannel: item,
           sidebarGroup: groups[groups.length - 1].sidebarGroup,
-          name: nameEl ? nameEl.textContent : '',
+          name: getChannelName(item),
         });
       }
     });
@@ -193,12 +200,24 @@ function BuddyList({ onClose, isFocus, dispatch }) {
               </div>
               <div className="com__buddy-list__group__items">
                 {g.expanded && g.children.map(c => {
+                  const online = c.element.querySelector('.c-presence--active');
+                  const muted = c.element.classList.contains('p-channel_sidebar__channel--muted');
+                  const unread = c.element.classList.contains('p-channel_sidebar__channel--unread');
                   let itemClass = '';
                   if (active === c.name) {
                     itemClass = 'com__buddy-list__active';
                     if (isFocus) {
                       itemClass = 'com__buddy-list__active--focus';
                     }
+                  }
+                  if (online) {
+                    itemClass += itemClass ? ' online' : 'online';
+                  }
+                  if (muted) {
+                    itemClass += itemClass ? ' muted' : 'muted';
+                  }
+                  if (unread) {
+                    itemClass += itemClass ? ' unread' : 'unread';
                   }
                   return (
                     <button
@@ -211,6 +230,8 @@ function BuddyList({ onClose, isFocus, dispatch }) {
                     >
                       <span>
                         <span className={itemClass}>
+                          {online && <img src={doorOpen} alt="online" />}
+                          {unread && !online && <img src={away} alt="unread" />}
                           {c.name}
                         </span>
                       </span>
@@ -355,6 +376,7 @@ const Div = styled.div`
     padding-right: 1px;
     padding-left: 1px;
     display: inline-block;
+    white-space: nowrap;
   }
   .com__buddy-list__group__expand__icon {
     height: 5px;
@@ -405,12 +427,29 @@ const Div = styled.div`
     height: 16px;
     display: inline-block;
   }
-  .com__buddy-list__group__item > span > span {
-    border: 1px dotted transparent;
+  .com__buddy-list__group__item > span > span.muted {
+    color: #8a8a8a;
+  }
+  .com__buddy-list__group__item > span > span.unread img {
+    height: 13px;
+    padding-right: 6px;
+    padding-bottom: 1px;
+  }
+  .com__buddy-list__group__item > span > span.online img {
+    height: 13px;
+    padding-right: 6px;
+    padding-bottom: 1px;
+  }
+  .com__buddy-list__group__item > span > span:not(.unread):not(.online) {
     padding-left: 20px;
+  }
+  .com__buddy-list__group__item > span > span {
+    align-items: center;
+    border: 1px dotted transparent;
+    display: flex;
+    height: 13px;
     padding-right: 1px;
     padding-top: 1px;
-    padding-bottom: 1px;
   }
   .com__actions__top {
     text-align: center;

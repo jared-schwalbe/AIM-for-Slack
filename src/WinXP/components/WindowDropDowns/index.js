@@ -69,7 +69,7 @@ WindowDropDowns.defaultProps = {
 WindowDropDowns.propTypes = {
   className: PropTypes.string.isRequired,
   height: PropTypes.number,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
+  items: PropTypes.object.isRequired,
   onClickItem: PropTypes.func.isRequired,
 }
 

@@ -19,6 +19,8 @@ const div = document.createElement('div');
 div.id = 'aim-for-slack';
 document.body.appendChild(div);
 
+chrome.storage.sync.clear();
+
 // fetch the user's preference for which view to show
 chrome.storage.sync.get(['view'], result => {
   if (result.view !== 'AIM') {

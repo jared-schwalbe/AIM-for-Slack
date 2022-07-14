@@ -204,11 +204,13 @@ function Chat({ onClose, isFocus, newChat, newMessage, channelName, sidebarChann
   }, [])
 
   function onClickOptionItem(item) {
-    switch (item) {
-      case 'Close':
-        onClose();
-        break;
-      default:
+    if (item === 'Close') {
+      onClose();
+      return;
+    }
+    if (item.match(/\p{Emoji}+/gu)) {
+      setDraft(prevDraft => prevDraft + item.match(/\p{Emoji}+/gu)[0]);
+      return;
     }
   }
 

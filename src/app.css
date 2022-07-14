@@ -1,7 +1,7 @@
 /*
- * Sets the body to hidden before the DOM is constructed
+ * Sets the body to hidden before the DOM is constructed.
  * If the user preference is set to load AIM immediately,
- * we don't want the Slack placeholder to be shown first
+ * we don't want the Slack placeholder to be shown first.
  */
 
 body {
@@ -9,8 +9,8 @@ body {
 }
 
 /*
- * These styles are for the button that switches to the Windows XP view
- * This button will be injected into Slack's top-right nav bar
+ * These styles are for the button that switches to the Windows XP view.
+ * This button will be injected into Slack's top-right nav bar.
  */
 
 .aim-for-slack--launcher {
@@ -19,7 +19,7 @@ body {
 }
 
 .aim-for-slack--launcher:active {
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .aim-for-slack--launcher:hover {
